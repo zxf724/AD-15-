@@ -63,6 +63,8 @@ dkms.conf
 
 #MDK
 **/Objects/
+**/Listings/
+**/JlinkLog.txt
 
 #pads
 *.inf
