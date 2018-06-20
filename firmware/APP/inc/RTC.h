@@ -66,6 +66,11 @@ static volatile bool ready_flag;
 
 #define IS_LEAP(y)      ((y % 4 == 0) && (y % 100 != 0)) || ((y % 100 == 00) && (y % 400 == 0))
 
+
+#define TSEC_INIT(ts)             do {ts = RTC_ReadCount();}while(0)
+#define TSEC_IS_OVER(ts, over)    (RTC_ReadCount() - ts >= over)
+#define TSEC_COUNT(ts)            (RTC_ReadCount() - ts)
+
 /* Exported functions --------------------------------------------------------*/
 /** @addtogroup RTC_Exported_Functions
   * @{

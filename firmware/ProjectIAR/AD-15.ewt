@@ -1170,9 +1170,6 @@
       <name>$PROJ_DIR$\..\APP\src\control.c</name>
     </file>
     <file>
-      <name>$PROJ_DIR$\..\APP\src\DataSave.c</name>
-    </file>
-    <file>
       <name>$PROJ_DIR$\..\APP\src\main.c</name>
     </file>
     <file>
@@ -1183,9 +1180,6 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\APP\src\RTC.c</name>
-    </file>
-    <file>
-      <name>$PROJ_DIR$\..\APP\src\spi_flash.c</name>
     </file>
     <file>
       <name>$PROJ_DIR$\..\APP\src\user_ble.c</name>
@@ -1210,6 +1204,87 @@
     </file>
     <file>
       <name>$PROJ_DIR$\..\SDK\toolchain\system_nrf51.c</name>
+    </file>
+  </group>
+  <group>
+    <name>GPRS</name>
+    <file>
+      <name>$PROJ_DIR$\..\APP\GPRS\gprs.c</name>
+    </file>
+  </group>
+  <group>
+    <name>MQTT</name>
+    <group>
+      <name>packet</name>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTConnect.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTConnectClient.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTConnectServer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTDeserializePublish.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTFormat.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTFormat.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTPacket.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTPacket.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTPublish.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTSerializePublish.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTSubscribe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTSubscribeClient.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTSubscribeServer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTUnsubscribe.h</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTUnsubscribeClient.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\MQTTUnsubscribeServer.c</name>
+      </file>
+      <file>
+        <name>$PROJ_DIR$\..\MQTT\MQTTPacket\StackTrace.h</name>
+      </file>
+    </group>
+    <file>
+      <name>$PROJ_DIR$\..\MQTT\nordic\MQTT_Conn.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\MQTT\nordic\mqtt_conn.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\MQTT\nordic\MQTTClient.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\MQTT\nordic\MQTTClient.h</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\MQTT\nordic\MQTTnordic.c</name>
+    </file>
+    <file>
+      <name>$PROJ_DIR$\..\MQTT\nordic\MQTTnordic.h</name>
     </file>
   </group>
   <group>

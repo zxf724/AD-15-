@@ -479,7 +479,7 @@ int8_t PcdComMF522(uint8_t   Command,
 	}		   // 该命令只与发送指令一起使用才有效，发送指令在上一句代码中
     
     //i = 600; //根据时钟频率调整，操作M1卡最大等待时间25ms
-	i = 2000; //2000;
+	i = 80; //2000;
 	// SetBitMask(ControlReg,0x40);           // start timer now --- Tiger.Yang
 	do 
 	{

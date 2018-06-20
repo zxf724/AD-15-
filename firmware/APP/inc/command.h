@@ -37,14 +37,8 @@
 /** @defgroup COMMAND_Exported_Constants COMMAND Exported Constants
   * @{
   */
-#define COMMAND_MAX        UART_RX_BUF_SIZE
+#define COMMAND_MAX        64
 
-    
-    
-extern uint8_t  RFID_DATA[32];
-extern uint8_t umbrellaID_num;
-    
-extern uint8_t  RFID_DATA_Flag;
 /**
   * @}
   */
@@ -59,9 +53,7 @@ void Command_Init(void);
 
 void CommandReceive_Poll(void);
 
-void RfidReceive_Poll(void) ;
 
-void Receive_Poll(void);
 /**
   * @}
   */
@@ -80,5 +72,5 @@ void Receive_Poll(void);
 
 #endif /* _COMMAND_H */
 
-/************************ (C)  *****END OF FILE****/
+/************************ (C) 深圳逗爱创新科技有限公司 *****END OF FILE****/
 

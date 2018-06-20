@@ -20,9 +20,8 @@
 #include "user_uart.h"
 
 #if !defined(__ICCARM__)
-struct __FILE 
-{
-    int handle;
+struct __FILE {
+  int handle;
 };
 #endif
 
@@ -31,69 +30,49 @@ FILE __stdin;
 
 
 #if defined(__CC_ARM) ||  defined(__ICCARM__)
-int fgetc(FILE * p_file)
-{
-    uint8_t input;
-    while (Get(&input) == NRF_ERROR_NOT_FOUND)
-    {
-        // No implementation needed.
-    }
-    return input;
+int fgetc(FILE* p_file) {
+  uint8_t input;
+  while (!user_uart_ReadByte(&input));
+  return input;
 }
 
 
-int fputc(int ch, FILE * p_file)
-{
-    UNUSED_PARAMETER(p_file);
+int fputc(int ch, FILE* p_file) {
+  UNUSED_PARAMETER(p_file);
 
-    UNUSED_VARIABLE(Print((uint8_t)ch));
-    return ch;
+  UNUSED_VARIABLE(user_uart_SendByte(ch));
+  return ch;
 }
 
 #elif defined(__GNUC__)
 
 
-int _write(int file, const char * p_char, int len)
-{
-    int i;
+int _write(int file, const char* p_char, int len) {
+  int i;
 
-    UNUSED_PARAMETER(file);
+  UNUSED_PARAMETER(file);
 
-    for (i = 0; i < len; i++)
-    {
-        UNUSED_VARIABLE(app_uart_put(*p_char++));
-    }
+  user_uart_SendData((uint8_t*)p_char, len);
 
-    return len;
+  return len;
 }
 
 
-int _read(int file, char * p_char, int len)
-{
-    UNUSED_PARAMETER(file);
-    while (app_uart_get((uint8_t *)p_char) == NRF_ERROR_NOT_FOUND)
-    {
-        // No implementation needed.
-    }
+int _read(int file, char* p_char, int len) {
+  UNUSED_PARAMETER(file);
 
-    return 1;
+  return user_uart_ReadData((uint8_t*)p_char, len);
 }
 #endif
 
 #if defined(__ICCARM__)
 
-__ATTRIBUTES size_t __write(int file, const unsigned char * p_char, size_t len)
-{
-    int i;
+__ATTRIBUTES size_t __write(int file, const unsigned char* p_char, size_t len) {
 
-    UNUSED_PARAMETER(file);
+  UNUSED_PARAMETER(file);
 
-    for (i = 0; i < len; i++)
-    {
-        UNUSED_VARIABLE(app_uart_put(*p_char++));
-    }
-
-    return len;
+  user_uart_SendData((uint8_t*)p_char, len); 
+  return len;
 }
 
 #endif

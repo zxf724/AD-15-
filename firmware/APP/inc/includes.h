@@ -26,6 +26,7 @@
 #include "nrf_drv_spi.h"
 #include "nrf_drv_twi.h"
 #include "nrf_drv_rng.h"
+#include "nrf_drv_wdt.h"
 
 #include "app_timer.h"
 #include "app_uart.h"
@@ -34,20 +35,16 @@
 #include "prjlib.h"
 #include "bsp.h"
 #include "rtc.h"
+#include "command.h"
 
 #include "workdata.h"
 #include "user_uart.h"
 #include "user_ble.h"
-#include "command.h"
 #include "control.h"
 #include "protocol.h"
-#include "spi_flash.h"
-#include "MFRC522_API.h"
-#include "fpg.h"
-#include "touchpad.h"
-#include "profession.h"
 #include "aes.h"
-#include "user_comm.h"
+#include "gprs.h"
+#include "mqtt_conn.h"
 
 #endif /* _INCLUDES_H */
 

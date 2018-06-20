@@ -1,95 +1,42 @@
-/**
-        ******************************************************************************
-        * @file    Control.c
-        * @author  宋阳
-        * @version V1.0
-        * @date    2015.12.4
-        * @brief   控制操作相关函数
-        ******************************************************************************
-        */
-
 /* Includes ------------------------------------------------------------------*/
-#include "control.h"
-#include "nrf_drv_wdt.h"
-#include "user_uart.h"
-#include "protocol.h"
-/** @addtogroup firmwaveF2_BLE
-        * @{
-        */
+#include "includes.h"
 
-
-
-/** @defgroup Control
-        * @brief 控制操作相关函数
-        * @{
-        */
 
 
 /* Private typedef -----------------------------------------------------------*/
-/** @defgroup Control_Private_Types Control Private Types
-        * @{
-        */
+typedef struct
+{
+  uint16_t activetime;
+  uint16_t idletime;
+  uint16_t times;
+  uint16_t index;
+  BOOL active;
+} Period_Block_t;
 
-/**
-        * @}
-        */
 
 /* Private define ------------------------------------------------------------*/
 
-/** @defgroup Control_Private_Constants Control Private Constants
-        * @{
-        */
-#define TIME1_PATCH_REG           (*(uint32_t *)0x40009C0C)
-#define TIME2_PATCH_REG           (*(uint32_t *)0x4000AC0C)
-
-
-
-/**
-        * @}
-        */
-
 /* Private macros ------------------------------------------------------------*/
-/** @defgroup Control_Private_Macros Control Private Macros
-        * @{
-        */
 
-/**
-        * @}
-        */
 /* Private variables ---------------------------------------------------------*/
-/** @defgroup Control_Private_Variables Private Variables
-        * @{
-        */
-APP_TIMER_DEF(TimerId_Lock);
-APP_TIMER_DEF(TimerId_RfidCmd);
 
-static USDelay_CB timer2CB = NULL;
-uint8_t  *data;
-uint8_t RFID_SendCmd_Flag = 0,RFID_ReceiveData_Flag = 1;
 uint16_t BatVol = 0;
+motor_status_t Motor_staus;
 
-/**
-        * @}
-        */
+APP_TIMER_DEF(TimerId_Lock);
+APP_TIMER_DEF(TimerId_LED_NET);
+APP_TIMER_DEF(TimerId_LED_STATUS);
+
+static uint16_t motorTick = 0;
+static Period_Block_t  LED_NET_Period, LED_STATUS_Period;
+
 /* Private function prototypes -----------------------------------------------*/
-/** @defgroup Control_Private_Functions Control Private Functions
-        * @{
-        */
-
-static void Timer_Driver_init(void);
 static void Motor_TimerCB(void* p_context);
-static void RfidCmd_TimerCB(void *p_context);
+static void LED_NET_TimerCB(void* p_context);
+static void LED_STATUS_TimerCB(void* p_context);
 static void funControl(int argc, char* argv[]);
 
-/**
-        * @}
-        */
-
 /* Exported functions ---------------------------------------------------------*/
-
-/** @defgroup Control_Exported_Functions Control Exported Functions
-        * @{
-        */
 
 /**
 * @brief  控制轮循函数.
@@ -98,17 +45,9 @@ static void funControl(int argc, char* argv[]);
 */
 void Control_Init(void) {
 
-
-  nrf_drv_ppi_init();
-  if (!nrf_drv_gpiote_is_init()) {
-    nrf_drv_gpiote_init();
-  }
-  Timer_Driver_init();
-
-  app_timer_create(&TimerId_Lock, APP_TIMER_MODE_SINGLE_SHOT, Motor_TimerCB);
-  app_timer_create(&TimerId_RfidCmd, APP_TIMER_MODE_SINGLE_SHOT, RfidCmd_TimerCB);
-//  app_timer_create(&TimerId_RfidCheck, APP_TIMER_MODE_SINGLE_SHOT, RFIDCheck_TimerCB);
-
+  app_timer_create(&TimerId_Lock, APP_TIMER_MODE_REPEATED, Motor_TimerCB);
+  app_timer_create(&TimerId_LED_NET, APP_TIMER_MODE_SINGLE_SHOT, LED_NET_TimerCB);
+  app_timer_create(&TimerId_LED_STATUS, APP_TIMER_MODE_SINGLE_SHOT, LED_STATUS_TimerCB);
 
   CMD_ENT_DEF(control, funControl);
   Cmd_AddEntrance(CMD_ENT(control));
@@ -116,184 +55,209 @@ void Control_Init(void) {
   DBG_LOG("Device control init.");
 }
 
-
-
-/**
- * 用定时器实现us延时
- * 
- * @param us     延时的时间
- * @param cb     回调函数
- */
-void Delay_Us(uint16_t us, USDelay_CB cb) {
-
-  DELAY_TIMER->TASKS_STOP = 1;
-  DELAY_TIMER->TASKS_CLEAR = 1;
-  DELAY_TIMER->CC[0] = us;
-
-  timer2CB = cb;
-  DELAY_TIMER->TASKS_START = 1;
-}
-
-/**
- * 利用定时器等待接收RFID数据并发送APP数据
- */
-void RfidSendCmd(void)
-{
-  app_timer_stop(TimerId_RfidCmd);
-  RFID_SendCmd_Flag = 0;
-  app_timer_start(TimerId_RfidCmd, APP_TIMER_TICKS(CMD_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
-}
-
 /**
  * 借伞操作函数
  */
-void Borrow_Action(uint8_t *dat) {
+void Borrow_Action(uint8_t* dat) {
+
   app_timer_stop(TimerId_Lock);
-  data = dat;
-  RFID_ReceiveData_Flag = 0;
-  MOTOR_FORWARD();
-  (CommParam.UmbrellaCount)--;
-  RfidSendCmd();
-  app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
+  motorTick = 0;
+
+  /*检查是否卡住*/
+  if (IR_CHECK()) {
+    Motor_staus = status_ir_stuck;
+    DBG_LOG("Borrow_Action IR Stuck.");
+  } else {
+    LED_ON(STATUS);
+    MOTOR_FORWARD();
+    app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
+  }
 }
+
 /**
  * 还伞操作函数
  */
-void Repay_Action(void)
-{
-  app_timer_stop(TimerId_Lock);
+void Repay_Action(void) {
 
-  MOTOR_BACK();
-  (CommParam.UmbrellaCount)++;
-  app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
+  app_timer_stop(TimerId_Lock);
+  motorTick = 0;
+
+  /*检查是否卡住*/
+  if (IR_CHECK()) {
+    Motor_staus = status_ir_stuck;
+    DBG_LOG("Repay_Action IR Stuck.");
+  } else {
+    LED_ON(STATUS);
+    MOTOR_BACK();
+    app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
+  }
 }
+
 /**
  * 停止设备操作函数
  */
-void Stop_Action(void)
-{
+void Stop_Action(void) {
+  LED_OFF(STATUS);
+  motorTick = 0;
+  app_timer_stop(TimerId_Lock);
   MOTOR_STOP();
 }
 
 /**
- * 蜂鸣器驱动定时器初始化，用于产生PWM波形
+ * 网络指示灯开始闪烁
+ * 
+ * @param activetime 一个周期亮的时间
+ * @param idletime   一个周期灭的时间
+ * @param times      周期数
  */
-static void Timer_Driver_init(void) {
-  static nrf_ppi_channel_t ppi_buz1, ppi_buz2;
+void LED_NET_Flash_Start(uint16_t activetime, uint16_t idletime, uint16_t times) {
+  app_timer_stop(TimerId_LED_NET);
+  LED_OFF(NET);
 
-  BUZ_TIMER->TASKS_STOP = 1;
-  TIME1_PATCH_REG = 0;
-  BUZ_TIMER->SHORTS     = TIMER_SHORTS_COMPARE0_CLEAR_Msk;
-  BUZ_TIMER->MODE       = TIMER_MODE_MODE_Timer;
-  BUZ_TIMER->BITMODE    = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
-  BUZ_TIMER->PRESCALER  = (uint32_t)4; /*1M*/
-  BUZ_TIMER->INTENSET   = 0;
+  LED_NET_Period.index = 0;
+  LED_NET_Period.active = FALSE;
+  LED_NET_Period.activetime = activetime;
+  LED_NET_Period.idletime = idletime;
+  LED_NET_Period.times = times;
 
-
-//  nrf_gpiote_task_configure(0, BUZ_PIN, NRF_GPIOTE_POLARITY_TOGGLE, NRF_GPIOTE_INITIAL_VALUE_LOW);
-
-  nrf_drv_ppi_channel_alloc(&ppi_buz1);
-  nrf_drv_ppi_channel_alloc(&ppi_buz2);
-
-  nrf_drv_ppi_channel_assign(
-      ppi_buz1,
-      (uint32_t)&(BUZ_TIMER->EVENTS_COMPARE[1]),
-      (uint32_t)&(NRF_GPIOTE->TASKS_OUT[0]));
-  nrf_drv_ppi_channel_assign(
-      ppi_buz2,
-      (uint32_t)&(BUZ_TIMER->EVENTS_COMPARE[0]),
-      (uint32_t)&(NRF_GPIOTE->TASKS_OUT[0]));
-
-  nrf_drv_ppi_channel_enable(ppi_buz1);
-  nrf_drv_ppi_channel_enable(ppi_buz2);
-
-
-  DELAY_TIMER->TASKS_STOP = 1;
-  TIME2_PATCH_REG = 0;
-  DELAY_TIMER->SHORTS     = TIMER_SHORTS_COMPARE0_CLEAR_Msk | TIMER_SHORTS_COMPARE0_STOP_Msk;
-  DELAY_TIMER->MODE       = TIMER_MODE_MODE_Timer;
-  DELAY_TIMER->BITMODE    = (TIMER_BITMODE_BITMODE_16Bit << TIMER_BITMODE_BITMODE_Pos);
-  DELAY_TIMER->PRESCALER  = (uint32_t)4; /*1M*/
-  DELAY_TIMER->INTENSET   = TIMER_INTENSET_COMPARE0_Msk;
-  nrf_drv_common_irq_enable(TIMER2_IRQn, NRF_APP_PRIORITY_HIGH);
+  LED_ON(NET);
+  LED_NET_Period.active = TRUE;
+  app_timer_start(TimerId_LED_NET, APP_TIMER_TICKS(activetime, APP_TIMER_PRESCALER), NULL);
 }
 
 /**
- * Timer2的中断服务函数
+ * 状态指示灯开始闪烁
+ * 
+ * @param activetime 一个周期亮的时间
+ * @param idletime   一个周期灭的时间
+ * @param times      周期数
  */
-void TIMER2_IRQHandler(void) {
-  DELAY_TIMER->EVENTS_COMPARE[0] = 0;
-  if (timer2CB != NULL) {
-    timer2CB();
-    timer2CB = NULL;
-  }
+void LED_STATUS_Flash_Start(uint16_t activetime, uint16_t idletime, uint16_t times) {
+  app_timer_stop(TimerId_LED_STATUS);
+  LED_OFF(STATUS);
+
+  LED_STATUS_Period.index = 0;
+  LED_STATUS_Period.active = FALSE;
+  LED_STATUS_Period.activetime = activetime;
+  LED_STATUS_Period.idletime = idletime;
+  LED_STATUS_Period.times = times;
+
+  LED_ON(STATUS);
+  LED_STATUS_Period.active = TRUE;
+  app_timer_start(TimerId_LED_STATUS, APP_TIMER_TICKS(activetime, APP_TIMER_PRESCALER), NULL);
+}
+
+
+/**
+* 清看门狗.
+*/
+void WatchDog_Clear(void) {
+#if WTD_EN == 1
+  nrf_drv_wdt_feed();
+#endif
 }
 
 /**
-        * @brief  借伞操作结束函数.
-        * @retval none.
-        */
+ * @brief 借伞操作结束函数.
+ * @retval none.
+ * @param p_context
+ */
 static void Motor_TimerCB(void* p_context) {
-  Stop_Action();
+  /*延时检查是否过流*/
+  if (motorTick > 10 && MOTOR_IS_STUCK()) {
+    app_timer_stop(TimerId_Lock);
+    Stop_Action();
+    Motor_staus = status_motor_stuck;
+    DBG_LOG("Motor is Stuck.");
+  }
+  /*检查红外*/
+  if (IR_CHECK()) {
+    app_timer_stop(TimerId_Lock);
+    Stop_Action();
+    Motor_staus = status_ir_stuck;
+    DBG_LOG("Motor IR Stuck.");
+  }
+  /*延时检查到位*/
+  if (motorTick > 10 && UM_OVER_CHECK()) {
+    app_timer_stop(TimerId_Lock);
+    Stop_Action();
+    if (Motor_staus == status_borrow) {
+      Motor_staus = status_borrow_complite;
+    } else if (Motor_staus == status_repay) {
+      Motor_staus = status_repay_complite;
+    }
+    DBG_LOG("Motor Running over.");
+  }
+  /*超时停止*/
+  if (motorTick++ >= MOTOR_OVERFLOW_TIMES) {
+    motorTick = 0;
+    Stop_Action();
+    Motor_staus = status_timeout;
+    DBG_LOG("Motor Running Timeout.");
+  }
 }
 
 /**
- * 等待识别到RFID数据并返送APP雨伞ID数据
+ * 网络指示灯定时器回调
  */
-static void RfidCmd_TimerCB(void *p_context){
-  uint8_t param[9] = {0};
-  
-  if(RFID_SendCmd_Flag == 0){
-    
-    app_timer_start(TimerId_RfidCmd, APP_TIMER_TICKS(CMD_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
+static void LED_NET_TimerCB(void* p_context) {
+  if (LED_NET_Period.index == LED_FLASH_CONTINUE) {
+    LED_NET_Period.index = 0;
   }
-  else if(RFID_SendCmd_Flag == 1){
-    app_timer_stop(TimerId_RfidCmd);
-    param[0] = RFID_DATA[5];
-    param[1] = RFID_DATA[6];
-    param[2] = RFID_DATA[7];
-    param[3] = RFID_DATA[8];
-    param[4] =0x55;
-    RFID_SendCmd_Flag = 0;
-    RFID_ReceiveData_Flag = 1;
-    ReBack(data,0x3B,param,5);
+ 
+  if (LED_NET_Period.index < LED_NET_Period.times) {
+    if (LED_NET_Period.active) {
+      LED_OFF(NET);
+      LED_NET_Period.active = FALSE;
+      LED_NET_Period.index++;
+      if (LED_NET_Period.index < LED_NET_Period.times) {
+        app_timer_start(TimerId_LED_NET, APP_TIMER_TICKS(LED_NET_Period.idletime, APP_TIMER_PRESCALER), NULL);
+      }
+    } else {
+      LED_ON(NET);
+      LED_NET_Period.active = TRUE;
+      app_timer_start(TimerId_LED_NET, APP_TIMER_TICKS(LED_NET_Period.activetime, APP_TIMER_PRESCALER), NULL);
+    }
   }
 }
 
 /**
-        * @brief  设备控制调试命令.
-        */
+ * 状态指示灯定时器回调
+ */
+static void LED_STATUS_TimerCB(void* p_context) {
+  if (LED_STATUS_Period.index == LED_FLASH_CONTINUE) {
+    LED_STATUS_Period.index = 0;
+  }
+  if (LED_STATUS_Period.index < LED_STATUS_Period.times) {
+    if (LED_STATUS_Period.active) {
+      LED_OFF(STATUS);
+      LED_STATUS_Period.active = FALSE;
+      LED_STATUS_Period.index++;
+      if (LED_STATUS_Period.index < LED_STATUS_Period.times) {
+        app_timer_start(TimerId_LED_STATUS, APP_TIMER_TICKS(LED_STATUS_Period.idletime, APP_TIMER_PRESCALER), NULL);
+      }
+    } else {
+      LED_ON(STATUS);
+      LED_STATUS_Period.active = TRUE;
+      app_timer_start(TimerId_LED_STATUS, APP_TIMER_TICKS(LED_STATUS_Period.activetime, APP_TIMER_PRESCALER), NULL);
+    }
+  }
+}
+
+/**
+ * @brief 设备控制调试命令.
+ * @param argc
+ * @param argv
+ */
 static void funControl(int argc, char* argv[]) {
-  
-  	argv++;
-	argc--;
 
-	if (ARGV_EQUAL("borrow")) 
-        {
-          MOTOR_FORWARD();
-          nrf_delay_ms(1000);
-          nrf_delay_ms(1000);
-          nrf_delay_ms(1000);
-          MOTOR_STOP();
-          DBG_LOG("MOTOR CONTROL.");
-	}
+  argv++;
+  argc--;
+
+  if (ARGV_EQUAL("borrow")) {}
 
 }
 
-
-/**
-        * @}
-        */
-
-
-
-/**
-        * @}
-        */
-
-/**
-        * @}
-        */
 
 /************************ (C) COPYRIGHT  *****END OF FILE****/
 

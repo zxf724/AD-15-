@@ -10,20 +10,8 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "nordic_common.h"
-#include "nrf.h"
-#include "nrf51_bitfields.h"
-#include "nrf_delay.h"
-#include "nrf_drv_wdt.h"
-#include "nrf_sdm.h"
-#include "nrf_nvmc.h"
-#include "ble_nus.h"
-#include "app_uart.h"
-#include "app_trace.h"
-#include "app_timer.h"
-#include "app_error.h"
 #include "includes.h"
-#include "command.h"
+
 
 /** @addtogroup firmwave_F2_BLE
   * @{
@@ -56,7 +44,6 @@
   * @{
   */
 static void wdt_init(uint32_t value);
-static void WatchDog_Clear(void);
 static void FlashWRPProcess(void);
 
 
@@ -85,42 +72,39 @@ static void wdt_event_handler(void);
   * @param  none.
   * @retval none.
   */
-int main(void)
-{
-  wdt_init(5000);
+int main(void) {
+  wdt_init(10000);
   FlashWRPProcess();
-  
+
   APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
   BSP_Init();
-  RFID_uart_init();
+  user_uart_init();
+  Command_Init();
   RTC_Init();
+
   user_BLE_Start();
+  WorkData_Init();
   user_BLE_Connected();
   nrf_drv_rng_init(NULL);
-#if (DEBUG == 1)
-  Command_Init();
 
-#endif
   Protocol_Init();
-  SFlash_Init();
-  WorkParam_Init();
-  DataSave_Init();
+  GPRS_Init();
   Control_Init();
 
-  for (;;)
-  {
+  MQTT_Conn_Init();
+  for (;;) {
     WatchDog_Clear();
-#if (DEBUG == 1)
-    CommandReceive_Poll();
-#endif
-
-#if (RFID_Flag == 1)
-    RfidReceive_Poll();
-#endif
 
     Protocol_DateProcPoll();
-//    /* 进入休眠 */
-   sd_app_evt_wait();
+    CommandReceive_Poll();
+
+    GPRS_Polling();
+
+    MQTT_Conn_Polling();
+    /* 进入休眠 */
+    if (user_uart_RecLength() == 0) {
+      sd_app_evt_wait();
+    }
   }
 }
 
@@ -202,17 +186,6 @@ static void wdt_init(uint32_t value) {
 #endif
 }
 
-
-/**
-* 清看门狗.
-*/
-static void WatchDog_Clear(void) {
-#if WTD_EN == 1
-  nrf_drv_wdt_feed();
-#endif
-}
-
-
 /**
   * @brief  FLASH读写保护初始化.
   * @param  none.
@@ -240,22 +213,6 @@ static void wdt_event_handler(void) {
 
 }
 #endif
-
-/**
-  * @}
-  */
-//void BLE_DateProcPoll(void)
-//{
-//    #if (DEBUG == 1)
-//      user_uart_init();
-//    #endif
-//      
-//    #if (DEBUG == 1)
-//  CommandReceive_Poll();
-//#endif
-//   Protocol_DateProcPoll();
-//}
-
 
 /**
   * @}

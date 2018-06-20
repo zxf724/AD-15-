@@ -10,8 +10,7 @@
 #define APP_TIMER_TICK_DEF(tick)        APP_TIMER_TICKS(tick, APP_TIMER_PRESCALER)
 
 
-
-#define DEVICE_NAME                     "AFU"
+#define DEVICE_NAME                     "AD15"
 #define CENTRAL_LINK_COUNT              0                                          /**<number of central links used by the application. When changing this number remember to adjust the RAM settings*/
 #define PERIPHERAL_LINK_COUNT           1                                          /**<number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
