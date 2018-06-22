@@ -137,10 +137,12 @@ void GPRS_Init(void) {
 void GPRS_Polling(void) {
 
   if (NRF_UART0->PSELRXD == GSM_RXD_PIN) {
+    UART_MutexCount++;
     GPRS_ManagerPoll();
     if (user_uart_RecLength() > 0 || RspBufIndex > 0) {
       GPRS_Intercept_Proc();
     }
+    UART_MutexCount--;
   }
 }
 
@@ -195,7 +197,7 @@ int16_t GPRS_SocketSendData(uint8_t* data, uint16_t len) {
 #if GPRS_DEBUG > 0
     DBG_LOG("TCPIP_Send %u, ret:%d", len, rc);
 #endif
-    return len;
+    return rc;
   }
   return -1;
 }
@@ -218,7 +220,9 @@ uint8_t GPRS_ReadRSSI(void) {
  * @param text   待播报的文本
  */
 void GPRS_TTS(char* text) {
-  TTS_Play(text);
+  if (GPRS_Param.status != gprs_status_fault) {
+    TTS_Play(text);
+  }
 }
 
 /**
@@ -695,7 +699,7 @@ static uint16_t TCPIP_Send(uint8_t* data, uint16_t len) {
  * @param text   待播报的文本
  */
 static void  TTS_Play(char* text) {
-  GPRS_AT_PRINTF("CTTS=1,\"%s\"", text);
+  GPRS_AT_PRINTF("CTTS=2,\"%s\"", text);
   GPRS_WAIT_ACK("OK", 3000);
 }
 
@@ -733,6 +737,7 @@ static char* WaitATRsp(char* token, uint16_t time) {
     }
   }
   RspBufIndex = 0;
+
   return psearch;
 }
 
@@ -788,6 +793,7 @@ static void GPRS_Console(int argc, char* argv[]) {
       DBG_LOG("gprs test send AT :%s.", argv[1]);
     } else if (strcmp(argv[0], "send") == 0) {
       GPRS_SEND_DATA((uint8_t*)argv[1], strlen(argv[1]));
+      GPRS_SEND_DATA("\r\n", 2);
       DBG_LOG("gprs test send data OK.");
     } else  if (strcmp(argv[0], "power") == 0) {
       if (strcmp(argv[1], "on") == 0) {

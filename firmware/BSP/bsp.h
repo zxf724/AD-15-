@@ -63,7 +63,7 @@
 
 #define IR_SENSOR_PIN           17
 
-#define OVER_SENSOR_PIN         20
+#define OVER_SENSOR_PIN         0
    
 #define RFID_RX_PIN             24
 #define RFID_TX_PIN             25
@@ -78,14 +78,17 @@
 	*/
 
 
-#define LED_ON(x)     					(nrf_gpio_pin_clear(LED##_##x))
-#define LED_OFF(x)    					(nrf_gpio_pin_set(LED##_##x))
+#define LED_ON(x)     					(nrf_gpio_pin_set(LED##_##x))
+#define LED_OFF(x)    					(nrf_gpio_pin_clear(LED##_##x))
 #define LED_TOGGLE(x)					  (nrf_gpio_pin_toggle(LED##_##x))                           
 
 #define MOTOR_STOP()            do{nrf_gpio_pin_clear(M_CTR_R1);nrf_gpio_pin_clear(M_CTR_L1);} while(0)
 #define MOTOR_FORWARD()         do{nrf_gpio_pin_set(M_CTR_R1);nrf_gpio_pin_clear(M_CTR_L1);} while(0)
 #define MOTOR_BACK()            do{nrf_gpio_pin_set(M_CTR_L1);nrf_gpio_pin_clear(M_CTR_R1);} while(0)
 #define MOTOR_IS_STUCK()        (nrf_gpio_pin_read(M_SEN_1))
+
+#define PA_ENABLE()             (nrf_gpio_pin_set(PA_EN_PIN))
+#define PA_DISABLE()            (nrf_gpio_pin_clear(PA_EN_PIN))
 
 #define IO_H(x)               	(nrf_gpio_pin_set(x))
 #define IO_L(x)                 (nrf_gpio_pin_clear(x))

@@ -1176,6 +1176,9 @@
       <name>$PROJ_DIR$\..\APP\src\prjlib.c</name>
     </file>
     <file>
+      <name>$PROJ_DIR$\..\APP\src\Process.c</name>
+    </file>
+    <file>
       <name>$PROJ_DIR$\..\APP\src\protocol.c</name>
     </file>
     <file>
@@ -1195,6 +1198,12 @@
     <name>BSP</name>
     <file>
       <name>$PROJ_DIR$\..\BSP\bsp.c</name>
+    </file>
+  </group>
+  <group>
+    <name>CJSON</name>
+    <file>
+      <name>$PROJ_DIR$\..\cJSON\cJSON.c</name>
     </file>
   </group>
   <group>

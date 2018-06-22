@@ -92,14 +92,18 @@ int main(void) {
   Control_Init();
 
   MQTT_Conn_Init();
+  Process_Init();
+
+  DBG_LOG("System Start.");
+  LED_OFF(STATUS);
+  LED_OFF(NET);
   for (;;) {
     WatchDog_Clear();
 
     Protocol_DateProcPoll();
     CommandReceive_Poll();
-
+    Control_Polling();
     GPRS_Polling();
-
     MQTT_Conn_Polling();
     /* Ω¯»Î–›√ﬂ */
     if (user_uart_RecLength() == 0) {
@@ -156,7 +160,6 @@ void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info) {
 void assert_nrf_callback(uint16_t line_num, const uint8_t* p_file_name) {
   app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
-
 
 /**
   * @}

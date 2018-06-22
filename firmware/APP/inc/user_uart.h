@@ -10,12 +10,12 @@
 #define UART_TX_USE_INT                 0
 
 #define UART_TX_BUF_SIZE                256        /**< UART TX buffer size. */
-#define UART_RX_BUF_SIZE                256        /**< UART RX buffer size. */
+#define UART_RX_BUF_SIZE                512        /**< UART RX buffer size. */
 
 #define UART_TX_DEFAULT_PIN             GSM_TXD_PIN
 #define UART_RX_DEFAULT_PIN             GSM_RXD_PIN
 
-#define UART_RESUME_DELAY               200
+#define UART_RESUME_DELAY               1000
 
 #if DEBUG == 1
 #define DBG_LOG(format, ...)            do {UART_TX_PIN_SELECT(TX_PIN_NUMBER); \
@@ -29,7 +29,7 @@
 #define RFID_SEND(data, len)            do {UART_TX_PIN_SELECT(RFID_TX_PIN); \
                                           user_uart_SendData(data, len); \
                                           UART_TX_PIN_SELECT(UART_TX_DEFAULT_PIN);} while(0)
-
+extern uint16_t UART_MutexCount;
 
 
 void user_uart_init(void);

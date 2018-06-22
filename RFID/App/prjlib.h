@@ -193,7 +193,6 @@ int32_t  FIFO_cmp(FIFO_t *p_fifo, uint32_t offset, char *str);
 int32_t  FIFO_chr(FIFO_t *p_fifo, uint32_t offset, char ch);
 
 void Array2Hex(uint8_t *in,  uint8_t *out, uint16_t len);
-uint8_t Check(uint8_t *buf,uint16_t len);
 BOOL IsCPUendianBig(void);
 
 #endif

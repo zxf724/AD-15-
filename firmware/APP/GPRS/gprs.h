@@ -24,7 +24,7 @@
 
 /* Exported define -----------------------------------------------------------*/
 #define GPRS_SEND_MAX_SIZE          512
-#define GPRS_RECEIVE_MAX_SIZE       256
+#define GPRS_RECEIVE_MAX_SIZE       512
 
 /*GPRS省电关机的时间，单位秒*/
 #define GPRS_POWER_SAVE_TIME        60
@@ -35,7 +35,7 @@
 #define GPRS_OPT_SET_APN            0x08
 
 /*GPRS调试开关*/
-#define GPRS_DEBUG                  2
+#define GPRS_DEBUG                  1
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum

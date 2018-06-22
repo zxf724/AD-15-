@@ -46,6 +46,7 @@ void BSP_Init(void) {
   nrf_gpio_pin_set(LED_STATUS);
 
   nrf_gpio_cfg_output(PA_EN_PIN);
+  nrf_gpio_pin_clear(PA_EN_PIN); 
 
   nrf_gpio_cfg_input(IR_SENSOR_PIN, NRF_GPIO_PIN_PULLUP);
   nrf_gpio_cfg_input(OVER_SENSOR_PIN, NRF_GPIO_PIN_PULLUP);

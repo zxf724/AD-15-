@@ -79,9 +79,11 @@ void MQTT_Conn_Init(void) {
  * @param argument
  */
 void MQTT_Conn_Polling(void) {
+  UART_MutexCount++;
   Manager_MQTT();
 
   MQTTYield(&mClient, 0);
+  UART_MutexCount--;
 }
 
 /**
@@ -100,8 +102,7 @@ void messageArrived(MessageData* data) {
   int i = 0;
 
 #if MQTT_DEBUG > 0
-
-  DBG_LOG("Receive New message%.*s, payload:",
+  DBG_LOG("Receive New message%.*s:",
           data->topicName->lenstring.len,
           data->topicName->lenstring.data);
 #endif
@@ -193,7 +194,7 @@ BOOL Publish_MQTT(char const* topic, Qos qos, uint8_t* payload, uint16_t len) {
 #endif
   }
 
-  return (rc > 0) ? TRUE : FALSE;
+  return (rc == 0) ? TRUE : FALSE;
 }
 
 /**
@@ -236,25 +237,18 @@ static void Manager_MQTT(void) {
   /*推送失败或心跳无应答时断开连接*/
   if (mClient.ping_outstanding == 0) {
     TSEC_INIT(tsPingOut);
-  } else if (TSEC_IS_OVER(tsPingOut, 6)) {
+  } else if (TSEC_IS_OVER(tsPingOut, 15)) {
     pingout = TRUE;
     TSEC_INIT(tsPingOut);
+    DBG_LOG("MQTT ping timeout.");
   }
   /*发送失败或心跳无应答时重连*/
-  if (Publish_Fail > 1 || pingout > 0) {
+  if (Publish_Fail > 1 || pingout > 0 || Connect_Fail > 1) {
     Publish_Fail = 0;
     mClient.ping_outstanding = 0;
-    if (mClient.isconnected) {
+    if (mClient.isconnected || Connect_Fail) {
       Disconnect_MQTT();
     }
-  }
-  /*多次连接失败后重新鉴权*/
-  if (Connect_Fail >= CONNECT_FAIL_REAUTH) {
-    if (mClient.isconnected) {
-      Disconnect_MQTT();
-    }
-    Connect_Fail = 0;
-    DBG_LOG("CONNECT_FAIL_REAUTH.");
   }
 
   if (mClient.isconnected == 0) {
@@ -272,7 +266,7 @@ static void Manager_MQTT(void) {
       sprintf(clientid, "%u", WorkData.DeviceID);
       connectData.clientID.cstring = clientid;
       connectData.username.cstring = "AD-15";
-      connectData.password.cstring = "123456";
+      connectData.password.cstring = "AD-15";
       connectData.cleansession = 1;
       connectData.willFlag = 0;
       /*连接MQTT*/
@@ -282,6 +276,8 @@ static void Manager_MQTT(void) {
         DBG_LOG("MQTT Ping invter %d s", MQTT_PING_INVT_DEF / 2);
         Connect_Fail = 0;
         MQTT_ReSubscribe();
+        /*MQTT连接成功时上报设备参数*/
+        Status_Updata();
       } else {
         Connect_Fail++;
       }

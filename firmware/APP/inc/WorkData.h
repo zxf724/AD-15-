@@ -24,7 +24,7 @@
 /*固件版本,2BYTE*/
 #define VERSION			        1
 /*硬件版本*/
-#define VERSION_HARDWARE    "EVT"
+#define VERSION_HARDWARE    "AD15_EVT"
 
 /*参数版本*/
 #define WORKDATA_VERSION	  1
@@ -55,7 +55,7 @@ typedef struct
   uint32_t	DeviceID;
   uint16_t  StockCount;
   uint16_t  StockMax;
-  char      MQTT_Server[48];
+  char      MQTT_Server[32];
   uint16_t  MQTT_Port;
   uint16_t  MQTT_PingInvt;
   uint16_t  StoreLog_In;
@@ -79,8 +79,9 @@ extern pstorage_handle_t  psLog;
 /* Exported functions --------------------------------------------------------*/
 void WorkData_Init(void);
 void DataBackInit(BOOL reset);
+BOOL WorkData_Update(void);
 
-BOOL Wrick_StoreLog(uint32_t rfid);
+BOOL Write_StoreLog(uint32_t rfid);
 
 uint32_t Wait_For_FlashOP(uint32_t op_in);
 
