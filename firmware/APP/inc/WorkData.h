@@ -45,7 +45,7 @@
 #define HEARTBEAT_DEF       60
 
 /*默认设备ID*/
-#define DEVICEID_DEF        8000001
+#define DEVICEID_DEF        80000000
 
 /*定义设备参数结构,必须4字节对齐*/
 typedef struct

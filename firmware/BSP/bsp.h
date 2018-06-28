@@ -63,7 +63,7 @@
 
 #define IR_SENSOR_PIN           17
 
-#define OVER_SENSOR_PIN         0
+#define OVER_SENSOR_PIN         2
    
 #define RFID_RX_PIN             24
 #define RFID_TX_PIN             25

@@ -133,7 +133,7 @@ void Control_Polling(void) {
           RFID_Borrow = RFID_Read;
           TTS_Play("³öÉ¡³É¹¦£¬Ð»Ð»");
           WorkData.StockCount--;
-          WorkData_Update(); 
+          WorkData_Update();
           Protocol_Report_Umbrella_Borrow(RFID_Read, status);
           Report_Umbrella_Borrow_Status(RFID_Read, status);
         }
@@ -543,6 +543,15 @@ static void funControl(int argc, char* argv[]) {
     SEND_READ_RFID();
   } else if (ARGV_EQUAL("status")) {
     DBG_LOG("Motor_staus:%u.", Motor_staus);
+  } else if (ARGV_EQUAL("forward")) {
+    MOTOR_FORWARD();
+    DBG_LOG("Motor forward.");
+  } else if (ARGV_EQUAL("back")) {
+    MOTOR_BACK();
+    DBG_LOG("Motor back.");
+  } else if (ARGV_EQUAL("stop")) {
+    MOTOR_STOP();
+    DBG_LOG("Motor stop.");
   }
 }
 
