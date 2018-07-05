@@ -1,11 +1,50 @@
 *PADS-ECO-V9.5-MILS*
 *REMARK*  old file: E:\PADS Projects\ecogtmp0.asc
-*REMARK*  new file: C:\Users\Hj\Desktop\AFU工作文件\AD-15 共享雨伞\hardware\ATPO-1804-AD-15LED1.ASC
-*REMARK*  created by ECOGEN (Version 6.4v) on 2018/5/22 11:30:41
-*RENPART*
-U9  U8
-U11  U10
-U10  U9
+*REMARK*  new file: C:\Users\Hj\Desktop\AFU工作文件\AD-15 共享雨伞\AD-15\hardware\ATPO-1804-AD-15.ASC
+*REMARK*  created by ECOGEN (Version 6.4v) on 2018/6/29 22:37:05
+*DELPIN*
+R32.2  M2L
+*NET*
+*SIGNAL*  M1L
+Q4.4
+*SIGNAL*  M1R
+Q5.4
+*SIGNAL*  M2L
+Q6.4
+*SIGNAL*  M2R
+Q7.4
+*SIGNAL*  M_CTR_R2
+R32.2
 
-*REMARK*  Deleted pins: 0,  Added pins: 0
+*REMARK*  Deleted pins: 1,  Added pins: 5
+*END*
+*PADS-ECO-V9.5-METRIC*
+
+*REMARK* -- ATPO-1804-AD-15.Pcb -- Fri Jun 29 22:58:35 2018
+
+
+*NET*
+*SIGNAL* M1L 0.2
+Q4.2 Q4.2/2
+*SIGNAL* M1R 0.2
+Q5.2 Q5.2/2
+*SIGNAL* M2R 0.2
+Q7.2 Q7.2/2
+
+*NET*
+*SIGNAL* M2L 0.2
+Q6.2 Q6.2/2
+*END*
+*PADS-ECO-V9.5-METRIC*
+
+*REMARK* -- ATPO-1804-AD-15.Pcb -- Sun Jul 01 17:10:27 2018
+
+
+*NET*
+*SIGNAL* GND 0.2
+U1.13 U1.49
+
+*NET*
+*SIGNAL* GND 0.2
+U2.7 U2.9
 *END*
