@@ -35,6 +35,7 @@ static uint8_t UART_Send_Buffer[UART_TX_BUF_SIZE], TxDoing = 0;
 #endif
 
 APP_TIMER_DEF(TimerId_UARTresume);
+uint16_t UART_MutexCount = 0;
 
 /* Private function prototypes -----------------------------------------------*/
 static void uart_incoming_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action);
@@ -144,8 +145,7 @@ BOOL user_uart_ReadByte(uint8_t* readbyte) {
  * 
  * @return 返回串口接收的数据长度
  */
-uint16_t user_uart_RecLength(void)
-{
+uint16_t user_uart_RecLength(void) {
   return FIFO_Length(&UART_RecFIFO);
 }
 
@@ -234,12 +234,15 @@ void UART0_IRQHandler(void) {
  * 
  */
 static void uart_incoming_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t action) {
-  NRF_UART0->TASKS_STOPRX = 1;
+  if (UART_MutexCount == 0) {
 
-  rxPIN = pin;
-  nrf_drv_gpiote_in_event_disable(RFID_RX_PIN);
-  nrf_drv_gpiote_in_event_disable(RX_PIN_NUMBER);
-  app_timer_start(TimerId_UARTresume, APP_TIMER_TICKS(100, APP_TIMER_PRESCALER), NULL);
+    NRF_UART0->TASKS_STOPRX = 1;
+
+    rxPIN = pin;
+    nrf_drv_gpiote_in_event_disable(RFID_RX_PIN);
+    nrf_drv_gpiote_in_event_disable(RX_PIN_NUMBER);
+    app_timer_start(TimerId_UARTresume, APP_TIMER_TICKS(20, APP_TIMER_PRESCALER), NULL);
+  }
 }
 
 

@@ -118,6 +118,7 @@ void CommandReceive_Poll(void) {
   static uint16_t index = 0;
 
   if (NRF_UART0->PSELRXD == RX_PIN_NUMBER) {
+    UART_MutexCount++;
     if (user_uart_ReadByte(&CmdRecBuf[index])) {
       if (CmdRecBuf[index] == '\n') {
         DBG_SEND(CmdRecBuf, index + 1);
@@ -132,8 +133,10 @@ void CommandReceive_Poll(void) {
         index = 0;
       } else if (index++ >= COMMAND_MAX - 1) {
         index = 0;
+        UART_RX_PIN_SELECT(UART_RX_DEFAULT_PIN);
       }
     }
+    UART_MutexCount--;
   }
 }
 

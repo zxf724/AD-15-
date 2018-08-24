@@ -48,8 +48,6 @@ void SendCmd(uint8_t cmd, uint8_t *data, uint8_t datalen);
 void ReadCmdDeal(void);
 void UART_NewData(uint8_t data);
 void GET_DeviceAddress(void);
-void SendID_Data(void);
-
 
 #endif /* _APP_H */
 

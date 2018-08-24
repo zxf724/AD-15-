@@ -272,6 +272,11 @@ static void funWorkBack(int argc, char* argv[]) {
       WorkData_Update();
     }
     DBG_LOG("MQTT connect port:%u", WorkData.MQTT_Port);
+  } else if (ARGV_EQUAL("count")) {
+    DBG_LOG("Stock Count:%u, max:%u", WorkData.StockCount, WorkData.StockMax);
+  } else if (ARGV_EQUAL("clear")) {
+    WorkData.StockCount = 0;
+    WorkData_Update();
   }
 }
 

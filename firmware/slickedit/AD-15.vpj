@@ -262,7 +262,7 @@
         <F N="../APP/inc/control.h"/>
         <F N="../APP/inc/includes.h"/>
         <F N="../APP/inc/prjlib.h"/>
-        <F N="../APP/inc/profession.h"/>
+        <F N="../APP/inc/process.h"/>
         <F N="../APP/inc/protocol.h"/>
         <F N="../APP/inc/RTC.h"/>
         <F N="../APP/inc/user_ble.h"/>
@@ -274,7 +274,7 @@
         <F N="../APP/src/control.c"/>
         <F N="../APP/src/main.c"/>
         <F N="../APP/src/prjlib.c"/>
-        <F N="../APP/src/profession.c"/>
+        <F N="../APP/src/Process.c"/>
         <F N="../APP/src/protocol.c"/>
         <F N="../APP/src/RTC.c"/>
         <F N="../APP/src/user_ble.c"/>
@@ -297,6 +297,10 @@
       <F N="../BSP/boards.h"/>
       <F N="../BSP/bsp.c"/>
       <F N="../BSP/bsp.h"/>
+    </Folder>
+    <Folder Name="../cJSON">
+      <F N="../cJSON/cJSON.c"/>
+      <F N="../cJSON/cJSON.h"/>
     </Folder>
     <Folder Name="../MQTT">
       <Folder Name="FreeRTOS">

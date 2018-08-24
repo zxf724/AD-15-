@@ -29,14 +29,14 @@
 #define MQTT_DEBUG                      1
 
 /*协议处理缓存长度*/
-#define MQTT_TX_BUFF_SIZE               256
-#define MQTT_RX_BUFF_SIZE               256
+#define MQTT_TX_BUFF_SIZE               280
+#define MQTT_RX_BUFF_SIZE               200
 
 /*MQTT数据发送的超时时间，单位毫秒*/
 #define MQTT_TIMEOUT_DEF                5000
 
 /*MQTT的心跳包间隔,实际发送间隔为设置值的一半，单位秒*/
-#define MQTT_PING_INVT_DEF              90
+#define MQTT_PING_INVT_DEF              110
 
 /*连接失败重新鉴权的失败次数*/
 #define CONNECT_FAIL_REAUTH             5
@@ -45,16 +45,6 @@
 
 
 /* Exported types ------------------------------------------------------------*/
-
-/*MQTT连接参数*/
-typedef struct
-{
-    char  *MQTT_Server;
-    uint16_t MQTT_Port;
-    char  *MQTT_ClientID;
-    char  *MQTT_UserName;
-    char  *MQTT_PassWord;
-} MQTT_ConnParam_t;
 
 /*MQTT订阅回调函数类型*/
 typedef void (*Arrived_t)(uint8_t *data, uint16_t len);

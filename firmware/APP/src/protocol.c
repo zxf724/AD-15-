@@ -102,9 +102,7 @@ void Protocol_DateProcPoll(void) {
     }
   } else {
     /*超时无数据断开蓝牙连接*/
-    if (BLE_Connect) {
-
-    } else {
+    if (BLE_Connect) {} else {
       AuthOK_TS = RTC_ReadCount();
     }
     if (BLE_Connect && RTC_ReadCount() - AuthOK_TS > BLE_CONNECT_TIMEOUT) {
@@ -113,6 +111,30 @@ void Protocol_DateProcPoll(void) {
       user_BLE_Disconnected();
       DBG_LOG("Timeout disconnected.");
     }
+  }
+}
+
+/**
+ * 蓝牙上报取伞结果
+ * 
+ * @param rfid   雨伞的RFID
+ * @param status 电机的状态
+ */
+void Protocol_Report_Umbrella_Borrow(uint32_t rfid, motor_status_t status) {
+  uint8_t buf[5];
+
+  if (BLE_Connect) {
+    *(uint32_t*)buf = rfid;
+    if (status == status_borrow_complite) {
+      buf[4] = 0x55;
+    } else if (status == status_ir_stuck) {
+      buf[4] = 0xAA;
+    } else if (status == status_motor_stuck) {
+      buf[4] = 0xAB;
+    } else if (status == status_timeout) {
+      buf[4] = 0xAC;
+    }
+    Send_Cmd(0x3B, buf, 5);
   }
 }
 
@@ -127,6 +149,7 @@ void Protocol_NewDate(uint8_t* dat, uint8_t len) {
     *p++ = len;
     memcpy(p, dat, len);
     ProtocolFifo.wpos++;
+    DataFlowCnt++;
   }
 }
 
@@ -176,6 +199,7 @@ void Send_Cmd(uint8_t cmd, uint8_t* arg, uint8_t len) {
 #else
   user_BLE_Send(buf, len);
 #endif
+  DataFlowCnt++;
 }
 
 /**
@@ -289,13 +313,7 @@ static BOOL Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
         memcpy(temp, (uint8_t*)&dat[7], 4);
         /*比较设备ID*/
         if (*(uint32_t*)temp == WorkData.DeviceID) {
-          memcpy(temp, (uint8_t*)&dat[11], 4);
-          RTC_SetCount(*(uint32_t*)temp);
-          temp[0] = 1;
-          temp[1] = VERSION;
-          temp[2] = WorkData.StockMax;
-          temp[3] = WorkData.StockCount;
-          Send_Cmd(0x19, temp, 4);
+          Borrow_Action();
         }
         break;
       default:
