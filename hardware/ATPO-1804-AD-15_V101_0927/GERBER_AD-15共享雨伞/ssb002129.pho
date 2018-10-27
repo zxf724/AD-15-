@@ -1,0 +1,86 @@
+*
+*
+G04 PADS 9.5 Build Number: 522968 generated Gerber (RS-274-X) file*
+G04 PC Version=2.1*
+*
+%IN "ATPO-1804-AD-15_0927.pc"*%
+*
+%MOIN*%
+*
+%FSLAX35Y35*%
+*
+*
+*
+*
+G04 PC Standard Apertures*
+*
+*
+G04 Thermal Relief Aperture macro.*
+%AMTER*
+1,1,$1,0,0*
+1,0,$1-$2,0,0*
+21,0,$3,$4,0,0,45*
+21,0,$3,$4,0,0,135*
+%
+*
+*
+G04 Annular Aperture macro.*
+%AMANN*
+1,1,$1,0,0*
+1,0,$2,0,0*
+%
+*
+*
+G04 Odd Aperture macro.*
+%AMODD*
+1,1,$1,0,0*
+1,0,$1-0.005,0,0*
+%
+*
+*
+G04 PC Custom Aperture Macros*
+*
+*
+*
+*
+*
+*
+G04 PC Aperture Table*
+*
+%ADD010C,0.001*%
+*
+*
+*
+*
+G04 PC Circuitry*
+G04 Layer Name ATPO-1804-AD-15_0927.pc - circuitry*
+%LPD*%
+*
+*
+G04 PC Custom Flashes*
+G04 Layer Name ATPO-1804-AD-15_0927.pc - flashes*
+%LPD*%
+*
+*
+G04 PC Circuitry*
+G04 Layer Name ATPO-1804-AD-15_0927.pc - circuitry*
+%LPD*%
+*
+G54D10*
+G01X656693Y200000D02*
+Y554331D01*
+X200000*
+Y200000*
+X656693*
+X632087Y239370D02*
+G75*
+G03X632087I-6890J0D01*
+G01Y514961D02*
+G03X632087I-6890J0D01*
+G01X238386D02*
+G03X238386I-6890J0D01*
+G01Y239370D02*
+G03X238386I-6890J0D01*
+G74*
+G01X0Y0D02*
+M02*

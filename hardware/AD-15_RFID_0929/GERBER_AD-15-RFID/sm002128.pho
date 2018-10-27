@@ -1,0 +1,102 @@
+*
+*
+G04 PADS 9.5 Build Number: 522968 generated Gerber (RS-274-X) file*
+G04 PC Version=2.1*
+*
+%IN "AD-15-RFID_0928.pcb"*%
+*
+%MOIN*%
+*
+%FSLAX35Y35*%
+*
+*
+*
+*
+G04 PC Standard Apertures*
+*
+*
+G04 Thermal Relief Aperture macro.*
+%AMTER*
+1,1,$1,0,0*
+1,0,$1-$2,0,0*
+21,0,$3,$4,0,0,45*
+21,0,$3,$4,0,0,135*
+%
+*
+*
+G04 Annular Aperture macro.*
+%AMANN*
+1,1,$1,0,0*
+1,0,$2,0,0*
+%
+*
+*
+G04 Odd Aperture macro.*
+%AMODD*
+1,1,$1,0,0*
+1,0,$1-0.005,0,0*
+%
+*
+*
+G04 PC Custom Aperture Macros*
+*
+*
+*
+*
+*
+*
+G04 PC Aperture Table*
+*
+%ADD010C,0.001*%
+%ADD209R,0.07X0.07*%
+%ADD210C,0.07*%
+%ADD552C,0.06905*%
+*
+*
+*
+*
+G04 PC Circuitry*
+G04 Layer Name AD-15-RFID_0928.pcb - circuitry*
+%LPD*%
+*
+*
+G04 PC Custom Flashes*
+G04 Layer Name AD-15-RFID_0928.pcb - flashes*
+%LPD*%
+*
+*
+G04 PC Circuitry*
+G04 Layer Name AD-15-RFID_0928.pcb - circuitry*
+%LPD*%
+*
+G54D10*
+G01X346063Y438110D02*
+X621654D01*
+Y674331*
+X346063*
+Y438110*
+X431693Y651693D02*
+G75*
+G03X431693I-4921J0D01*
+G01X565551D02*
+G03X565551I-4921J0D01*
+G01X431693Y460748D02*
+G03X431693I-4921J0D01*
+G01X565551D02*
+G03X565551I-4921J0D01*
+G54D209*
+G01X385827Y646772D03*
+G54D210*
+X375827D03*
+X365827D03*
+X355827D03*
+G54D552*
+X374803Y446772D03*
+Y454646D03*
+Y462520D03*
+Y470394D03*
+Y478268D03*
+Y486142D03*
+G74*
+X0Y0D02*
+M02*
