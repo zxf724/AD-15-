@@ -325,7 +325,6 @@ static BOOL CMD_Confirm_Rsp(uint32_t msgid, char* ret) {
   bodydesired = cJSON_CreateObject();
   cJSON_AddNumberToObject(bodydesired, "messageid", msgid);
   cJSON_AddStringToObject(bodydesired, "ret", ret);
-
   r = CMD_Updata("CMD-99", bodydesired);  
   return r;
 }
