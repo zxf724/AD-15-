@@ -396,7 +396,6 @@ error:
 static s32 ATResponse_AUD_handler(char* line, u32 len, void* userdata)
 {
     char *head = NULL;
-    AUDIO_DEBUG("AUDIO_DEBUG : %s",line);
     if((head =Ql_RIL_FindString(line, len, "+QAUDCH:")) || \
             (head =Ql_RIL_FindString(line, len, "+QMEDVL:")) || (head =Ql_RIL_FindString(line, len, "+CLVL:")) || \
             (head =Ql_RIL_FindString(line, len, "+QSIDET:")) || (head =Ql_RIL_FindString(line, len, "+QAUDRD:")) )
@@ -418,8 +417,7 @@ static s32 ATResponse_AUD_handler(char* line, u32 len, void* userdata)
     {
         *(u8* )userdata = parse_cmd_qmic(head,(u8)s_channel_qmic);
         return  RIL_ATRSP_CONTINUE;
-    }
-    
+    }    
     head = Ql_RIL_FindLine(line, len, "OK");
     if(head)
     {  

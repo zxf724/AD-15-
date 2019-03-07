@@ -70,7 +70,7 @@
 #include "ril_audio.h"
 #include "ril_util.h"
 #include "ql_fs.h"
-#define DEBUG_ENABLE 1
+#define DEBUG_ENABLE 0
 #if DEBUG_ENABLE > 0
 #define DEBUG_PORT  UART_PORT1
 #define DBG_BUF_LEN   512
@@ -9772,11 +9772,13 @@ void proc_main_task(s32 taskId)
 
     // Register & open UART port
     ret = Ql_UART_Register(m_myUartPort, CallBack_UART_Hdlr, NULL);
-
+	ret = Ql_UART_Open(m_myUartPort, 115200, FC_NONE);
     ret = Ql_UART_Register(rfid2Port, CallBack_UART_Hdlr, NULL);
 
     ret = Ql_UART_Open(rfid2Port, 115200, FC_NONE);
+	ret = Ql_UART_Register(rfid1Port, CallBack_UART_Hdlr, NULL);
 
+    ret = Ql_UART_Open(rfid1Port, 115200, FC_NONE);
     // Register & open virtual serial port
     ret = Ql_UART_Register(VIRTUAL_PORT1, CallBack_UART_Hdlr, NULL);
 
@@ -9794,37 +9796,37 @@ void proc_main_task(s32 taskId)
             u32 writeedlen = 0;
             Ql_RIL_Initialize();
 
-            filehandle =  Ql_FS_OpenRAMFile("RAM:开始还伞.mp3", QL_FS_CREATE, sizeof(startin_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:startin.mp3", QL_FS_CREATE, sizeof(startin_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)startin_mp3, sizeof(startin_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:开始出伞.mp3", QL_FS_CREATE, sizeof(startout_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:startout.mp3", QL_FS_CREATE, sizeof(startout_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)startout_mp3, sizeof(startout_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:本机存伞已满，请换一台.mp3", QL_FS_CREATE, sizeof(fullexchange_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:fullexchange.mp3", QL_FS_CREATE, sizeof(fullexchange_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)fullexchange_mp3, sizeof(fullexchange_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:本机无雨伞可取，请换一台.mp3", QL_FS_CREATE, sizeof(noneexchange_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:noneexchange.mp3", QL_FS_CREATE, sizeof(noneexchange_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)noneexchange_mp3, sizeof(noneexchange_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:出伞成功，谢谢.mp3", QL_FS_CREATE, sizeof(outsucceed_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:outsucceed.mp3", QL_FS_CREATE, sizeof(outsucceed_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)outsucceed_mp3, sizeof(outsucceed_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:电机卡住.mp3", QL_FS_CREATE, sizeof(stuck_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:stuck.mp3", QL_FS_CREATE, sizeof(stuck_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)stuck_mp3, sizeof(stuck_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:还伞成功，谢谢.mp3", QL_FS_CREATE, sizeof(insucceed_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:insucceed.mp3", QL_FS_CREATE, sizeof(insucceed_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)insucceed_mp3, sizeof(insucceed_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:请勿遮挡出伞口,请重新借伞.mp3", QL_FS_CREATE, sizeof(exitfaultrestart_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:exitfaultrestart.mp3", QL_FS_CREATE, sizeof(exitfaultrestart_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)exitfaultrestart_mp3, sizeof(exitfaultrestart_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:请勿遮挡出伞口.mp3", QL_FS_CREATE, sizeof(exitfault_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:exitfault.mp3", QL_FS_CREATE, sizeof(exitfault_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)exitfault_mp3, sizeof(exitfault_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:请正确折叠放置雨伞后再次归还.mp3", QL_FS_CREATE, sizeof(rein_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:rein.mp3", QL_FS_CREATE, sizeof(rein_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)rein_mp3, sizeof(rein_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-            filehandle =  Ql_FS_OpenRAMFile("RAM:设备故障.mp3", QL_FS_CREATE, sizeof(fault_mp3));
+            filehandle =  Ql_FS_OpenRAMFile("RAM:fault.mp3", QL_FS_CREATE, sizeof(fault_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)fault_mp3, sizeof(fault_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
         }
@@ -9942,14 +9944,17 @@ static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, boo
                 }
 
             }
-            else if (VIRTUAL_PORT1 == port)
+			else if (VIRTUAL_PORT1 == port){
+				Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
+			}
+            else if (rfid1Port == port)
             {
                 char sendtemp[20] = {0};
                 Ql_sprintf(sendtemp,"IPD2UART%d:\0",totalBytes);
                 Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
                 Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
             }
-            else if (rfid1Port == port)
+            else if (rfid2Port == port)
             {
                 char sendtemp[20] = {0};
                 Ql_sprintf(sendtemp,"IPD3UART%d:\0",totalBytes);
