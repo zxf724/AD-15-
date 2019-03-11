@@ -33,7 +33,7 @@ void System_Initializes(void)
   /* Configure USART Rx as alternate function push-pull  (software pull up)*/
     GPIO_ExternalPullUpConfig(GPIOC, GPIO_Pin_6, ENABLE);
     //GPIO_ExternalPullUpConfig(COM_PORT[COM], COM_RX_PIN[COM], ENABLE);
-    USART_Init(USART1, (uint32_t)38400, 
+    USART_Init(USART1, (uint32_t)19200, 
                USART_WordLength_8b, 
                USART_StopBits_1, 
                USART_Parity_No, 

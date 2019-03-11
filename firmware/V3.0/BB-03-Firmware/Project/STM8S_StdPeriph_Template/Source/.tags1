@@ -1,0 +1,33 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+Tick	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^__IO bool Tick = TRUE;$/;"	variable	line:54
+KeyFlag	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^__IO bool KeyFlag = FALSE;$/;"	variable	line:55
+filetmp	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^char filetmp[100];$/;"	variable	line:56
+linetemp	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^u32 linetemp = 0;$/;"	variable	line:57
+BC_03Data	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^stBC_03Data BC_03Data = {0,0};$/;"	variable	line:58
+LED_FlashCnt	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^uint16_t LED_FlashCnt = 0;$/;"	variable	line:59
+main	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void main(void)$/;"	function	line:64	signature:(void)
+CLK_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void CLK_Config(void)$/;"	function	line:190	file:	signature:(void)
+KEY_Pro	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static bool KEY_Pro(stBC_03Data *data)$/;"	function	line:200	file:	signature:(stBC_03Data *data)
+BEEP_Pro	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void BEEP_Pro(void){$/;"	function	line:228	file:	signature:(void)
+LED_FlashPro	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void LED_FlashPro(uint16_t *flashCnt, stBC_03Data data, uint16_t cnt)$/;"	function	line:245	file:	signature:(uint16_t *flashCnt, stBC_03Data data, uint16_t cnt)
+Key_GetValue	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static uint8_t Key_GetValue(void)$/;"	function	line:288	file:	signature:(void)
+TIM1_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void TIM1_Config(uint32_t ms)$/;"	function	line:310	file:	signature:(uint32_t ms)
+AWU_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void AWU_Config(void)$/;"	function	line:338	file:	signature:(void)
+AWU_GPIO_Dint	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void AWU_GPIO_Dint(void\/* arguments *\/) {$/;"	function	line:347	signature:(void )
+AWU_InInit	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void AWU_InInit(void\/* arguments *\/) {$/;"	function	line:352	file:	signature:(void )
+GPIO_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void GPIO_Config(void\/* arguments *\/) {$/;"	function	line:357	file:	signature:(void )
+ADC1_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void ADC1_Config(void)$/;"	function	line:379	file:	signature:(void)
+PWM_ELEOutInit	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void PWM_ELEOutInit(uint32_t frequency,uint16_t duty)$/;"	function	line:393	file:	signature:(uint32_t frequency,uint16_t duty)
+PWM_ELEOutSetduty	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void PWM_ELEOutSetduty(uint16_t duty)$/;"	function	line:419	signature:(uint16_t duty)
+PWM_ELEOutEnable	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void PWM_ELEOutEnable(uint8_t duty\/* arguments *\/) {$/;"	function	line:432	file:	signature:(uint8_t duty )
+TIM1_TickDisable	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void TIM1_TickDisable(void\/* arguments *\/) {$/;"	function	line:444	file:	signature:(void )
+TIM1_TickEnable	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void TIM1_TickEnable(void\/* arguments *\/) {$/;"	function	line:455	file:	signature:(void )
+PWM_ELEOutDisable	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void PWM_ELEOutDisable(void\/* arguments *\/) {$/;"	function	line:467	file:	signature:(void )
+LSIMeasurment	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static uint32_t LSIMeasurment(void)$/;"	function	line:482	file:	signature:(void)
+Delay	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void Delay(uint16_t nCount)$/;"	function	line:565	file:	signature:(uint16_t nCount)
+assert_failed	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void assert_failed(u8* file, u32 line)$/;"	function	line:583	signature:(u8* file, u32 line)

@@ -1,2 +1,18 @@
-ril/src/ril_audio.c: In function 'ATResponse_AUD_handler':
-ril/src/ril_audio.c:416:5: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+custom/main.c: In function 'proc_main_task':
+custom/main.c:9855:36: warning: unused variable 'pComingCall' [-Wunused-variable]
+custom/main.c:9770:9: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+custom/main.c: In function 'CallBack_UART_Hdlr':
+custom/main.c:9954:17: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9956:5: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9962:17: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9964:5: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c: At top level:
+custom/main.c:9975:13: warning: 'Callback_AudPlay' defined but not used [-Wunused-function]

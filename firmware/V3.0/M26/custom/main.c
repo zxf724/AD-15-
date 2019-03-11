@@ -9775,10 +9775,10 @@ void proc_main_task(s32 taskId)
 	ret = Ql_UART_Open(m_myUartPort, 115200, FC_NONE);
     ret = Ql_UART_Register(rfid2Port, CallBack_UART_Hdlr, NULL);
 
-    ret = Ql_UART_Open(rfid2Port, 115200, FC_NONE);
+    ret = Ql_UART_Open(rfid2Port, 19200, FC_NONE);
 	ret = Ql_UART_Register(rfid1Port, CallBack_UART_Hdlr, NULL);
 
-    ret = Ql_UART_Open(rfid1Port, 115200, FC_NONE);
+    ret = Ql_UART_Open(rfid1Port, 19200, FC_NONE);
     // Register & open virtual serial port
     ret = Ql_UART_Register(VIRTUAL_PORT1, CallBack_UART_Hdlr, NULL);
 
@@ -9950,16 +9950,18 @@ static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, boo
             else if (rfid1Port == port)
             {
                 char sendtemp[20] = {0};
-                Ql_sprintf(sendtemp,"IPD2UART%d:\0",totalBytes);
+                Ql_sprintf(sendtemp,"IPD1UART%d:\0",totalBytes);
                 Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
                 Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
+				Ql_UART_Write(m_myUartPort, "\r\n", 2);
             }
             else if (rfid2Port == port)
             {
                 char sendtemp[20] = {0};
-                Ql_sprintf(sendtemp,"IPD3UART%d:\0",totalBytes);
+                Ql_sprintf(sendtemp,"IPD2UART%d:\0",totalBytes);
                 Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
                 Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
+				Ql_UART_Write(m_myUartPort, "\r\n", 2);
             }
             break;
         }
