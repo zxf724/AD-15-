@@ -1,11 +1,11 @@
 /**
   **********************************  stm8l15x  ***********************************
-  * @文件名     ： app.c
-  * @作者       ： Huang Fugui
-  * @库版本     ： V2.2.0
-  * @文件版本   ： V1.0.0
-  * @日期       ： 2016年09月02日
-  * @摘要       ： 应用程序源文件
+  * @鏂囦欢鍚�     锛� app.c
+  * @浣滆€�       锛� Huang Fugui
+  * @搴撶増鏈�     锛� V2.2.0
+  * @鏂囦欢鐗堟湰   锛� V1.0.0
+  * @鏃ユ湡       锛� 2016骞�09鏈�02鏃�
+  * @鎽樿��       锛� 搴旂敤绋嬪簭婧愭枃浠�
   ******************************************************************************/
 #include "user_comm.h"
 
@@ -17,44 +17,39 @@ static FIFO_t   UART_RecFIFO;
 static uint8_t  UART_RecBuffer[UART_FIFO_BUF_SIZE], IC_ReadBuf[20], IC_Read = 0;
 
 /**
- * APP初始化
+ * APP鍒濆�嬪寲
  */
-void App_Init(void)
-{
+void App_Init(void) {
     FIFO_Init(&UART_RecFIFO, UART_RecBuffer, sizeof(UART_RecBuffer));
 }
 
 /**
- * 刷卡轮循
+ * 鍒峰崱杞�寰�
  */
-void RFID_Polling(void)
-{
+void RFID_Polling(void) {
     uint8_t ret = 0;
     ret = RfidReadData(&IC_ReadBuf[4], CARD_BLOCK, 1, 0);
-    if(ret != 0){
+    if(ret != 0) {
         LED_ON(RED);
 //        GPIO_ResetBits(GPIOD, GPIO_Pin_0);
 //        delay(500);
 //        memcpy(IC_ReadBuf, MLastSelectedSnr, 4);
-        if(ret == 1){
-           if (memcmp(IC_ReadBuf, MLastSelectedSnr, 4) != 0) {
-                  memcpy(IC_ReadBuf, MLastSelectedSnr, 4);
-                  SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
-                  TS_DELAY(50);
-                  SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
-                  ret = 0;
+        if(ret == 1) {
+            if (memcmp(IC_ReadBuf, MLastSelectedSnr, 4) != 0) {
+                memcpy(IC_ReadBuf, MLastSelectedSnr, 4);
+                SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
+                TS_DELAY(50);
+                SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
+                ret = 0;
+            } else {
+                ret = 0;
+                SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
+                TS_DELAY(50);
+                SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
             }
-           else{
-             ret = 0;
-            SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);
-            TS_DELAY(50);
-            SendCmd(CMD_READ_IC_RSP, IC_ReadBuf, 4);          
-           }
-        }
-        else{
+        } else {
             SendCmd(CMD_READ_IC_FRIM_RSP, IC_ReadBuf, 4);
         }
-        
         IC_Read = 1;
     } else {
         LED_OFF(RED);
@@ -64,15 +59,13 @@ void RFID_Polling(void)
 }
 
 /**
- * 发送命令
+ * 鍙戦€佸懡浠�
  *
  * @param cmd
- * @param arg    发送参数
+ * @param arg    鍙戦€佸弬鏁�
  */
-void SendCmd(uint8_t cmd, uint8_t *data, uint8_t datalen)
-{
+void SendCmd(uint8_t cmd, uint8_t *data, uint8_t datalen) {
     uint8_t buf[32], *p = buf, i = 0, len = 5;
-
     *p++ = 0x7E;
     *p++ = 0x1B;
     *p++ = DevAddress;
@@ -86,9 +79,7 @@ void SendCmd(uint8_t cmd, uint8_t *data, uint8_t datalen)
     *p = AddCheck(buf, len);
     len += 1;
     p = buf;
-
     EN485_Recevie_OFF;
-
     for (i = 0; i < len; i++) {
         while (USART_GetFlagStatus(USART1, USART_FLAG_TXE) == RESET);
         USART_SendData8(USART1, *p++);
@@ -98,10 +89,9 @@ void SendCmd(uint8_t cmd, uint8_t *data, uint8_t datalen)
 }
 
 /**
- * 接收处理命令
+ * 鎺ユ敹澶勭悊鍛戒护
  */
-void ReadCmdDeal(void)
-{
+void ReadCmdDeal(void) {
     uint8_t buf[32], len = 0;
     if (TS_IS_OVER(tsUART, 50)) {
         while (FIFO_Length(&UART_RecFIFO) >= 6 && FIFO_Get(&UART_RecFIFO) != 0x7E);
@@ -114,7 +104,6 @@ void ReadCmdDeal(void)
             }
             len = buf[4] + 5;
             buf[len] = FIFO_Get(&UART_RecFIFO);
-
             if ((DevAddress == buf[2] || buf[2] == 0) && AddCheck(buf, len) == buf[len]) {
                 if (buf[3] == CMD_DEVICE_RST) {
                     LED_ON(GREEN);
@@ -143,7 +132,7 @@ void ReadCmdDeal(void)
                     }
                 } else if (buf[3] == CMD_WRITE_FRIM && buf[4] == 16) {
                     LED_ON(GREEN);
-                    /*往IC卡中写入厂商信息*/
+                    /*寰€IC鍗′腑鍐欏叆鍘傚晢淇℃伅*/
                     if (RfidWriteData(CARD_BLOCK, 1, &buf[5])) {
                         LED_ON(RED);
                         TS_DELAY(200);
@@ -170,26 +159,24 @@ void ReadCmdDeal(void)
 }
 
 /**
- * 串口接收到新的数据
+ * 涓插彛鎺ユ敹鍒版柊鐨勬暟鎹�
  *
- * @param data   新接收到的数据
+ * @param data   鏂版帴鏀跺埌鐨勬暟鎹�
  */
-void UART_NewData(uint8_t data)
-{
+void UART_NewData(uint8_t data) {
     FIFO_Put(&UART_RecFIFO, data);
     TS_INIT(tsUART);
 }
 
 /************************************************
-函数名称 ： GET_DeviceAddress
-功    能 ： 得到设置地址
-参    数 ： 无
+鍑芥暟鍚嶇О 锛� GET_DeviceAddress
+鍔�    鑳� 锛� 寰楀埌璁剧疆鍦板潃
+鍙�    鏁� 锛� 鏃�
 
-返 回 值 ： 无
-作    者 ： Huang Fugui
+杩� 鍥� 鍊� 锛� 鏃�
+浣�    鑰� 锛� Huang Fugui
 *************************************************/
-void GET_DeviceAddress(void)
-{
+void GET_DeviceAddress(void) {
     DevAddress |= KEY1;
     DevAddress |= KEY2 << 1;
     DevAddress |= KEY3 << 2;
