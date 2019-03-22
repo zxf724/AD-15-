@@ -9764,7 +9764,6 @@ static u8 m_RxBuf_Uart1[SERIAL_RX_BUFFER_LEN];
 
 static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, bool level, void* customizedPara);
 static void Callback_AudPlay(s32 errCode);
-
 void proc_main_task(s32 taskId)
 {
     s32 ret;
@@ -9791,6 +9790,15 @@ void proc_main_task(s32 taskId)
         Ql_OS_GetMessage(&msg);
         switch(msg.message)
         {
+		case RFID_READ_IND :{
+			char sendtemp[20] = {0};
+			//RFID_ID[0] = 0;
+			//RFID_ID[1] = 0;
+			Ql_Sleep(1000);				
+			Ql_sprintf(sendtemp,"+RFID:%d,%d\0",RFID_ID[0], RFID_ID[1]);
+			Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
+			Ql_UART_Write(m_myUartPort, "\r\n", 2);
+		}
         case MSG_ID_RIL_READY:{
             s32 filehandle = 0;
             u32 writeedlen = 0;
@@ -9830,7 +9838,7 @@ void proc_main_task(s32 taskId)
             ret = Ql_FS_Write(filehandle, (u8*)fault_mp3, sizeof(fault_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
         }
-            break;
+        break;
         case MSG_ID_URC_INDICATION:
             //APP_DEBUG("<-- Received URC: type: %d, -->\r\n", msg.param1);
             switch (msg.param1)
@@ -9870,7 +9878,7 @@ void proc_main_task(s32 taskId)
 				char sendtemp[20] = {0};
 				RFID_ID[0] = 0;
 				RFID_ID[1] = 0;
-				Ql_Sleep(50);				
+				Ql_Sleep(100);				
                 Ql_sprintf(sendtemp,"+RFID:%d,%d\0",RFID_ID[0], RFID_ID[1]);
                 Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
 				Ql_UART_Write(m_myUartPort, "\r\n", 2);
@@ -9881,6 +9889,34 @@ void proc_main_task(s32 taskId)
                 break;
             }
             break;
+        default:
+            break;
+        }
+    }
+}
+
+
+void proc_subtask1(s32 taskId)
+{
+    s32 ret;
+    ST_MSG msg;
+
+
+    // START MESSAGE LOOP OF THIS TASK
+    while(TRUE)
+    {
+        Ql_OS_GetMessage(&msg);
+        switch(msg.message)
+        {
+		case RFID_READ_IND :{
+			char sendtemp[20] = {0};
+			RFID_ID[0] = 0;
+			RFID_ID[1] = 0;
+			Ql_Sleep(50);				
+			Ql_sprintf(sendtemp,"+RFID:%u,%u\0",RFID_ID[0], RFID_ID[1]);
+			Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
+			Ql_UART_Write(m_myUartPort, "\r\n", 2);
+		}        
         default:
             break;
         }
@@ -9947,7 +9983,7 @@ static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, boo
                 //aud test
                 if(Ql_strstr((char *)m_RxBuf_Uart1, "AT+RFID"))
                 {// handle it as AT command
-					Ql_OS_SendMessage(main_task_id, RFID_READ_IND, 0, 0);
+					Ql_OS_SendMessage(subtask1_id, RFID_READ_IND, 0, 0);
                 }
                 else{
                     Ql_UART_Write(VIRTUAL_PORT1, m_RxBuf_Uart1, totalBytes);
@@ -9962,7 +9998,8 @@ static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, boo
 				char *p = m_RxBuf_Uart1;
                 if (*p == 0x7E && *(p + 1) == 0x1B) {
 					Ql_memcpy(&RFID_ID[0], p+5, 4);
-				}               
+				}          
+				
             }
             else if (rfid2Port == port)
             {
