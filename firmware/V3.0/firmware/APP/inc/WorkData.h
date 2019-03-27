@@ -48,25 +48,23 @@
 #define DEVICEID_DEF        80000000
 
 /*定义设备参数结构,必须4字节对齐*/
-typedef struct
-{
-  uint16_t  crc; 
-  uint16_t  version;
-  uint32_t	DeviceID;
-  uint16_t  StockCount;
-  uint16_t  StockMax;
-  char      MQTT_Server[32];
-  uint16_t  MQTT_Port;
-  uint16_t  MQTT_PingInvt;
-  uint16_t  StoreLog_In;
-  uint16_t  StoreLog_Report;
+typedef struct {
+    uint16_t  crc;
+    uint16_t  version;
+    uint32_t	DeviceID;
+    uint16_t  StockCount;
+    uint16_t  StockMax;
+    char      MQTT_Server[32];
+    uint16_t  MQTT_Port;
+    uint16_t  MQTT_PingInvt;
+    uint16_t  StoreLog_In;
+    uint16_t  StoreLog_Report;
 } WorkParam_t;
 
 /*定义还伞记录结构*/
-typedef struct
-{
-  uint32_t time;
-  uint32_t rfid;
+typedef struct {
+    uint32_t time;
+    uint32_t rfid;
 } StoreLog_t;
 
 /* Exported constants --------------------------------------------------------*/

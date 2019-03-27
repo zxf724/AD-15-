@@ -364,7 +364,6 @@
           <state>$PROJ_DIR$\..\freertos\portable\IAR\nrf51</state>
           <state>$PROJ_DIR$\..\freertos\portable\CMSIS\nrf51</state>
           <state>$PROJ_DIR$</state>
-          <state>$PROJ_DIR$</state>
         </option>
         <option>
           <name>CCStdIncCheck</name>

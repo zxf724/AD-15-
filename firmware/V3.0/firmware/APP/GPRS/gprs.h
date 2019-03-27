@@ -35,11 +35,10 @@
 #define GPRS_OPT_SET_APN            0x08
 
 /*GPRSµ÷ÊÔ¿ª¹Ø*/
-#define GPRS_DEBUG                  1
+#define GPRS_DEBUG                  2
 
 /* Exported types ------------------------------------------------------------*/
-typedef enum
-{
+typedef enum {
     gprs_status_poweroff = 0,
     gprs_status_powerkey,
     gprs_status_poweron,

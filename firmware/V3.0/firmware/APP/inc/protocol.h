@@ -25,8 +25,11 @@
 /* Exported constants --------------------------------------------------------*/
 #define MSG_TYPE_CMD			      1
 #define MSG_TYPE_DATA			      3
-#define CMD_TIME_RALIB		      0x35
-#define CMD_BORROW_UMBRELLA	    0x1A
+#define CMD_TIME_RALIB		      0x35    //校时
+#define CMD_BORROW_UMBRELLA	    0x1A    //借伞
+#define CMD_RETURN_UMBRELLA     0xA1    //还伞
+#define CMD_RETURN_BREAKDOWN_UMBRELLA     0x1C  //还故障伞
+
 
 /*协议接收处理，接收缓存栈条目的最大数量，需为2的冥次方值 */
 #define PROTOCOL_REC_STACK_MAX  4
@@ -36,13 +39,12 @@
 
 /*蓝牙连接后无数据超时断开时间，单位秒*/
 #define BLE_CONNECT_TIMEOUT			300
-    
-typedef struct 
-{
-  uint8_t lock_num;
-  uint8_t lock_state;
-}lock_t;
-    
+
+typedef struct {
+    uint8_t lock_num;
+    uint8_t lock_state;
+} lock_t;
+
 extern BOOL isAuthOK;
 extern uint32_t AuthOK_TS;
 extern uint8_t Random_Running[];

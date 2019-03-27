@@ -51,7 +51,8 @@ const uint16_t crc16tab[256] = {
     0xed0f, 0xdd6c, 0xcd4d, 0xbdaa, 0xad8b, 0x9de8, 0x8dc9, 0x7c26, 0x6c07,
     0x5c64, 0x4c45, 0x3ca2, 0x2c83, 0x1ce0, 0x0cc1, 0xef1f, 0xff3e, 0xcf5d,
     0xdf7c, 0xaf9b, 0xbfba, 0x8fd9, 0x9ff8, 0x6e17, 0x7e36, 0x4e55, 0x5e74,
-    0x2e93, 0x3eb2, 0x0ed1, 0x1ef0 };
+    0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
+};
 
 const uint32_t crc32tab[] = { /* CRC polynomial 0xedb88320 */
     0x00000000, 0x77073096, 0xee0e612c, 0x990951ba, 0x076dc419, 0x706af48f, 0xe963a535, 0x9e6495a3,
@@ -103,15 +104,12 @@ const uint32_t crc32tab[] = { /* CRC polynomial 0xedb88320 */
  * Notes       : None.
  *******************************************************************************
  */
-uint8_t* SearchMemData(uint8_t *Dst, uint8_t *Dat, int lDst, int lDat)
-{
+uint8_t* SearchMemData(uint8_t *Dst, uint8_t *Dat, int lDst, int lDat) {
     int16_t i, n;
-
     if (Dst == NULL || Dat == NULL || lDst == 0 || lDat == 0) return NULL;
-
     i = 0;
     while (i <= (lDst - lDat)) {
-        for (n = 0; *(Dst + i + n) == *(Dat + n); n++) {
+        for (n = 0; * (Dst + i + n) == *(Dat + n); n++) {
             if ((n + 1) == lDat) {
                 return (Dst + i);
             }
@@ -127,10 +125,8 @@ uint8_t* SearchMemData(uint8_t *Dst, uint8_t *Dat, int lDst, int lDat)
  * Returns     : 返数字符串的长度.
  *******************************************************************************
  */
-uint32_t strlen_t(char *s)
-{
+uint32_t strlen_t(char *s) {
     uint32_t len = 0;
-
     if (s != NULL) len = strlen(s);
     return len;
 }
@@ -144,11 +140,9 @@ uint32_t strlen_t(char *s)
  * Notes       : None.
  *******************************************************************************
  */
-char* uitoa(uint32_t val, char *str)
-{
+char* uitoa(uint32_t val, char *str) {
     uint32_t power, j;
     char *p = NULL;
-
     if (str != NULL) {
         p = str;
         j = val;
@@ -174,11 +168,9 @@ char* uitoa(uint32_t val, char *str)
  * Notes       : None.
  *******************************************************************************
  */
-char* uitoax(uint32_t val, char *str)
-{
+char* uitoax(uint32_t val, char *str) {
     uint32_t power, i, j;
     char *p = NULL;
-
     if (str != NULL) {
         p = str;
         j = val;
@@ -209,10 +201,8 @@ char* uitoax(uint32_t val, char *str)
  * Notes       : none.
  *******************************************************************************
  */
-uint32_t uatoi(char *str)
-{
+uint32_t uatoi(char *str) {
     uint32_t r = 0;
-
     if (str != NULL) {
         while (isdigit(*str)) {
             r = r * 10 + (*str - 0x30);
@@ -226,10 +216,8 @@ uint32_t uatoi(char *str)
  * Description : 带长度的转换函数.
  *******************************************************************************
  */
-uint32_t uatoi_n(char *str, uint8_t n)
-{
+uint32_t uatoi_n(char *str, uint8_t n) {
     uint32_t r = 0;
-
     if (str != NULL) {
         while (isdigit(*str) && n > 0) {
             r = r * 10 + (*str - 0x30);
@@ -248,10 +236,8 @@ uint32_t uatoi_n(char *str, uint8_t n)
  * Notes       : none.
  *******************************************************************************
  */
-int32_t satoi(char *str)
-{
+int32_t satoi(char *str) {
     int32_t r = 0;
-
     if (str != NULL) {
         if (*str == '-') {
             str++;
@@ -283,12 +269,9 @@ int32_t satoi(char *str)
  * Caller      : Application.
  *******************************************************************************
  */
-uint32_t uatoix(char *str)
-{
+uint32_t uatoix(char *str) {
     uint32_t n, r = 0;
-
     if (str == NULL) return 0;
-
     if (*str == '0' && (*(str + 1) == 'x' || *(str + 1) == 'X')) str += 2;
     while (*str) {
         if (isdigit(*str)) n = *str - '0';
@@ -305,12 +288,9 @@ uint32_t uatoix(char *str)
  * Description : 带长度的转换函数.
  *******************************************************************************
  */
-uint32_t uatoix_n(char *str, uint8_t n)
-{
+uint32_t uatoix_n(char *str, uint8_t n) {
     uint32_t d, r = 0;
-
     if (str == NULL) return 0;
-
     if (*str == '0' && (*(str + 1) == 'x' || *(str + 1) == 'X')) str += 2;
     while (*str && n > 0) {
         if (isdigit(*str)) d = *str - '0';
@@ -329,11 +309,9 @@ uint32_t uatoix_n(char *str, uint8_t n)
  * @param s    字符串
  * @return 返回浮点数
  */
-double uatof(char *s)
-{
+double uatof(char *s) {
     double value = 0, dec = 0;
     uint32_t i, intt,  power = 1;
-
     if (s != NULL) {
         intt = uatoi(s);
         while (*s && *s != '.') {
@@ -363,12 +341,10 @@ double uatof(char *s)
  * Notes       : 只保留低位，高位不足时补零.
  *******************************************************************************
  */
-char* uitoa_d(uint32_t val, char *str, uint8_t d)
-{
+char* uitoa_d(uint32_t val, char *str, uint8_t d) {
     char *p = NULL;
     char buf[12];
     uint8_t i = 0;
-
     p = uitoa(val, buf);
     if (p != NULL && str != NULL) {
         i = strlen_t(buf);
@@ -396,12 +372,10 @@ char* uitoa_d(uint32_t val, char *str, uint8_t d)
  * Notes       : 只保留低位，高位不足时补空格.
  *******************************************************************************
  */
-char* uitoa_n(uint32_t val, char *str, uint8_t d)
-{
+char* uitoa_n(uint32_t val, char *str, uint8_t d) {
     char *p = NULL;
     char buf[12];
     uint8_t i = 0;
-
     p = uitoa(val, buf);
     if (p != NULL && str != NULL) {
         i = strlen_t(buf);
@@ -428,10 +402,8 @@ char* uitoa_n(uint32_t val, char *str, uint8_t d)
  * Notes       : 保留符号显示.
  *******************************************************************************
  */
-char* sitoa(int32_t val, char *str)
-{
+char* sitoa(int32_t val, char *str) {
     char *p = NULL;
-
     if (str != NULL) {
         if (val >= 0) {
             *str = '+';
@@ -455,12 +427,10 @@ char* sitoa(int32_t val, char *str)
  * Notes       : 只保留低位，高位不足时补空格.
  *******************************************************************************
  */
-char* sitoa_n(int32_t val, char *str, uint8_t d)
-{
+char* sitoa_n(int32_t val, char *str, uint8_t d) {
     char *p = NULL;
     char buf[12];
     uint8_t i = 0;
-
     p = sitoa(val, buf);
     if (p != NULL && str != NULL) {
         i = strlen_t(buf);
@@ -486,12 +456,10 @@ char* sitoa_n(int32_t val, char *str, uint8_t d)
  * Notes       : none.
  *******************************************************************************
  */
-uint16_t int16tBS(uint16_t *num)
-{
+uint16_t int16tBS(uint16_t *num) {
     uint16_t i = *num;
     char *p1 = (char *)&i;
     char *p2 = (char *)num;
-
     *p2 = *(p1 + 1);
     *(p2 + 1) = *p1;
     return *num;
@@ -505,12 +473,10 @@ uint16_t int16tBS(uint16_t *num)
  * Notes       : none.
  *******************************************************************************
  */
-uint32_t int32tBS(uint32_t *num)
-{
+uint32_t int32tBS(uint32_t *num) {
     uint32_t i = *num;
     char *p1 = (char *)&i;
     char *p2 = (char *)num;
-
     *p2 = *(p1 + 3);
     *(p2 + 1) = *(p1 + 2);
     *(p2 + 2) = *(p1 + 1);
@@ -526,12 +492,10 @@ uint32_t int32tBS(uint32_t *num)
  * Notes       : none.
  *******************************************************************************
  */
-uint64_t int64tBS(uint64_t *num)
-{
+uint64_t int64tBS(uint64_t *num) {
     uint64_t i = *num;
     char *p1 = (char *)&i;
     char *p2 = (char *)num;
-
     *p2 = *(p1 + 7);
     *(p2 + 1) = *(p1 + 6);
     *(p2 + 2) = *(p1 + 5);
@@ -552,11 +516,9 @@ uint64_t int64tBS(uint64_t *num)
  * Notes       : none.
  *******************************************************************************
  */
-uint8_t XORCheck(uint8_t *p_start, uint16_t len)
-{
+uint8_t XORCheck(uint8_t *p_start, uint16_t len) {
     uint16_t i;
     uint8_t Return_XORCheck = 0;
-
     if (p_start != NULL) {
         Return_XORCheck = *p_start++;
         for (i = 0; i < len - 1; i++) {
@@ -575,11 +537,9 @@ uint8_t XORCheck(uint8_t *p_start, uint16_t len)
  * Caller      : Application.
  *******************************************************************************
  */
-uint8_t AddCheck(uint8_t *p_start, uint16_t len)
-{
+uint8_t AddCheck(uint8_t *p_start, uint16_t len) {
     uint8_t r = 0;
     uint16_t i = 0;
-
     if (p_start != NULL) {
         r = *p_start++;
         for (i = 0; i < len - 1; i++) {
@@ -594,8 +554,7 @@ uint8_t AddCheck(uint8_t *p_start, uint16_t len)
  * Description : 队列初始化.
  *******************************************************************************
  */
-BOOL InitQueue(CirQueue_TypeDef *queue, char *buf, uint16_t len)
-{
+BOOL InitQueue(CirQueue_TypeDef *queue, char *buf, uint16_t len) {
     if (buf != NULL && len > 0) {
         queue->lenth = len;
         queue->pbuf = buf;
@@ -611,10 +570,8 @@ BOOL InitQueue(CirQueue_TypeDef *queue, char *buf, uint16_t len)
  * Description : 入队.
  *******************************************************************************
  */
-BOOL EnQueue(CirQueue_TypeDef *queue, char *buff, uint16_t length)
-{
+BOOL EnQueue(CirQueue_TypeDef *queue, char *buff, uint16_t length) {
     uint16_t rem = 0, len = 0;
-
     len = length;
     rem = queue->lenth - queue->count;
     if (len <= rem && len > 0) {
@@ -638,10 +595,8 @@ BOOL EnQueue(CirQueue_TypeDef *queue, char *buff, uint16_t length)
  * Description : 出队.
  *******************************************************************************
  */
-BOOL DeQueue(CirQueue_TypeDef *queue, char *buff, uint16_t length)
-{
+BOOL DeQueue(CirQueue_TypeDef *queue, char *buff, uint16_t length) {
     uint16_t rem = 0, len = 0;
-
     len = length;
     rem = queue->count;
     if (len <= rem && len > 0) {
@@ -666,11 +621,9 @@ BOOL DeQueue(CirQueue_TypeDef *queue, char *buff, uint16_t length)
 * Notes       : 16位CRC校验函数;
 ********************************************************************************
 */
-uint16_t CRC_16(uint16_t init, uint8_t *aData, uint16_t aSize)
-{
+uint16_t CRC_16(uint16_t init, uint8_t *aData, uint16_t aSize) {
     uint16_t i;
     uint16_t nAccum = init;
-
     for (i = 0; i < aSize; i++) {
         nAccum = (nAccum << 8) ^ (uint16_t)crc16tab[(nAccum >> 8) ^ *aData++];
     }
@@ -681,11 +634,9 @@ uint16_t CRC_16(uint16_t init, uint8_t *aData, uint16_t aSize)
 * Arguments   : CRC16校验2
 ********************************************************************************
 */
-uint16_t crc16_compute(const uint8_t *p_data, uint32_t size, const uint16_t *p_crc)
-{
+uint16_t crc16_compute(const uint8_t *p_data, uint32_t size, const uint16_t *p_crc) {
     uint32_t i;
     uint16_t crc = (p_crc == NULL) ? 0xffff : *p_crc;
-
     for (i = 0; i < size; i++) {
         crc = (unsigned char)(crc >> 8) | (crc << 8);
         crc ^= p_data[i];
@@ -693,7 +644,6 @@ uint16_t crc16_compute(const uint8_t *p_data, uint32_t size, const uint16_t *p_c
         crc ^= (crc << 8) << 4;
         crc ^= ((crc & 0xff) << 4) << 1;
     }
-
     return crc;
 }
 
@@ -702,11 +652,9 @@ uint16_t crc16_compute(const uint8_t *p_data, uint32_t size, const uint16_t *p_c
 * Notes       : 32位CRC校验函数;
 ********************************************************************************
 */
-uint32_t CRC_32(uint32_t init, uint8_t *aData, uint32_t aSize)
-{
+uint32_t CRC_32(uint32_t init, uint8_t *aData, uint32_t aSize) {
     uint32_t i;
     uint32_t nAccum = init;
-
     for (i = 0; i < aSize; i++) nAccum = crc32tab[((uint32_t)nAccum ^ *aData++) & 0xff] ^ ((nAccum >> 8) & 0x00FFFFFF);
     return nAccum;
 }
@@ -717,10 +665,8 @@ uint32_t CRC_32(uint32_t init, uint8_t *aData, uint32_t aSize)
  * Returns     : 返回转换后的值
  *******************************************************************************
  */
-uint8_t BCD_To_HEX(uint8_t bcd)
-{
+uint8_t BCD_To_HEX(uint8_t bcd) {
     uint8_t temp = 0;
-
     temp = ((bcd & 0xF0) >> 4) * 10;
     temp += bcd & 0x0F;
     return temp;
@@ -732,10 +678,8 @@ uint8_t BCD_To_HEX(uint8_t bcd)
  * Returns     : 返回转换后的值
  *******************************************************************************
  */
-uint8_t HEX_To_BCD(uint8_t hex)
-{
+uint8_t HEX_To_BCD(uint8_t hex) {
     uint8_t temp = 0;
-
     temp = (hex / 10) << 4;
     temp |= hex % 10;
     return temp;
@@ -748,11 +692,9 @@ uint8_t HEX_To_BCD(uint8_t hex)
  * Returns     : 返回转换后的值
  *******************************************************************************
  */
-uint32_t BCDStr_To_Dec(char *bcd, uint8_t len)
-{
+uint32_t BCDStr_To_Dec(char *bcd, uint8_t len) {
     uint8_t temp = 0, i = 0;
     uint32_t r = 0, j = 1;
-
     for (i = len; i > 0; i--) {
         temp = bcd[i - 1] - (bcd[i - 1] >> 4) * 6;
         r += temp * j;
@@ -765,12 +707,10 @@ uint32_t BCDStr_To_Dec(char *bcd, uint8_t len)
 * Description : BCD转字符串.
 ********************************************************************************
 */
-char* BCDStr_To_Str(char *bcd, uint16_t len, char *str)
-{
+char* BCDStr_To_Str(char *bcd, uint16_t len, char *str) {
     uint8_t temp = 0;
     char *p = str;
     uint16_t ct;
-
     for (ct = 0; ct < len; ct++) {
         temp = *(bcd + ct);
         *p++ = ((temp >> 4) & 0x0f) + '0';
@@ -786,11 +726,9 @@ char* BCDStr_To_Str(char *bcd, uint16_t len, char *str)
 * Caller      : bcd bcd数据指针。
 *******************************************************************************
 */
-char* Dec_To_BCDStr(uint32_t dec, uint8_t len, char *bcd)
-{
+char* Dec_To_BCDStr(uint32_t dec, uint8_t len, char *bcd) {
     int i = 0;
     uint8_t temp = 0;
-
     for (i = len - 1; i >= 0; i--) {
         temp = dec % 100;
         bcd[i] = temp + temp / 10 * 6;
@@ -803,10 +741,8 @@ char* Dec_To_BCDStr(uint32_t dec, uint8_t len, char *bcd)
 * Description : 字符串可打印转换.
 *******************************************************************************
 */
-char* Str2Print(char *str)
-{
+char* Str2Print(char *str) {
     char *p = str;
-
     while (*p) {
         if (isprint(*p) == 0) {
             break;
@@ -821,10 +757,8 @@ char* Str2Print(char *str)
 * Description : 字符串可显示转换.
 *******************************************************************************
 */
-char* Str2Graph(char *str)
-{
+char* Str2Graph(char *str) {
     char *p = str;
-
     while (*p) {
         if (isgraph(*p) == 0) {
             break;
@@ -839,10 +773,8 @@ char* Str2Graph(char *str)
 * Description : 字符串纯字母转换.
 *******************************************************************************
 */
-char* Str2Alpha(char *str)
-{
+char* Str2Alpha(char *str) {
     char *p = str;
-
     while (*p) {
         if (isalpha(*p) == 0) {
             break;
@@ -857,10 +789,8 @@ char* Str2Alpha(char *str)
 * Description : 删除字符串中的token.
 *******************************************************************************
 */
-char* StrTokenDel(char *str, char token)
-{
+char* StrTokenDel(char *str, char token) {
     char *p = str;
-
     while (*p) {
         if (*p == token) {
             break;
@@ -875,11 +805,9 @@ char* StrTokenDel(char *str, char token)
 * Description : 添加命令处理入口.
 *******************************************************************************
 */
-BOOL Cmd_AddEntrance(CmdEntrance_t *pEnt)
-{
+BOOL Cmd_AddEntrance(CmdEntrance_t *pEnt) {
     BOOL r = FALSE;
     CmdEntrance_t *p = NULL;
-
     if (pEnt != NULL && pEnt->cmd != NULL) {
         if (firstEnt == NULL) {
             firstEnt = pEnt;
@@ -899,47 +827,37 @@ BOOL Cmd_AddEntrance(CmdEntrance_t *pEnt)
 * Description : 命令处理.
 *******************************************************************************
 */
-void Cmd_Handle(char *cmd)
-{
+void Cmd_Handle(char *cmd) {
     int argc = 0;
     char *argv[CMD_ARGC_MAX + 1], *p = NULL;
     CmdEntrance_t *pEnt = firstEnt;
-
-    for (argc = 0; argc < CMD_ARGC_MAX; argc++)
-    {
-      argv[argc] = NULL;
+    for (argc = 0; argc < CMD_ARGC_MAX; argc++) {
+        argv[argc] = NULL;
     }
-    while (*cmd && !isgraph(*cmd)) 
-    {
+    while (*cmd && !isgraph(*cmd)) {
         cmd++;
     }
     argc = 1;
     argv[0] = cmd;
     p = cmd;
     /*去除非可显字符*/
-    while (*p && argc < CMD_ARGC_MAX) 
-    {
-        while (*p && isgraph(*p)) 
-        {
+    while (*p && argc < CMD_ARGC_MAX) {
+        while (*p && isgraph(*p)) {
             p++;
         }
-        while (*p && !isgraph(*p)) 
-        {
+        while (*p && !isgraph(*p)) {
             *p = 0;
             p++;
         }
-        if (*p) 
-        {
+        if (*p) {
             argv[argc] = p;
             argc++;
         }
     }
     argv[argc] = NULL;
     /*回调*/
-    while (pEnt != NULL) 
-    {
-        if (argc > 0 && strcmp(cmd, pEnt->cmd) == 0) 
-        {
+    while (pEnt != NULL) {
+        if (argc > 0 && strcmp(cmd, pEnt->cmd) == 0) {
             pEnt->pCB(argc, argv);
             break;
         }
@@ -951,11 +869,9 @@ void Cmd_Handle(char *cmd)
 * Description : 在参数列表中寻找指定参数.
 *******************************************************************************
 */
-int Cmd_ArgFind(char **argv, char *arg)
-{
+int Cmd_ArgFind(char **argv, char *arg) {
     int ret = -1;
     uint16_t i = 0;
-
     while (argv[i] != NULL) {
         if (STR_EQUAL(argv[i], arg)) {
             ret = i;
@@ -971,10 +887,8 @@ int Cmd_ArgFind(char **argv, char *arg)
   * @param  de: 延时的周期.
   * @retval none.
   */
-void delay(uint32_t de)
-{
+void delay(uint32_t de) {
     volatile uint32_t i = 0;
-
     while (i < de) {
         i++;
     }
@@ -984,10 +898,8 @@ void delay(uint32_t de)
  * Description : 添加任务看门狗。
  *******************************************************************************
  */
-void TaskWDG_Add(stTaskWatchDog *pTWDG)
-{
+void TaskWDG_Add(stTaskWatchDog *pTWDG) {
     stTaskWatchDog *p;
-
     if (pTWDGEnter == NULL) {
         pTWDGEnter = pTWDG;
     } else {
@@ -1006,8 +918,7 @@ void TaskWDG_Add(stTaskWatchDog *pTWDG)
  * Description : 使能任务看门狗。
  *******************************************************************************
  */
-void TaskWDG_Onof(stTaskWatchDog *pTWDG, BOOL en)
-{
+void TaskWDG_Onof(stTaskWatchDog *pTWDG, BOOL en) {
     pTWDG->Enable = en;
 }
 
@@ -1015,8 +926,7 @@ void TaskWDG_Onof(stTaskWatchDog *pTWDG, BOOL en)
  * Description : 清任务看门狗。
  *******************************************************************************
  */
-void TaskWDG_Clear(stTaskWatchDog *pTWDG)
-{
+void TaskWDG_Clear(stTaskWatchDog *pTWDG) {
     pTWDG->TaskCount = 0;
 }
 
@@ -1024,11 +934,9 @@ void TaskWDG_Clear(stTaskWatchDog *pTWDG)
  * Description : 查询任务看门狗是否溢出, 如有溢出的任务则返回任务名称的指针。
  *******************************************************************************
  */
-char* TaskWDG_IsUpper(void)
-{
+char* TaskWDG_IsUpper(void) {
     char *r = NULL;
     stTaskWatchDog *p;
-
     p = pTWDGEnter;
     while (p != NULL) {
         if (p->TaskCount >= p->TaskUpper) {
@@ -1043,10 +951,8 @@ char* TaskWDG_IsUpper(void)
 /**
  * Description : 任务看门狗计数。
  */
-void TaskWDG_Tick(void)
-{
+void TaskWDG_Tick(void) {
     stTaskWatchDog *p;
-
     p = pTWDGEnter;
     while (p != NULL) {
         if (p->Enable) p->TaskCount++;
@@ -1061,8 +967,7 @@ void TaskWDG_Tick(void)
  * @param buf_size FIFO缓存的大小
  * @return 参数正确返回TRUE
  */
-BOOL FIFO_Init(FIFO_t *p_fifo, uint8_t *p_buf, uint32_t buf_size)
-{
+BOOL FIFO_Init(FIFO_t *p_fifo, uint8_t *p_buf, uint32_t buf_size) {
     if (p_buf != NULL && IS_POWER_OF_TWO(buf_size)) {
         p_fifo->pBuffer = p_buf;
         p_fifo->sizeMask = buf_size - 1;
@@ -1079,8 +984,7 @@ BOOL FIFO_Init(FIFO_t *p_fifo, uint8_t *p_buf, uint32_t buf_size)
  * @param byte   写入的值
  * @return 入队成功返回TRUE
  */
-void FIFO_Put(FIFO_t *p_fifo, uint8_t byte)
-{
+void FIFO_Put(FIFO_t *p_fifo, uint8_t byte) {
     p_fifo->pBuffer[p_fifo->wpos & p_fifo->sizeMask] = byte;
     p_fifo->wpos++;
 }
@@ -1090,10 +994,8 @@ void FIFO_Put(FIFO_t *p_fifo, uint8_t byte)
  * @param p_fifo FIFO的句柄
  * @return 返回读出的数据
  */
-uint8_t FIFO_Get(FIFO_t *p_fifo)
-{
+uint8_t FIFO_Get(FIFO_t *p_fifo) {
     uint8_t ret = 0;
-
     ret = p_fifo->pBuffer[p_fifo->rpos & p_fifo->sizeMask];
     p_fifo->rpos++;
     return ret;
@@ -1104,10 +1006,8 @@ uint8_t FIFO_Get(FIFO_t *p_fifo)
  * @param p_fifo FIFO的句柄
  * @return 返回FIFO的长度
  */
-uint32_t FIFO_Length(FIFO_t *p_fifo)
-{
+uint32_t FIFO_Length(FIFO_t *p_fifo) {
     uint32_t tmp = p_fifo->rpos;
-
     return (p_fifo->wpos - tmp);
 }
 
@@ -1115,10 +1015,8 @@ uint32_t FIFO_Length(FIFO_t *p_fifo)
  * FIFO清除
  * @param p_fifo FIFO的句柄
  */
-void FIFO_Flush(FIFO_t *p_fifo)
-{
+void FIFO_Flush(FIFO_t *p_fifo) {
     uint32_t tmp = p_fifo->wpos;
-
     p_fifo->rpos = tmp;
 }
 
@@ -1129,10 +1027,8 @@ void FIFO_Flush(FIFO_t *p_fifo)
  * @param size   读出的长度
  * @return 返回实际读取的长度
  */
-uint32_t FIFO_Read(FIFO_t *p_fifo, uint8_t *pBuf, uint32_t size)
-{
+uint32_t FIFO_Read(FIFO_t *p_fifo, uint8_t *pBuf, uint32_t size) {
     uint32_t len = 0, i = 0;
-
     if (pBuf != NULL && size > 0) {
         len = FIFO_Length(p_fifo);
         if (size > len) {
@@ -1155,10 +1051,8 @@ uint32_t FIFO_Read(FIFO_t *p_fifo, uint8_t *pBuf, uint32_t size)
  * @param size   写入的长度
  * @return 返回实际写入的长度
  */
-uint32_t FIFO_Write(FIFO_t *p_fifo, uint8_t *pBuf, uint32_t size)
-{
+uint32_t FIFO_Write(FIFO_t *p_fifo, uint8_t *pBuf, uint32_t size) {
     uint32_t rem = 0, i = 0;
-
     if (pBuf != NULL && size > 0) {
         rem = p_fifo->sizeMask - FIFO_Length(p_fifo) + 1;
         if (size > rem) {
@@ -1177,10 +1071,8 @@ uint32_t FIFO_Write(FIFO_t *p_fifo, uint8_t *pBuf, uint32_t size)
 /**
  * FIFO查询数据.
  */
-uint8_t FIFO_Query(FIFO_t *p_fifo, uint32_t offset)
-{
+uint8_t FIFO_Query(FIFO_t *p_fifo, uint32_t offset) {
     uint8_t r = 0;
-
     if (offset < FIFO_Length(p_fifo)) {
         r = p_fifo->pBuffer[(p_fifo->rpos + offset) & p_fifo->sizeMask];
     }
@@ -1194,15 +1086,12 @@ uint8_t FIFO_Query(FIFO_t *p_fifo, uint32_t offset)
  * @param size  拷入的长度
  * @return 返回实际写入的长度
  */
-uint32_t FIFO_cpy(FIFO_t *p_des, FIFO_t *p_res, uint32_t size)
-{
+uint32_t FIFO_cpy(FIFO_t *p_des, FIFO_t *p_res, uint32_t size) {
     uint8_t temp = 0;
     uint32_t rem = 0, ret = 0, len = 0;;
-
     if (size > 0) {
         rem = p_des->sizeMask - FIFO_Length(p_des) + 1;
         len = FIFO_Length(p_res);
-
         if (size > rem) {
             size = rem;
         }
@@ -1228,15 +1117,12 @@ uint32_t FIFO_cpy(FIFO_t *p_des, FIFO_t *p_res, uint32_t size)
  * @param str    待查找的字符串
  * @return 返回查找到的位置在FIFO中的偏移量,未找到返回-1
  */
-int32_t FIFO_str(FIFO_t *p_fifo, uint32_t offset, char *str)
-{
+int32_t FIFO_str(FIFO_t *p_fifo, uint32_t offset, char *str) {
     uint8_t temp = 0;
     uint32_t i = 0, j = 0, dlen = 0, slen = 0;
-
     if (str != NULL) {
         slen = strlen(str);
         dlen = FIFO_Length(p_fifo);
-
         for (i = 0; i <= dlen - slen; i++) {
             temp = p_fifo->pBuffer[(p_fifo->rpos + offset + i) & p_fifo->sizeMask];
             for (j = 0; temp == *(str + j); j++) {
@@ -1257,14 +1143,11 @@ int32_t FIFO_str(FIFO_t *p_fifo, uint32_t offset, char *str)
  * @param str    待比较的字符串
  * @return 比较成功返回0，失败返回-1
  */
-int32_t FIFO_cmp(FIFO_t *p_fifo, uint32_t offset, char *str)
-{
+int32_t FIFO_cmp(FIFO_t *p_fifo, uint32_t offset, char *str) {
     uint8_t temp = 0;
     uint32_t i = 0, dlen = 0;
-
     if (str != NULL) {
         dlen = FIFO_Length(p_fifo);
-
         do {
             temp = p_fifo->pBuffer[(p_fifo->rpos + offset + i) & p_fifo->sizeMask];
             if (temp != *(str + i)) {
@@ -1284,13 +1167,10 @@ int32_t FIFO_cmp(FIFO_t *p_fifo, uint32_t offset, char *str)
  * @param ch    待查找的字符
  * @return 返回查找到的位置在FIFO中的偏移量,未找到返回-1
  */
-int32_t FIFO_chr(FIFO_t *p_fifo, uint32_t offset, char ch)
-{
+int32_t FIFO_chr(FIFO_t *p_fifo, uint32_t offset, char ch) {
     uint8_t temp = 0;
     uint32_t i = 0, dlen = 0;
-
     dlen = FIFO_Length(p_fifo);
-
     do {
         temp = p_fifo->pBuffer[(p_fifo->rpos + offset + i) & p_fifo->sizeMask];
         if (temp == ch) {
@@ -1298,18 +1178,15 @@ int32_t FIFO_chr(FIFO_t *p_fifo, uint32_t offset, char ch)
         }
         i++;
     } while (i < dlen);
-
     return -1;
 }
 
 /**
  * 数组转HEX
  */
-void Array2Hex(uint8_t *in, uint8_t *out, uint16_t len)
-{
+void Array2Hex(uint8_t *in, uint8_t *out, uint16_t len) {
     int i = 0;
     uint8_t *p = out, tmp = 0;;
-
     for (i = 0; i < len; i++) {
         tmp = *(in + i) / 16;
         *p++ = (tmp > 9) ? tmp - 10 + 'A' : tmp + '0';
@@ -1326,13 +1203,11 @@ void Array2Hex(uint8_t *in, uint8_t *out, uint16_t len)
  * 大小端检查
  * @return 大端返回TRUE
  */
-BOOL IsCPUendianBig(void)
-{
+BOOL IsCPUendianBig(void) {
     union {
         unsigned long i;
         uint8_t s[4];
-    }c;
-
+    } c;
     c.i = 0x12345678;
     return (BOOL)(0x12 == c.s[0]);
 }

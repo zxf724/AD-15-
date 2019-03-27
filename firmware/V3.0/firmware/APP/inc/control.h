@@ -18,24 +18,31 @@
 #include "prjlib.h"
 
 /* Exported types ------------------------------------------------------------*/
-typedef enum
-{
-  status_idle,
-  status_borrow,
-  status_repay,
-  status_borrow_complite,
-  status_repay_complite,
-  status_motor_stuck,
-  status_ir_stuck,
-  status_timeout, 
-  status_empty,
-  status_full,
+typedef enum {
+    status_idle,
+    status_borrow,
+    status_repay,
+    status_repay_breakdown,
+    status_borrow_complite,
+    status_repay_complite,
+    status_repay_breakdown_complite,
+    status_motor_stuck,
+    status_ir_stuck,
+    status_timeout,
+    status_empty,
+    status_full,
+    status_borrow_soon,
+    status_repay_soon,
+    status_repay_breakdown_soon,
 } motor_status_t;
 
 /* Exported constants --------------------------------------------------------*/
 /*电机转动的时间，单位ms*/
 #define MOTOR_ACTION_TIME     10
 #define MOVE_ACTION_TIME     100
+#define TMP_TIME             500
+#define TIME_RFID_READ       800
+
 /*电机转动超时次数*/
 #define MOTOR_OVERFLOW_TIMES  6000
 
@@ -51,20 +58,20 @@ extern motor_status_t Motor_staus;
 /* Exported macro ------------------------------------------------------------*/
 
 /*
-LED定义： 
- 
+LED定义：
+
 1. 状态指示灯
-取伞或还伞:        长亮 
+取伞或还伞:        长亮
 红外遮挡:          100ms亮, 100ms灭,闪烁30次
 电机过流：         1s亮，500ms灭,闪烁5次
 无伞可取或伞架满：   200ms亮, 1s灭,闪烁5次
- 
+
 1. 网络指示灯
-蓝牙/MQTT收发包:  50ms亮灭闪烁三次 
-无SIM卡：        2秒亮，3s灭,循环闪烁 
-无GPRS网络:      200ms亮，3s灭,循环闪烁 
-连接不上MQTT服务: 100ms亮，5s灭,循环闪烁   
- 
+蓝牙/MQTT收发包:  50ms亮灭闪烁三次
+无SIM卡：        2秒亮，3s灭,循环闪烁
+无GPRS网络:      200ms亮，3s灭,循环闪烁
+连接不上MQTT服务: 100ms亮，5s灭,循环闪烁
+
 */
 
 #define LED_IR_OVER_FLASH()				LED_STATUS_Flash_Start(100, 100, 30)
@@ -83,7 +90,7 @@ void Control_Polling(void);
 
 void Borrow_Action(void);
 void Repay_Action(void);
-void Stop_Action(void);
+void Stop_Action(uint8_t num);
 
 void LED_NET_Flash_Start(uint16_t activetime, uint16_t idletime, uint16_t times);
 void LED_STATUS_Flash_Start(uint16_t activetime, uint16_t idletime, uint16_t times);
@@ -92,6 +99,12 @@ void TTS_Play(char *text);
 
 void WatchDog_Clear(void);
 uint8_t RFID_ReadPoll(uint8_t addr, uint8_t** data);
+
+void Breakdown_Repay(void);
+void Motor_Re_Fun(void);
+void TestFun(void);
+void Reset(void);
+void InitFlag(void);
 
 #endif /* _Control_H */
 

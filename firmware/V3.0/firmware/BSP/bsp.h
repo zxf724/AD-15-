@@ -1,7 +1,7 @@
 /**
 	******************************************************************************
 	* @file    BSP.h
-	* @author  ËÎÑô
+	* @author  é”Ÿæ–¤æ‹·é”Ÿæ–¤æ‹·
 	* @version V1.0
 	* @date    2017.12.1
 	* @brief   Header file of BSP
@@ -50,32 +50,57 @@
 #define LED_NET                 13
 #define LED_STATUS              14
 
-#define PA_EN_PIN               17
+#define PA_EN		            17
 
-#define GSM_TXD_PIN             5
-#define GSM_RXD_PIN             4
-#define GSM_PWRKEY_PIN          30
-#define GSM_EN_PIN              0
+#define M_SEN_1                 21		//main motor feedback
+#define M_SEN_2					15		//push umberalla motor feedback
 
-#define M_SEN_1                 21
-#define M_CTR_R1                22
+#define M_CTR_R1                22		//main motor right 
 #define M_CTR_L1                23
+#define M_CTR_L4				30		//switch door 
+#define M_CTR_R4				29
+#define M_CTR_L3				20		//fault umbrella
+#define M_CTR_R3				12
+#define M_CTR_L2				28		//push umberalla motor
+#define M_CTR_R2				25
 
-#define M_SEN_2                 29
-#define M_CTR_R2                25
-#define M_CTR_L2                28
+#define SQ_SW1					6		//push motor front trigger switch
+#define SQ_SW2					7		//push motor behind trigger switch 
+#define SQ_SW3					8		//switch door front trigger switch
+#define SQ_SW4					9		//fault umberlla motor front trigger switch 
+#define SQ_SW5					10		//switch door behind trigger switch
+#define SQ_SW6					11		//fault umberlla motor front trigger switch
+#define SQ_SW7					24		//photoelectric trigger switch   // low votage when it is cover
 
-#define IR_SENSOR_PIN           18
-#define IR_EN_PIN               19
+#define M26_EN					0
+#define M26_DTR					1
+#define M26TX					4
+#define M26RX					5
 
-#define OVER_SENSOR_PIN         6
-#define FORWARD_SENSOR_PIN      7
-#define BACK_SENSOR_PIN         8
-   
-#define RFID_RX_PIN             9
-#define RFID_TX_PIN             10
-#define RFID_IO                 12
-#define RFID_RE                 11
+#define RFID_RX_PIN				M26TX
+#define RFID_TX_PIN				M26RX
+
+#define RX_PIN_NUMBER			15
+#define TX_PIN_NUMBER			16
+
+//switch door photoelectric check
+#define IR_SW					19
+#define IR_EN					18
+
+//OLD IO
+#define GSM_TXD_PIN             M26RX//M26TX
+#define GSM_RXD_PIN             M26TX//M26RX
+#define GSM_PWRKEY_PIN          31//M26_DTR
+#define GSM_EN_PIN              31//M26_EN
+
+//old io
+#define IR_EN_PIN               31
+
+#define FORWARD_SENSOR_PIN      31
+#define BACK_SENSOR_PIN         31
+
+#define RFID_IO                 31
+#define RFID_RE                 31
 
 /**
 	* @}
@@ -87,42 +112,49 @@
 	*/
 
 
-#define LED_ON(x)     					(nrf_gpio_pin_set(LED##_##x))
-#define LED_OFF(x)    					(nrf_gpio_pin_clear(LED##_##x))
-#define LED_TOGGLE(x)					  (nrf_gpio_pin_toggle(LED##_##x))                           
+#define LED_ON(x)     			(nrf_gpio_pin_set(LED##_##x))
+#define LED_OFF(x)    			(nrf_gpio_pin_clear(LED##_##x))
+#define LED_TOGGLE(x)			(nrf_gpio_pin_toggle(LED##_##x))
 
-#define MOTOR_STOP()            do{nrf_gpio_pin_clear(M_CTR_R1);nrf_gpio_pin_clear(M_CTR_L1);} while(0)
-#define MOTOR_FORWARD()         do{nrf_gpio_pin_set(M_CTR_R1);nrf_gpio_pin_clear(M_CTR_L1);} while(0)
-#define MOTOR_BACK()            do{nrf_gpio_pin_set(M_CTR_L1);nrf_gpio_pin_clear(M_CTR_R1);} while(0)
-#define MOTOR_IS_STUCK()        (nrf_gpio_pin_read(M_SEN_1))
-      
-#define MOTOR2_STOP()            do{nrf_gpio_pin_clear(M_CTR_R2);nrf_gpio_pin_clear(M_CTR_L2);} while(0)
-#define MOTOR2_FORWARD()         do{nrf_gpio_pin_set(M_CTR_R2);nrf_gpio_pin_clear(M_CTR_L2);} while(0)
-#define MOTOR2_BACK()            do{nrf_gpio_pin_set(M_CTR_L2);nrf_gpio_pin_clear(M_CTR_R2);} while(0)
-#define MOTOR2_IS_STUCK()        (nrf_gpio_pin_read(M_SEN_2))
+//main motor--1, push motor--2, fault umberlla motor--3, switch door--4
+#define MOTOR_FORWARD(x)		do{nrf_gpio_pin_set(M_CTR_L##x);nrf_gpio_pin_clear(M_CTR_R##x);} while(0)
+#define MOTOR_BACK(x)			do{nrf_gpio_pin_set(M_CTR_R##x);nrf_gpio_pin_clear(M_CTR_L##x);} while(0)
+#define MOTOR_IS_STUCK()		(nrf_gpio_pin_read(M_SEN_1))
 
-#define PA_ENABLE()             (nrf_gpio_pin_set(PA_EN_PIN))
-#define PA_DISABLE()            (nrf_gpio_pin_clear(PA_EN_PIN))
+//trigger switch  -- push motor,front-behind--12,fault umberlla motor,front-behind--46,switch door front-behind--35,photoelectric-7
+#define IF_IS_TOUCH(x)			(nrf_gpio_pin_read(SQ_SW##x))
 
-#define IO_H(x)               	(nrf_gpio_pin_set(x))
-#define IO_L(x)                 (nrf_gpio_pin_clear(x))
-#define IO_TOGGLE(x)            (nrf_gpio_pin_toggle(x))
-#define IO_READ(x)              (nrf_gpio_pin_read(x))
+//voice enable
+#define PA_ENABLE()				(nrf_gpio_pin_set(PA_EN))
+#define PA_DISABLE()			(nrf_gpio_pin_clear(PA_EN))
 
-#define IR_CHECK()              (nrf_gpio_pin_read(IR_SENSOR_PIN) == 0)
-#define IR_EN()                 (nrf_gpio_pin_set(IR_EN_PIN))
-#define IR_DIS()                 (nrf_gpio_pin_clear(IR_EN_PIN))
-  
-#define UM_OVER_CHECK()         (nrf_gpio_pin_read(OVER_SENSOR_PIN) != 0)
-#define UM_FORWARD_CHECK()      (nrf_gpio_pin_read(FORWARD_SENSOR_PIN) != 0)
-#define UM_BACK_CHECK()         (nrf_gpio_pin_read(BACK_SENSOR_PIN) != 0)
+//io configation
+#define IO_H(x)					(nrf_gpio_pin_set(x))
+#define IO_L(x)					(nrf_gpio_pin_clear(x))
+#define IO_TOGGLE(x)			(nrf_gpio_pin_toggle(x))
+#define IO_READ(x)				(nrf_gpio_pin_read(x))
 
-#define UART_SET_CMD()          nrf_uart_txrx_pins_set(NRF_UART0, TX_PIN_NUMBER, RX_PIN_NUMBER)
-#define UART_SET_RFID()         nrf_uart_txrx_pins_set(NRF_UART0, RFID_TX_PIN, RFID_RX_PIN)
-#define UART_SET_GPRS()         nrf_uart_txrx_pins_set(NRF_UART0, GSM_TXD_PIN, GSM_RXD_PIN)
+//photoelectric check
+#define IR_CHECK()				nrf_gpio_pin_read(IR_EN)
 
-#define UART_RX_PIN_SELECT(x)   (NRF_UART0->PSELRXD = x)
-#define UART_TX_PIN_SELECT(x)   (NRF_UART0->PSELTXD = x)
+//RFID CHECK
+#define RFID_M26_EN()			(nrf_gpio_pin_clear(M26_EN))
+#define RFID_M26_DIS()			(nrf_gpio_pin_set(M26_EN))
+#define RFID_M26_NRF()			(nrf_gpio_pin_read(M26TX))
+
+//M26
+#define UART_SET_CMD()			nrf_uart_txrx_pins_set(NRF_UART0, TX_PIN_NUMBER, M26RX)
+#define UART_SET_RFID()			nrf_uart_txrx_pins_set(NRF_UART0, TX, RX)
+
+#define UART_SET_GPRS()			nrf_uart_txrx_pins_set(NRF_UART0, M26RX, M26TX)
+
+#define UART_RX_PIN_SELECT(x)	(NRF_UART0->PSELRXD = x)
+#define UART_TX_PIN_SELECT(x)	(NRF_UART0->PSELTXD = x)
+
+//time calcatulation
+#define TSEC_INIT(ts)             do {ts = RTC_ReadCount();}while(0)
+#define TSEC_IS_OVER(ts, over)    (RTC_ReadCount() - ts >= over)
+#define TSEC_COUNT(ts)            (RTC_ReadCount() - ts)
 
 /**
 	* @}
@@ -133,7 +165,7 @@
 	* @{
 	*/
 void BSP_Init(void);
-
+void MOTOR_STOP(uint8_t num);
 
 /**
 	* @}
