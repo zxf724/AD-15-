@@ -1,0 +1,34 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+DEBUG_ENABLE	C:\Users\oy\Desktop\M26\custom\main.c	/^#define DEBUG_ENABLE /;"	macro	line:73	file:
+DEBUG_PORT	C:\Users\oy\Desktop\M26\custom\main.c	/^#define DEBUG_PORT /;"	macro	line:75	file:
+DBG_BUF_LEN	C:\Users\oy\Desktop\M26\custom\main.c	/^#define DBG_BUF_LEN /;"	macro	line:76	file:
+DBG_BUFFER	C:\Users\oy\Desktop\M26\custom\main.c	/^static char DBG_BUFFER[DBG_BUF_LEN];$/;"	variable	line:77	file:
+APP_DEBUG	C:\Users\oy\Desktop\M26\custom\main.c	/^#define APP_DEBUG(/;"	macro	line:78	file:
+APP_DEBUG	C:\Users\oy\Desktop\M26\custom\main.c	/^#define APP_DEBUG(/;"	macro	line:89	file:
+startout_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 startout_mp3[3780] = {$/;"	variable	line:91
+startin_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 startin_mp3[3888] = {$/;"	variable	line:566
+exitfault_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 exitfault_mp3[5832] = {$/;"	variable	line:1054
+exitfaultrestart_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 exitfaultrestart_mp3[11448] = {$/;"	variable	line:1785
+rein_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 rein_mp3[11772] = {$/;"	variable	line:3218
+fault_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 fault_mp3[3240] = {$/;"	variable	line:4692
+fullexchange_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 fullexchange_mp3[9720] = {$/;"	variable	line:5099
+noneexchange_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 noneexchange_mp3[10260] = {$/;"	variable	line:6316
+outsucceed_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 outsucceed_mp3[6804] = {$/;"	variable	line:7601
+stuck_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 stuck_mp3[3456] = {$/;"	variable	line:8454
+insucceed_mp3	C:\Users\oy\Desktop\M26\custom\main.c	/^const u8 insucceed_mp3[6912] = {$/;"	variable	line:8888
+SERIAL_RX_BUFFER_LEN	C:\Users\oy\Desktop\M26\custom\main.c	/^#define SERIAL_RX_BUFFER_LEN /;"	macro	line:9757	file:
+m_myUartPort	C:\Users\oy\Desktop\M26\custom\main.c	/^static Enum_SerialPort m_myUartPort  = UART_PORT1;$/;"	variable	line:9760	file:
+rfid1Port	C:\Users\oy\Desktop\M26\custom\main.c	/^static Enum_SerialPort rfid1Port  = UART_PORT2;$/;"	variable	line:9761	file:
+rfid2Port	C:\Users\oy\Desktop\M26\custom\main.c	/^static Enum_SerialPort rfid2Port  = UART_PORT3;$/;"	variable	line:9762	file:
+m_RxBuf_Uart1	C:\Users\oy\Desktop\M26\custom\main.c	/^static u8 m_RxBuf_Uart1[SERIAL_RX_BUFFER_LEN];$/;"	variable	line:9763	file:
+proc_main_task	C:\Users\oy\Desktop\M26\custom\main.c	/^void proc_main_task(s32 taskId)$/;"	function	line:9768	signature:(s32 taskId)
+ReadSerialPort	C:\Users\oy\Desktop\M26\custom\main.c	/^static s32 ReadSerialPort(Enum_SerialPort port, \/*[out]*\/u8* pBuffer, \/*[in]*\/u32 bufLen)$/;"	function	line:9878	file:	signature:(Enum_SerialPort port, u8* pBuffer, u32 bufLen)
+GET_MIN_VALUE	C:\Users\oy\Desktop\M26\custom\main.c	/^#define GET_MIN_VALUE(/;"	macro	line:9904	file:
+CONV_STRING_TO_INTEGER	C:\Users\oy\Desktop\M26\custom\main.c	/^#define CONV_STRING_TO_INTEGER(/;"	macro	line:9905	file:
+CallBack_UART_Hdlr	C:\Users\oy\Desktop\M26\custom\main.c	/^static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, bool level, void* customizedPara)$/;"	function	line:9915	file:	signature:(Enum_SerialPort port, Enum_UARTEventType msg, bool level, void* customizedPara)
+Callback_AudPlay	C:\Users\oy\Desktop\M26\custom\main.c	/^static void Callback_AudPlay(s32 errCode)$/;"	function	line:9968	file:	signature:(s32 errCode)

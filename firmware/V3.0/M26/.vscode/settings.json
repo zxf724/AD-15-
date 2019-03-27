@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "custom_feature_def.h": "c",
+        "ql_error.h": "c",
+        "ril_telephony.h": "c"
+    }
+}

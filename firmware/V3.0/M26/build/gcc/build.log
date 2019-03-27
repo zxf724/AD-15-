@@ -1,0 +1,28 @@
+custom/main.c: In function 'proc_main_task':
+custom/main.c:9799:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9800:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9863:36: warning: unused variable 'pComingCall' [-Wunused-variable]
+custom/main.c:9883:17: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9884:5: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9769:9: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+custom/main.c: In function 'proc_subtask1':
+custom/main.c:9917:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9918:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+In file included from custom/main.c:68:0:
+include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
+custom/main.c:9901:9: warning: unused variable 'ret' [-Wunused-variable]
+custom/main.c: In function 'CallBack_UART_Hdlr':
+custom/main.c:9998:15: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+custom/main.c:10006:26: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+custom/main.c: At top level:
+custom/main.c:10020:13: warning: 'Callback_AudPlay' defined but not used [-Wunused-function]
