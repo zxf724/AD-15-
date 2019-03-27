@@ -1,0 +1,80 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	0	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+__BSP_H	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define __BSP_H$/;"	macro	line:30
+GPIO_SW_ELE_BEEP	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_SW_ELE_BEEP /;"	macro	line:42
+GPIO_SW_ELE	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_SW_ELE /;"	macro	line:43
+GPIO_SW_BEEP	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_SW_BEEP /;"	macro	line:44
+GPIO_BUTTTON_LEVEL	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_BUTTTON_LEVEL /;"	macro	line:45
+GPIO_ELE_CHECK	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_ELE_CHECK /;"	macro	line:47
+GPIO_VIB_CHECK	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_VIB_CHECK /;"	macro	line:48
+GPIO_ELE_OUT	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_ELE_OUT /;"	macro	line:50
+GPIO_BEEP_OUT	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_BEEP_OUT /;"	macro	line:51
+GPIO_LED_BLE	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_BLE /;"	macro	line:53
+GPIO_LED_READ1	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ1 /;"	macro	line:55
+GPIO_LED_READ2	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ2 /;"	macro	line:56
+GPIO_LED_READ3	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ3 /;"	macro	line:57
+GPIO_LED_BLE_ON	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_BLE_ON(/;"	macro	line:68
+GPIO_LED_BLE_OFF	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_BLE_OFF(/;"	macro	line:69
+GPIO_LED_READ1_ON	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ1_ON(/;"	macro	line:70
+GPIO_LED_READ1_OFF	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ1_OFF(/;"	macro	line:71
+GPIO_LED_READ2_ON	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ2_ON(/;"	macro	line:72
+GPIO_LED_READ2_OFF	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ2_OFF(/;"	macro	line:73
+GPIO_LED_READ3_ON	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ3_ON(/;"	macro	line:74
+GPIO_LED_READ3_OFF	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define GPIO_LED_READ3_OFF(/;"	macro	line:75
+Read_SW_ELE_BEEP_STATUS	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define Read_SW_ELE_BEEP_STATUS(/;"	macro	line:77
+Read_SW_ELE_STATUS	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define Read_SW_ELE_STATUS(/;"	macro	line:78
+Read_SW_BEEP_STATUS	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define Read_SW_BEEP_STATUS(/;"	macro	line:79
+Read_BUTTON_LEVEL	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\bsp.h	/^#define Read_BUTTON_LEVEL(/;"	macro	line:80
+Tick	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^__IO bool Tick = TRUE;$/;"	variable	line:53
+KeyFlag	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^__IO bool KeyFlag = FALSE;$/;"	variable	line:54
+filetmp	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^char filetmp[100];$/;"	variable	line:55
+linetemp	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^u32 linetemp = 0;$/;"	variable	line:56
+BC_03Data	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^stBC_03Data BC_03Data = {0,0};$/;"	variable	line:57
+LED_FlashCnt	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^uint8_t LED_FlashCnt = 0;$/;"	variable	line:58
+main	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void main(void)$/;"	function	line:63	signature:(void)
+CLK_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void CLK_Config(void)$/;"	function	line:101	file:	signature:(void)
+KEY_Pro	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static bool KEY_Pro(stBC_03Data *data)$/;"	function	line:111	file:	signature:(stBC_03Data *data)
+LED_FlashPro	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void LED_FlashPro(uint8_t *flashCnt, stBC_03Data data, uint8_t cnt)$/;"	function	line:143	file:	signature:(uint8_t *flashCnt, stBC_03Data data, uint8_t cnt)
+Key_GetValue	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static uint8_t Key_GetValue(void)$/;"	function	line:183	file:	signature:(void)
+TIM1_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void TIM1_Config(uint32_t ms)$/;"	function	line:205	file:	signature:(uint32_t ms)
+AWU_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void AWU_Config(void)$/;"	function	line:233	file:	signature:(void)
+AWU_GPIO_Dint	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void AWU_GPIO_Dint(void\/* arguments *\/) {$/;"	function	line:242	signature:(void )
+AWU_InInit	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void AWU_InInit(void\/* arguments *\/) {$/;"	function	line:247	file:	signature:(void )
+GPIO_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void GPIO_Config(void\/* arguments *\/) {$/;"	function	line:252	file:	signature:(void )
+ADC1_Config	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void ADC1_Config(void)$/;"	function	line:274	file:	signature:(void)
+PWM_ELEOutInit	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void PWM_ELEOutInit(uint32_t frequency,uint16_t duty)$/;"	function	line:288	file:	signature:(uint32_t frequency,uint16_t duty)
+PWM_ELEOutSetduty	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void PWM_ELEOutSetduty(uint32_t frequency, uint16_t duty)$/;"	function	line:313	signature:(uint32_t frequency, uint16_t duty)
+PWM_ELEOutEnable	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void PWM_ELEOutEnable(void\/* arguments *\/) {$/;"	function	line:327	file:	signature:(void )
+PWM_ELEOutDisable	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void PWM_ELEOutDisable(void\/* arguments *\/) {$/;"	function	line:338	file:	signature:(void )
+LSIMeasurment	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static uint32_t LSIMeasurment(void)$/;"	function	line:351	file:	signature:(void)
+Delay	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^static void Delay(uint16_t nCount)$/;"	function	line:434	file:	signature:(uint16_t nCount)
+assert_failed	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\main.c	/^void assert_failed(u8* file, u32 line)$/;"	function	line:452	signature:(u8* file, u32 line)
+__STM8S_CONF_H	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\stm8s_conf.h	/^#define __STM8S_CONF_H$/;"	macro	line:30
+USE_FULL_ASSERT	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\stm8s_conf.h	/^#define USE_FULL_ASSERT /;"	macro	line:93
+assert_param	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\stm8s_conf.h	/^#define assert_param(/;"	macro	line:106
+assert_param	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\stm8s_conf.h	/^#define assert_param(/;"	macro	line:110
+INTERRUPT_HANDLER_TRAP	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\stm8s_it.c	/^INTERRUPT_HANDLER_TRAP(TRAP_IRQHandler)$/;"	function	line:67
+__STM8S_IT_H	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\stm8s_it.h	/^#define __STM8S_IT_H$/;"	macro	line:30
+__USER_CONFIG_H	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define __USER_CONFIG_H$/;"	macro	line:30
+IS_POWER_OF_TWO	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define IS_POWER_OF_TWO(/;"	macro	line:34
+IS_WORD	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define IS_WORD(/;"	macro	line:35
+BIT_SET	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define BIT_SET(/;"	macro	line:38
+BIT_CLEAR	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define BIT_CLEAR(/;"	macro	line:39
+BIT_READ	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define BIT_READ(/;"	macro	line:40
+MASK_SET	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define MASK_SET(/;"	macro	line:43
+MASK_CLEAR	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define MASK_CLEAR(/;"	macro	line:44
+IS_MASK_SET	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define IS_MASK_SET(/;"	macro	line:45
+STATUS_ELE_BEEP	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_ELE_BEEP /;"	macro	line:47
+STATUS_ELE_ONLY	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_ELE_ONLY /;"	macro	line:48
+STATUS_BEEP_ONLY	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_BEEP_ONLY /;"	macro	line:49
+STATUS_BUTTON	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_BUTTON /;"	macro	line:50
+STATUS_ELE_LEVEL1	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_ELE_LEVEL1 /;"	macro	line:52
+STATUS_ELE_LEVEL2	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_ELE_LEVEL2 /;"	macro	line:53
+STATUS_ELE_LEVEL3	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^#define STATUS_ELE_LEVEL3 /;"	macro	line:54
+status	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^    uint8_t status;$/;"	member	line:57	struct:__anon1
+level	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^    uint8_t level;   \/\/µç»÷Ç¿¶È$/;"	member	line:58	struct:__anon1
+stBC_03Data	C:\Users\oy\Desktop\DA03_SV001\DA03_SV001\Project\STM8S_StdPeriph_Template\Source\user_config.h	/^}stBC_03Data;$/;"	typedef	line:60	typeref:struct:__anon1

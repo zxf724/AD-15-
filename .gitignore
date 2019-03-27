@@ -55,7 +55,7 @@ dkms.conf
 #orcad
 *.opj
 *.DBK
-*.DNSlck
+*.DSNlck
 
 #iar
 **/Obj/

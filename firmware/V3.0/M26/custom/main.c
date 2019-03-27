@@ -9752,10 +9752,10 @@ const u8 insucceed_mp3[6912] = {
 	0x55,0x55,0x55,0x55,0x55,0x55,0x55,0x55,
 };
 
-
+#define RFID_READ_IND  1002
 
 #define SERIAL_RX_BUFFER_LEN  2048
-
+static u32 RFID_ID[2]= {0};
 // Define the UART port and the receive data buffer
 static Enum_SerialPort m_myUartPort  = UART_PORT1;
 static Enum_SerialPort rfid1Port  = UART_PORT2;
@@ -9764,7 +9764,6 @@ static u8 m_RxBuf_Uart1[SERIAL_RX_BUFFER_LEN];
 
 static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, bool level, void* customizedPara);
 static void Callback_AudPlay(s32 errCode);
-
 void proc_main_task(s32 taskId)
 {
     s32 ret;
@@ -9775,10 +9774,10 @@ void proc_main_task(s32 taskId)
 	ret = Ql_UART_Open(m_myUartPort, 115200, FC_NONE);
     ret = Ql_UART_Register(rfid2Port, CallBack_UART_Hdlr, NULL);
 
-    ret = Ql_UART_Open(rfid2Port, 115200, FC_NONE);
+    ret = Ql_UART_Open(rfid2Port, 19200, FC_NONE);
 	ret = Ql_UART_Register(rfid1Port, CallBack_UART_Hdlr, NULL);
 
-    ret = Ql_UART_Open(rfid1Port, 115200, FC_NONE);
+    ret = Ql_UART_Open(rfid1Port, 19200, FC_NONE);
     // Register & open virtual serial port
     ret = Ql_UART_Register(VIRTUAL_PORT1, CallBack_UART_Hdlr, NULL);
 
@@ -9791,6 +9790,15 @@ void proc_main_task(s32 taskId)
         Ql_OS_GetMessage(&msg);
         switch(msg.message)
         {
+		case RFID_READ_IND :{
+			char sendtemp[20] = {0};
+			//RFID_ID[0] = 0;
+			//RFID_ID[1] = 0;
+			Ql_Sleep(1000);				
+			Ql_sprintf(sendtemp,"+RFID:%d,%d\0",RFID_ID[0], RFID_ID[1]);
+			Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
+			Ql_UART_Write(m_myUartPort, "\r\n", 2);
+		}
         case MSG_ID_RIL_READY:{
             s32 filehandle = 0;
             u32 writeedlen = 0;
@@ -9830,7 +9838,7 @@ void proc_main_task(s32 taskId)
             ret = Ql_FS_Write(filehandle, (u8*)fault_mp3, sizeof(fault_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
         }
-            break;
+        break;
         case MSG_ID_URC_INDICATION:
             //APP_DEBUG("<-- Received URC: type: %d, -->\r\n", msg.param1);
             switch (msg.param1)
@@ -9866,11 +9874,49 @@ void proc_main_task(s32 taskId)
             case URC_MODULE_VOLTAGE_IND:
                 APP_DEBUG("<-- VBatt Voltage Ind: type=%d\r\n", msg.param2);
                 break;
+			case RFID_READ_IND :{
+				char sendtemp[20] = {0};
+				RFID_ID[0] = 0;
+				RFID_ID[1] = 0;
+				Ql_Sleep(100);				
+                Ql_sprintf(sendtemp,"+RFID:%d,%d\0",RFID_ID[0], RFID_ID[1]);
+                Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
+				Ql_UART_Write(m_myUartPort, "\r\n", 2);
+			}
+			break;
             default:
                 APP_DEBUG("<-- Other URC: type=%d\r\n", msg.param1);
                 break;
             }
             break;
+        default:
+            break;
+        }
+    }
+}
+
+
+void proc_subtask1(s32 taskId)
+{
+    s32 ret;
+    ST_MSG msg;
+
+
+    // START MESSAGE LOOP OF THIS TASK
+    while(TRUE)
+    {
+        Ql_OS_GetMessage(&msg);
+        switch(msg.message)
+        {
+		case RFID_READ_IND :{
+			char sendtemp[20] = {0};
+			RFID_ID[0] = 0;
+			RFID_ID[1] = 0;
+			Ql_Sleep(50);				
+			Ql_sprintf(sendtemp,"+RFID:%u,%u\0",RFID_ID[0], RFID_ID[1]);
+			Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
+			Ql_UART_Write(m_myUartPort, "\r\n", 2);
+		}        
         default:
             break;
         }
@@ -9935,9 +9981,9 @@ static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, boo
                 //Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
 
                 //aud test
-                if(Ql_strstr((char *)m_RxBuf_Uart1, "AT+UARTSEND"))
+                if(Ql_strstr((char *)m_RxBuf_Uart1, "AT+RFID"))
                 {// handle it as AT command
-
+					Ql_OS_SendMessage(subtask1_id, RFID_READ_IND, 0, 0);
                 }
                 else{
                     Ql_UART_Write(VIRTUAL_PORT1, m_RxBuf_Uart1, totalBytes);
@@ -9949,17 +9995,18 @@ static void CallBack_UART_Hdlr(Enum_SerialPort port, Enum_UARTEventType msg, boo
 			}
             else if (rfid1Port == port)
             {
-                char sendtemp[20] = {0};
-                Ql_sprintf(sendtemp,"IPD2UART%d:\0",totalBytes);
-                Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
-                Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
+				char *p = m_RxBuf_Uart1;
+                if (*p == 0x7E && *(p + 1) == 0x1B) {
+					Ql_memcpy(&RFID_ID[0], p+5, 4);
+				}          
+				
             }
             else if (rfid2Port == port)
             {
-                char sendtemp[20] = {0};
-                Ql_sprintf(sendtemp,"IPD3UART%d:\0",totalBytes);
-                Ql_UART_Write(m_myUartPort, sendtemp, Ql_strlen(sendtemp));
-                Ql_UART_Write(m_myUartPort, m_RxBuf_Uart1, totalBytes);
+               char *p = m_RxBuf_Uart1;
+                if (*p == 0x7E && *(p + 1) == 0x1B) {
+					Ql_memcpy(&RFID_ID[1], p+5, 4);
+				}
             }
             break;
         }
