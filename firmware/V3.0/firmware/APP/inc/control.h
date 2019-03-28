@@ -20,10 +20,11 @@
 /* Exported types ------------------------------------------------------------*/
 typedef enum {
     //output unbrella
-    status_start_output_unbrella,
     status_output_unbrella_success,
     status_take_the_unbrella_soon,
     status_have_no_unbrella,
+    status_start_output_unbrella,
+
     //input unbrella
     status_start_input_unbrella,
     status_input_unbrella_success,

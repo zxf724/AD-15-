@@ -105,6 +105,7 @@ void Control_Polling(void) {
     uint8_t led_n;
     static uint8_t led_net;
     static motor_status_t status;
+    DBG_LOG("Motor_staus = %d", Motor_staus);
     /*Ñ­»·¶Á¿¨*/
     uint8_t* pdata = NULL;
     if(flag_IR_SW == 1) {
@@ -158,6 +159,7 @@ void Control_Polling(void) {
         switch (Motor_staus) {
             //output unbrella
             case status_start_output_unbrella:
+                DBG_LOG("RAM: StartOutputUnbrella.mp3");
                 TTS_Play("RAM:StartOutputUnbrella.mp3");
                 Motor_staus = status_idle;
                 break;
