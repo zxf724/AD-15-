@@ -125,7 +125,7 @@ void Protocol_Report_Umbrella_Borrow(uint32_t rfid, motor_status_t status) {
     uint8_t buf[5];
     if (BLE_Connect) {
         *(uint32_t*)buf = rfid;
-        if (status == status_borrow_complite) {
+        if (status == status_output_unbrella_success) {
             buf[4] = 0x55;
         } else if (status == status_ir_stuck) {
             buf[4] = 0xAA;
@@ -246,7 +246,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         dat++;
         len--;
 #if USE_AES == 1
-        AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
+        // AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
@@ -311,7 +311,9 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                     DBG_LOG("timing .....");
                     memcpy(temp, (uint8_t*)&dat[11], 4);
                     RTC_SetCount(*(uint32_t*)temp);
-                    if(WorkData.StockCount == 0)  Motor_staus = status_empty;
+                    if(WorkData.StockCount == 0) {
+                        Motor_staus = status_have_no_unbrella;
+                    }
                     temp[0] = 1;
                     temp[1] = VERSION;
                     temp[2] = WorkData.StockMax;
@@ -324,7 +326,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             /*借伞*/
             case CMD_BORROW_UMBRELLA:
                 DBG_LOG("Borrow_Action .....");
-                Motor_staus = status_borrow;
+                Motor_staus = status_start_output_unbrella;
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
                 //if (*(uint32_t*)temp == WorkData.DeviceID) {
@@ -336,13 +338,13 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             /*还伞*/
             case CMD_RETURN_UMBRELLA:
                 DBG_LOG("RepayInAction...");
-                Motor_staus = status_repay;
+                Motor_staus = status_start_input_unbrella;
                 Repay_Action();
                 break;
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");
-                Motor_staus = status_repay_breakdown;
+                Motor_staus = status_input_breakdown_unbrella;
                 Breakdown_Repay();
                 break;
             default:

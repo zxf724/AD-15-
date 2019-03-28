@@ -19,21 +19,26 @@
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum {
+    //output unbrella
+    status_start_output_unbrella,
+    status_output_unbrella_success,
+    status_take_the_unbrella_soon,
+    status_have_no_unbrella,
+    //input unbrella
+    status_start_input_unbrella,
+    status_input_unbrella_success,
+    status_do_not_occlusion_door,
+    status_input_unbrella_soon,
+    status_full_unbrella,
+    //input breakdown unbrella
+    status_input_breakdown_unbrella,
+    status_restart_ouput,
+    status_report_breakdown,
     status_idle,
-    status_borrow,
-    status_repay,
-    status_repay_breakdown,
-    status_borrow_complite,
-    status_repay_complite,
-    status_repay_breakdown_complite,
+    //other situation
     status_motor_stuck,
     status_ir_stuck,
     status_timeout,
-    status_empty,
-    status_full,
-    status_borrow_soon,
-    status_repay_soon,
-    status_repay_breakdown_soon,
 } motor_status_t;
 
 /* Exported constants --------------------------------------------------------*/

@@ -220,7 +220,7 @@ void TestFun(void) {
     //     DBG_LOG("hello,world!");
     //     MOTOR_STOP(1);
     // }
-    // MOTOR_FORWARD(1);
+    // MOTOR_BACK(1);
     // /*****************/
     // /*test push unberally motor--finish*/
     // /*****************/
@@ -291,9 +291,10 @@ void TestFun(void) {
     // /**********************/
     // /*test video*/
     // /**********************/
-    // GPRS_ReadRSSI();
-    // TTS_Play("RAM:startout.mp3");
     // nrf_delay_ms(2000);
+    // TTS_Play("RAM:FullUnbrella.mp3");
+    // nrf_delay_ms(3000);
+    // TTS_Play("RAM:HaveNoUnbrella.mp3");
     // /**********************/
     // /*test RFID_READ*/
     // /**********************/

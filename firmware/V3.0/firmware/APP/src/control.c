@@ -49,8 +49,8 @@ static uint8_t TTS_Step = 0, Direction = 0, move_status = 0, RFID_flag = 0,
                move_step = 0, timeout_status = 0, IR_Status = 0, borrow_flag = 0;
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
 static uint8_t flag_motor4 = 0, flag_if_is_have_unber = 0, flag_if_is_have_unb = 0,
-               flag_RFID_GPRS_Read = 0, flag_IR_CHECK = 0, flag_rfid = 0, flag_is_have = 0,
-               flag_solve_motor = 0;
+               flag_RFID_GPRS_Read = 0, flag_IR_CHECK = 0, flag_rfid = 0, flag_is_have = 0, flag_motor2 = 0, flag_solve_motor = 0,
+               flag_if_is_touch = 0;
 static char* TTS_Text = NULL;
 static uint16_t motorTick = 0;
 static uint32_t  RFID_Read = 0;
@@ -83,13 +83,13 @@ void Control_Init(void) {
     //borrow
     app_timer_create(&TimerId_Lock, APP_TIMER_MODE_REPEATED, Motor_TimerCB);
     app_timer_create(&TimerId_RFID, APP_TIMER_MODE_REPEATED, TimerIdRFID);
+    app_timer_create(&TimerId_Move, APP_TIMER_MODE_REPEATED, Move_TimerCB);
     //repay
     app_timer_create(&TimerId_Repay, APP_TIMER_MODE_REPEATED, RepayInAction);
     app_timer_create(&TimerId_In_Repay, APP_TIMER_MODE_REPEATED, TimerIdInRepay);
     //repay browndown
     app_timer_create(&TimerId_BreakDown, APP_TIMER_MODE_REPEATED, BreakdownInRepay);
     //others
-    app_timer_create(&TimerId_Move, APP_TIMER_MODE_REPEATED, Move_TimerCB);
     app_timer_create(&TimerId_LED_NET, APP_TIMER_MODE_SINGLE_SHOT, LED_NET_TimerCB);
     app_timer_create(&TimerId_LED_STATUS, APP_TIMER_MODE_SINGLE_SHOT, LED_STATUS_TimerCB);
     app_timer_create(&TimerId_TTS, APP_TIMER_MODE_SINGLE_SHOT, TTS_TimerCB);
@@ -152,16 +152,15 @@ void Control_Polling(void) {
     if (Motor_staus != status) {
         status = Motor_staus;
         switch (Motor_staus) {
-            case status_borrow:
-                TTS_Play("RAM:startout.mp3");
+            //output unbrella
+            case status_start_output_unbrella:
+                TTS_Play("RAM:StartOutputUnbrella.mp3");
+                Motor_staus = status_idle;
                 break;
-            case status_repay:
-                TTS_Play("RAM:startin.mp3");
-                break;
-            case status_borrow_complite:
+            case status_output_unbrella_success:
                 Motor_staus = status_idle;
                 if (0 == RFID_Read) {
-                    TTS_Play("RAM:outsucceed.mp3");
+                    TTS_Play("RAM:OutputUnbrellaSuccess.mp3");
                     WorkData.StockCount--;
                     WorkData_Update();
                     Protocol_Report_Umbrella_Borrow(RFID_Read, status);
@@ -169,8 +168,21 @@ void Control_Polling(void) {
                     borrow_flag = 0;
                 }
                 break;
-            case status_repay_complite:
-                TTS_Play("RAM:insucceed.mp3");
+            case status_take_the_unbrella_soon:
+                TTS_Play("RAM:TakeTheUnbrellaSoon.mp3");
+                Motor_staus = status_idle;
+                break;
+            case status_have_no_unbrella:
+                TTS_Play("RAM:HaveNoUnbrella.mp3");
+                Motor_staus = status_idle;
+                break;
+            //input unbrella
+            case status_start_input_unbrella:
+                TTS_Play("RAM:StartInputUnbrella.mp3");
+                Motor_staus = status_idle;
+                break;
+            case status_input_unbrella_success:
+                TTS_Play("RAM:InputUnbrellaSuccess.mp3");
                 Motor_staus = status_idle;
                 if (0 != RFID_Read) {
                     WorkData.StockCount++;
@@ -182,69 +194,95 @@ void Control_Polling(void) {
                     }
                 }
                 break;
-            case status_motor_stuck:
-                TTS_Play("RAM:stuck.mp3");
+            case status_do_not_occlusion_door:
+                TTS_Play("RAM:DoNotOcclusionDoor.mp3");
                 Motor_staus = status_idle;
-                if (Direction == 1) {
-                    Protocol_Report_Umbrella_Borrow(0, status);
-                    Report_Umbrella_Borrow_Status(0, status);
-                } else if (Direction == 2) {
-                    Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-                }
                 break;
-            case status_ir_stuck:
+            case status_input_unbrella_soon:
+                TTS_Play("RAM:InputUnbrellaSoon.mp3");
                 Motor_staus = status_idle;
-                if (Direction == 1) {
-                    if(IR_Status == 1) {
-                        TTS_Play("RAM:exitfaultrestart.mp3");
-                    } else if(IR_Status == 2) {
-                        nrf_delay_ms(1000);
-                        TTS_Play("RAM:fullexchange.mp3");//缺少
-                        nrf_delay_ms(2000);
-                        Reback_Action();
-                    }
-                    IR_Status = 0;
-                    Protocol_Report_Umbrella_Borrow(0, status);
-                    Report_Umbrella_Borrow_Status(0, status);
-                } else if (Direction == 2) {
-                    if(IR_Status == 1) {
-                        TTS_Play("RAM:rein.mp3");
-                    } else if(IR_Status == 2) {
-                        nrf_delay_ms(1000);
-                        TTS_Play("RAM:rein.mp3");
-                        nrf_delay_ms(2000);
-                        Reforward_Action();
-                    }
-                    IR_Status = 0;
-                    Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-                }
                 break;
-            case status_timeout:
-                TTS_Play("RAM:fault.mp3");
+            case status_full_unbrella:
+                TTS_Play("RAM:FullUnbrella.mp3");
                 Motor_staus = status_idle;
-                if (Direction == 1) {
-                    Protocol_Report_Umbrella_Borrow(0, status);
-                    Report_Umbrella_Borrow_Status(0, status);
-                } else if (Direction == 2) {
-                    Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-                }
                 break;
-            case status_empty:
-                TTS_Play("RAM:noneexchange.mp3");
+            //input breakdown unbrella
+            case status_input_breakdown_unbrella:
+                TTS_Play("RAM:InputBreakDownUnbrella.mp3");
                 Motor_staus = status_idle;
-                Protocol_Report_Umbrella_Borrow(0, status);
-                Report_Umbrella_Borrow_Status(0, status);
                 break;
-            case status_full:
-                TTS_Play("RAM:fullexchange.mp3");
+            case status_restart_ouput:
+                TTS_Play("RAM:RestartOuput.mp3");
                 Motor_staus = status_idle;
-                Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
                 break;
-            case status_repay_breakdown_complite:
-                TTS_Play("RAM:fullexchange.mp3"); //缺少
+            case status_report_breakdown:
+                TTS_Play("RAM:ReportBreakDown.mp3");
                 Motor_staus = status_idle;
-                //Report_Umbrella_Borrow_Status(0, status, RTC_ReadCount());
                 break;
+            //others
+            // case status_motor_stuck:
+            //     TTS_Play("RAM:stuck.mp3");
+            //     Motor_staus = status_idle;
+            //     if (Direction == 1) {
+            //         Protocol_Report_Umbrella_Borrow(0, status);
+            //         Report_Umbrella_Borrow_Status(0, status);
+            //     } else if (Direction == 2) {
+            //         Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
+            //     }
+            //     break;
+            // case status_ir_stuck:
+            //     Motor_staus = status_idle;
+            //     if (Direction == 1) {
+            //         if(IR_Status == 1) {
+            //             TTS_Play("RAM:exitfaultrestart.mp3");
+            //         } else if(IR_Status == 2) {
+            //             nrf_delay_ms(1000);
+            //             TTS_Play("RAM:fullexchange.mp3");//缺少
+            //             nrf_delay_ms(2000);
+            //             Reback_Action();
+            //         }
+            //         IR_Status = 0;
+            //         Protocol_Report_Umbrella_Borrow(0, status);
+            //         Report_Umbrella_Borrow_Status(0, status);
+            //     } else if (Direction == 2) {
+            //         if(IR_Status == 1) {
+            //             TTS_Play("RAM:rein.mp3");
+            //         } else if(IR_Status == 2) {
+            //             nrf_delay_ms(1000);
+            //             TTS_Play("RAM:rein.mp3");
+            //             nrf_delay_ms(2000);
+            //             Reforward_Action();
+            //         }
+            //         IR_Status = 0;
+            //         Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
+            //     }
+            //     break;
+            // case status_timeout:
+            //     TTS_Play("RAM:fault.mp3");
+            //     Motor_staus = status_idle;
+            //     if (Direction == 1) {
+            //         Protocol_Report_Umbrella_Borrow(0, status);
+            //         Report_Umbrella_Borrow_Status(0, status);
+            //     } else if (Direction == 2) {
+            //         Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
+            //     }
+            //     break;
+            // case status_empty:
+            //     TTS_Play("RAM:noneexchange.mp3");
+            //     Motor_staus = status_idle;
+            //     Protocol_Report_Umbrella_Borrow(0, status);
+            //     Report_Umbrella_Borrow_Status(0, status);
+            //     break;
+            // case status_full:
+            //     TTS_Play("RAM:fullexchange.mp3");
+            //     Motor_staus = status_idle;
+            //     Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
+            //     break;
+            // case status_repay_breakdown_complite:
+            //     TTS_Play("RAM:fullexchange.mp3"); //缺少
+            //     Motor_staus = status_idle;
+            //     //Report_Umbrella_Borrow_Status(0, status, RTC_ReadCount());
+            //     break;
             default:
                 break;
         }
@@ -257,7 +295,7 @@ void Control_Polling(void) {
             index = 0;
         }
         DBG_LOG("Report Histroy:%u.", index);
-        sta = status_repay_complite;
+        sta = status_input_unbrella_success;
         if (Report_Umbrella_Repy_Status(STROE_LOG_POINT(index)->rfid, sta, STROE_LOG_POINT(index)->time)) {
             WorkData.StoreLog_Report = index;
             WorkData_Update();
@@ -277,7 +315,7 @@ void Borrow_Action(void) {
     WorkData.StockCount = 3;        //单独测试
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
-        Motor_staus = status_empty;
+        Motor_staus = status_have_no_unbrella;
         DBG_LOG("Borrow_Action Empty.");
     }
     /*红外检测*/
@@ -318,7 +356,7 @@ void Repay_Action(void) {
     WorkData.StockCount = 9; //test
     if (WorkData.StockCount >= WorkData.StockMax) {
         LED_MOTOR_NG();
-        Motor_staus = status_full;
+        Motor_staus = status_full_unbrella;
         DBG_LOG("Repay_Action Full.");
     }
     /*检查是否卡住*/
@@ -328,7 +366,7 @@ void Repay_Action(void) {
         Motor_staus = status_ir_stuck;
         DBG_LOG("Repay_Action IR Stuck.");
     } else {
-        Motor_staus = status_repay;
+        Motor_staus = status_start_input_unbrella;
         LED_ON(STATUS);
         DBG_LOG("Repay_Action");
         app_timer_start(TimerId_Repay, APP_TIMER_TICKS(MOVE_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
@@ -425,7 +463,7 @@ void WatchDog_Clear(void) {
 
 static void Move_TimerCB(void * p_context) {
     static uint8_t i = 0, j = 0, step = 0;
-    static uint8_t flag_motor2 = 0, flag_if_is_touch = 0, flag_motor5 = 0;
+    static uint8_t  flag_motor5 = 0;
     if(1) {   //bluetooth condition add  todo
         if(flag_motor2 == 0) {
             MOTOR_FORWARD(2);
@@ -449,13 +487,14 @@ static void Move_TimerCB(void * p_context) {
             WatchDog_Clear();
             DBG_LOG("请尽快取伞");
             j++;
-            Motor_staus = status_borrow_complite;  //这里播报尽快取伞，缺了。
+            Motor_staus = status_take_the_unbrella_soon;
         }
         if(j >= 3) {
             DBG_LOG("出伞失败，没有及时取伞");
             MOTOR_BACK(2);
             flag_if_is_touch = 0;
             flag_motor5 = 1;
+            flag_RFID_GPRS_Read = 0;
             //关闭开关门
             if(flag_motor5 == 1) {
                 MOTOR_FORWARD(4);
@@ -503,18 +542,18 @@ static void Motor_TimerCB(void* p_context) {
         DBG_LOG("Motor is Stuck.");
     }
     /*检查红外*/
-    // if (IR_CHECK() == 0) {
-    //     LED_IR_OVER_FLASH();
-    //     Stop_Action(1);
-    //     IR_Status = 2;
-    //     Motor_staus = status_ir_stuck;
-    //     DBG_LOG("Motor IR Stuck.");
-    // }
+    if (IR_CHECK() == 0) {
+        LED_IR_OVER_FLASH();
+        Stop_Action(1);
+        IR_Status = 2;
+        Motor_staus = status_ir_stuck;
+        DBG_LOG("Motor IR Stuck.");
+    }
     /*延时检查到位*/
     if ((motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (RFID_Read > 0)) {
         motorTick = 0;
         Stop_Action(1);
-        if (Motor_staus == status_borrow) {
+        if (Motor_staus == status_start_output_unbrella) {
             if (RFID_Read > 0) {
                 Move_Forward_Action();
                 DBG_LOG("In Move_Forward_Action()");
@@ -658,7 +697,7 @@ static void RepayInAction(void *a) {
     WorkData.StockCount = 3;        //单独测试
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
-        Motor_staus = status_empty;
+        Motor_staus = status_have_no_unbrella;
         DBG_LOG("Borrow_Action Empty.");
     }
     /*检查伞桶内是否有伞*/
@@ -679,7 +718,7 @@ static void RepayInAction(void *a) {
     }
     /*打开开关门电机*/
     if(flag_if_is_have_unb == 1) {
-        Motor_staus = status_repay;
+        Motor_staus = status_start_input_unbrella;
         if(flag_motor4 == 0) {
             MOTOR_BACK(4);
             flag_motor4 = 1;
@@ -700,7 +739,7 @@ static void RepayInAction(void *a) {
         if ((motorTick1 > 50) && (IF_IS_TOUCH(7) == 0)) {
             motorTick1 = 0;
             app_timer_stop(TimerId_Lock);
-            if (Motor_staus == status_repay) {
+            if (Motor_staus == status_start_input_unbrella) {
                 DBG_LOG("Motor Running forware.");
                 Move_Back_Action();
                 flag_motor41 = 0;
@@ -771,10 +810,8 @@ static void TimerIdInRepay(void* p_context) {
         }
         if((IF_IS_TOUCH(5) == 0) && (flag_already == 1)) {
             MOTOR_STOP(4);
-            Motor_staus = status_repay_complite;
+            Motor_staus = status_input_unbrella_success;
             DBG_LOG("close all the timeid");
-            app_timer_stop(TimerId_Repay);
-            app_timer_stop(TimerId_In_Repay);
             //init all the flag
             InitFlag();
             step = 0;
@@ -782,6 +819,9 @@ static void TimerIdInRepay(void* p_context) {
             j = 0;
             flag_already = 0;
             step1 = 0;
+            //stop timer
+            app_timer_stop(TimerId_Repay);
+            app_timer_stop(TimerId_In_Repay);
         }
     }
 }
@@ -799,6 +839,8 @@ void InitFlag(void) {
     flag_is_have = 0;
     flag_if_is_have_unb = 0;
     flag_solve_motor = 0;
+    flag_motor2 = 0;
+    flag_if_is_touch = 0;
 }
 
 /**
@@ -841,7 +883,7 @@ static void BreakdownInRepay(void* p_context) {
     }
     if((IF_IS_TOUCH(6) == 0) && (flag_motor3 == 1)) {
         MOTOR_STOP(3);
-        Motor_staus = status_repay_breakdown_complite;
+        Motor_staus = status_restart_ouput;
         flag_RFID_GPRS_Read = 0;
         flag_motor3 = 0;
         flag_time = 0;
@@ -856,7 +898,6 @@ static void BreakdownInRepay(void* p_context) {
  * @param argv
  */
 static void TimerIdRFID(void* p_context) {
-    static uint8_t flag_if_is_touch = 1;
     //红外检测
     if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0)) {
         // if(0) {
@@ -865,17 +906,18 @@ static void TimerIdRFID(void* p_context) {
         app_timer_stop(TimerId_Move);
         app_timer_stop(TimerId_Lock);
         DBG_LOG("取伞成功");
-        Motor_staus = status_borrow_complite;
+        Motor_staus = status_output_unbrella_success;
         //关闭开关门
         MOTOR_FORWARD(4);
         if(IF_IS_TOUCH(5) == 0) {
             MOTOR_STOP(4);
-            flag_if_is_touch = 0;
+            flag_if_is_touch = 1;
             //关闭推伞电机
             MOTOR_BACK(2);
         }
-        if((IF_IS_TOUCH(2) == 0) && (flag_if_is_touch == 0)) {
+        if((IF_IS_TOUCH(2) == 0) && (flag_if_is_touch == 1)) {
             MOTOR_STOP(2);
+            InitFlag();
             app_timer_stop(TimerId_RFID);
         }
     }

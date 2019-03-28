@@ -1,28 +1,71 @@
+ril/src/ril_atResponse.c: In function 'Ql_RIL_AT_SetErrCode':
+ril/src/ril_atResponse.c:50:1: warning: control reaches end of non-void function [-Wreturn-type]
+ril/src/ril_audio.c: In function 'ATResponse_AUD_handler':
+ril/src/ril_audio.c:399:5: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+ril/src/ril_bluetooth.c: In function 'OnURCHandler_BTDisconn':
+ril/src/ril_bluetooth.c:1531:10: warning: unused variable 'profileId' [-Wunused-variable]
+ril/src/ril_network.c: In function 'ATRsp_COPS_Handler':
+ril/src/ril_network.c:501:14: warning: unused variable 'str' [-Wunused-variable]
+example/nema_pro.c: In function 'read_gps_I2C_buffer':
+example/nema_pro.c:170:9: warning: unused variable 'realwrlen' [-Wunused-variable]
+example/nema_pro.c: In function 'extract_nmea':
+example/nema_pro.c:190:5: warning: unused variable 'nmea_buf' [-Wunused-variable]
+example/nema_pro.c:189:9: warning: unused variable 'realwrlen' [-Wunused-variable]
+example/nema_pro.c: In function 'iop_inst_avail':
+example/nema_pro.c:283:21: warning: operation on 'id_que_tail' may be undefined [-Wsequence-point]
+example/nema_pro.c: In function 'iop_get_inst':
+example/nema_pro.c:321:13: warning: operation on 'idx' may be undefined [-Wsequence-point]
+example/nema_pro.c: In function 'iop_pcrx_nmea':
+example/nema_pro.c:353:25: warning: operation on 'id_que_head' may be undefined [-Wsequence-point]
+example/nema_pro.c:358:29: warning: operation on 'id_que_tail' may be undefined [-Wsequence-point]
+example/nema_pro.c:379:29: warning: operation on 'rx_que_head' may be undefined [-Wsequence-point]
+example/nema_pro.c:385:29: warning: operation on 'rx_que_head' may be undefined [-Wsequence-point]
+example/nema_pro.c:405:25: warning: operation on 'rx_que_head' may be undefined [-Wsequence-point]
+example/utility.c: In function 'Check_Separator':
+example/utility.c:45:5: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+example/utility.c:52:5: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+example/utility.c:59:5: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+example/utility.c:42:11: warning: unused variable 'pChar2' [-Wunused-variable]
+example/utility.c: In function 'Analyse_Command':
+example/utility.c:103:5: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
+example/utility.c:120:17: warning: suggest parentheses around assignment used as truth value [-Wparentheses]
 custom/main.c: In function 'proc_main_task':
-custom/main.c:9799:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+custom/main.c:13057:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
 In file included from custom/main.c:68:0:
 include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
-custom/main.c:9800:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+custom/main.c:13058:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
 In file included from custom/main.c:68:0:
 include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
-custom/main.c:9863:36: warning: unused variable 'pComingCall' [-Wunused-variable]
-custom/main.c:9883:17: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+custom/main.c:13127:36: warning: unused variable 'pComingCall' [-Wunused-variable]
+custom/main.c:13147:17: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
 In file included from custom/main.c:68:0:
 include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
-custom/main.c:9884:5: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+custom/main.c:13148:5: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
 In file included from custom/main.c:68:0:
 include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
-custom/main.c:9769:9: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+custom/main.c:13027:9: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
 custom/main.c: In function 'proc_subtask1':
-custom/main.c:9917:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+custom/main.c:13181:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
 In file included from custom/main.c:68:0:
 include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
-custom/main.c:9918:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
+custom/main.c:13182:4: warning: pointer targets in passing argument 2 of 'Ql_UART_Write' differ in signedness [-Wpointer-sign]
 In file included from custom/main.c:68:0:
 include/ql_uart.h:269:5: note: expected 'u8 *' but argument is of type 'char *'
-custom/main.c:9901:9: warning: unused variable 'ret' [-Wunused-variable]
+custom/main.c:13165:9: warning: unused variable 'ret' [-Wunused-variable]
 custom/main.c: In function 'CallBack_UART_Hdlr':
-custom/main.c:9998:15: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
-custom/main.c:10006:26: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+custom/main.c:13262:15: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
+custom/main.c:13270:26: warning: pointer targets in initialization differ in signedness [-Wpointer-sign]
 custom/main.c: At top level:
-custom/main.c:10020:13: warning: 'Callback_AudPlay' defined but not used [-Wunused-function]
+custom/main.c:13284:13: warning: 'Callback_AudPlay' defined but not used [-Wunused-function]
+custom/fota/src/fota_ftp.c: In function 'FTP_FotaMain':
+custom/fota/src/fota_ftp.c:44:9: warning: variable 'retValue' set but not used [-Wunused-but-set-variable]
+custom/fota/src/fota_ftp.c: In function 'FTP_Callback_OnDownload':
+custom/fota/src/fota_ftp.c:83:10: warning: variable 'retValue' set but not used [-Wunused-but-set-variable]
+custom/fota/src/fota_ftp.c:82:9: warning: variable 'ret' set but not used [-Wunused-but-set-variable]
+custom/fota/src/fota_ftp.c: In function 'FTP_Program':
+custom/fota/src/fota_ftp.c:124:10: warning: variable 'retValue' set but not used [-Wunused-but-set-variable]
+custom/fota/src/fota_ftp.c: In function 'FTP_Callback_OnDownload':
+custom/fota/src/fota_ftp.c:315:35: warning: 'retValue' may be used uninitialized in this function [-Wmaybe-uninitialized]
+custom/fota/src/fota_ftp.c:198:10: note: 'retValue' was declared here
+custom/fota/src/fota_main.c: In function 'Ql_FOTA_StartUpgrade':
+custom/fota/src/fota_main.c:33:10: warning: variable 'retValue' set but not used [-Wunused-but-set-variable]

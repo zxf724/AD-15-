@@ -91,7 +91,7 @@ BOOL Report_Umbrella_Borrow_Status(uint32_t rfid, motor_status_t status) {
     if (desired != NULL) {
         cJSON_AddNumberToObject(desired, "Umbrella_ID", rfid);
         switch (status) {
-            case status_borrow_complite:
+            case status_output_unbrella_success:
                 cJSON_AddStringToObject(desired, "Result", "ok");
                 break;
             case status_ir_stuck:
@@ -103,10 +103,10 @@ BOOL Report_Umbrella_Borrow_Status(uint32_t rfid, motor_status_t status) {
             case status_timeout:
                 cJSON_AddStringToObject(desired, "Result", "timeout");
                 break;
-            case status_empty:
+            case status_have_no_unbrella:
                 cJSON_AddStringToObject(desired, "Result", "empty");
                 break;
-            case status_repay_breakdown_complite:
+            case status_restart_ouput:
                 cJSON_AddStringToObject(desired, "Result", "motorbroken");
                 break;
             default:
@@ -131,7 +131,7 @@ BOOL Report_Umbrella_Repy_Status(uint32_t rfid, motor_status_t status, uint32_t 
         cJSON_AddNumberToObject(desired, "Umbrella_ID", rfid);
         cJSON_AddNumberToObject(desired, "timestamp", ts);
         switch (status) {
-            case status_repay_complite:
+            case status_input_unbrella_success:
                 cJSON_AddStringToObject(desired, "Result", "ok");
                 break;
             case status_ir_stuck:
@@ -143,7 +143,7 @@ BOOL Report_Umbrella_Repy_Status(uint32_t rfid, motor_status_t status, uint32_t 
             case status_timeout:
                 cJSON_AddStringToObject(desired, "Result", "timeout");
                 break;
-            case status_full:
+            case status_full_unbrella:
                 cJSON_AddStringToObject(desired, "Result", "full");
                 break;
             default:

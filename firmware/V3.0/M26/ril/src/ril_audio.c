@@ -43,24 +43,7 @@
 #include "ril_util.h"
 #include "ril_audio.h"
 
-#define AUDIO_DEBUG_ENABLE 1
-#if AUDIO_DEBUG_ENABLE > 0
-#define AUDIO_DEBUG_PORT  UART_PORT1
-#define AUDIO_DBG_BUF_LEN   512
-static char DBG_BUFFER[AUDIO_DBG_BUF_LEN];
-#define AUDIO_DEBUG(FORMAT,...) {\
-    Ql_memset(DBG_BUFFER, 0, AUDIO_DBG_BUF_LEN);\
-    Ql_sprintf(DBG_BUFFER,FORMAT,##__VA_ARGS__); \
-    if (UART_PORT2 == (AUDIO_DEBUG_PORT)) \
-    {\
-        Ql_Debug_Trace(DBG_BUFFER);\
-    } else {\
-        Ql_UART_Write((Enum_SerialPort)(AUDIO_DEBUG_PORT), (u8*)(DBG_BUFFER), Ql_strlen((const char *)(DBG_BUFFER)));\
-    }\
-}
-#else
-#define AUDIO_DEBUG(FORMAT,...) 
-#endif
+
 #ifdef __OCPU_RIL_SUPPORT__ 
 
 #define IS_SUPPORT_AUD_CHANNEL(audChannel)    \
@@ -282,7 +265,6 @@ s32 RIL_AUD_StartRecord(char* fileName, Enum_AudRecordFormat format)
     }
     Ql_memset(strAT, 0, sizeof(strAT));
     Ql_sprintf(strAT, "AT+QAUDRD=1,\"%s\",%d\r\n",fileName,real_format);
-    AUDIO_DEBUG("strAT : %s",strAT);
     ret = Ql_RIL_SendATCmd(strAT,Ql_strlen(strAT),ATResponse_AUD_handler,NULL,0);
     
     return ret;
@@ -396,6 +378,7 @@ error:
 static s32 ATResponse_AUD_handler(char* line, u32 len, void* userdata)
 {
     char *head = NULL;
+
     if((head =Ql_RIL_FindString(line, len, "+QAUDCH:")) || \
             (head =Ql_RIL_FindString(line, len, "+QMEDVL:")) || (head =Ql_RIL_FindString(line, len, "+CLVL:")) || \
             (head =Ql_RIL_FindString(line, len, "+QSIDET:")) || (head =Ql_RIL_FindString(line, len, "+QAUDRD:")) )
@@ -417,7 +400,8 @@ static s32 ATResponse_AUD_handler(char* line, u32 len, void* userdata)
     {
         *(u8* )userdata = parse_cmd_qmic(head,(u8)s_channel_qmic);
         return  RIL_ATRSP_CONTINUE;
-    }    
+    }
+    
     head = Ql_RIL_FindLine(line, len, "OK");
     if(head)
     {  
