@@ -50,7 +50,7 @@ static uint8_t TTS_Step = 0, Direction = 0, move_status = 0, RFID_flag = 0,
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
 static uint8_t flag_motor4 = 0, flag_if_is_have_unber = 0, flag_if_is_have_unb = 0,
                flag_RFID_GPRS_Read = 0, flag_IR_CHECK = 0, flag_rfid = 0, flag_is_have = 0, flag_motor2 = 0, flag_solve_motor = 0,
-               flag_if_is_touch = 0;
+               flag_if_is_touch = 0, flag_IR_SW = 0;
 static char* TTS_Text = NULL;
 static uint16_t motorTick = 0;
 static uint32_t  RFID_Read = 0;
@@ -107,7 +107,11 @@ void Control_Polling(void) {
     static motor_status_t status;
     /*循环读卡*/
     uint8_t* pdata = NULL;
-    IO_H(IR_SW);  //enable the sensor
+    if(flag_IR_SW == 1) {
+        IO_H(IR_SW);  //enable the sensor
+    } else if(flag_IR_SW == 0) {
+        IO_L(IR_SW);
+    }
     if(flag_RFID_GPRS_Read == 1) {
         RFID_Read = GPRS_ReadRFID(2);
         DBG_LOG("RFID_Read = %u", RFID_Read);
@@ -308,6 +312,7 @@ void Control_Polling(void) {
  */
 void Borrow_Action(void) {
     app_timer_stop(TimerId_Lock);
+    flag_IR_SW = 1;
     motorTick = 0;
     nrf_delay_ms(80);
     Direction = 1;
@@ -350,6 +355,7 @@ static void Reforward_Action(void) {
 void Repay_Action(void) {
     flag_RFID_GPRS_Read = 1; // open RFID read!
     app_timer_stop(TimerId_Lock);
+    flag_IR_SW = 1;
     motorTick = 0;
     Direction = 2;
     nrf_delay_ms(80);
@@ -553,12 +559,12 @@ static void Motor_TimerCB(void* p_context) {
     if ((motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (RFID_Read > 0)) {
         motorTick = 0;
         Stop_Action(1);
-        if (Motor_staus == status_start_output_unbrella) {
-            if (RFID_Read > 0) {
-                Move_Forward_Action();
-                DBG_LOG("In Move_Forward_Action()");
-            }
+        // if (Motor_staus == status_start_output_unbrella) {
+        if (RFID_Read > 0) {
+            Move_Forward_Action();
+            DBG_LOG("In Move_Forward_Action()");
         }
+        // }
     }
     /*超时停止*/
     if (motorTick++ >= MOTOR_OVERFLOW_TIMES) {
@@ -758,6 +764,7 @@ static void RepayInAction(void *a) {
 void Breakdown_Repay(void) {
     //检测系列
     MOTOR_FORWARD(3);
+    flag_IR_SW = 1;
     flag_RFID_GPRS_Read = 1;
     //TTS_Play("请将伞折叠好后伞头向里放入还伞口");
     DBG_LOG("请将伞折叠好后伞头向里放入还伞口");
@@ -838,9 +845,11 @@ void InitFlag(void) {
     flag_rfid = 0;
     flag_is_have = 0;
     flag_if_is_have_unb = 0;
+    flag_if_is_have_unber = 0;
     flag_solve_motor = 0;
     flag_motor2 = 0;
     flag_if_is_touch = 0;
+    flag_IR_SW = 0;
 }
 
 /**
