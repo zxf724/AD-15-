@@ -105,7 +105,6 @@ void Control_Polling(void) {
     uint8_t led_n;
     static uint8_t led_net;
     static motor_status_t status;
-    DBG_LOG("Motor_staus = %d", Motor_staus);
     /*Ñ­»·¶Á¿¨*/
     uint8_t* pdata = NULL;
     if(flag_IR_SW == 1) {

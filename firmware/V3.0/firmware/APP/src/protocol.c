@@ -251,6 +251,8 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
         }
+        dat[0] = dat[0] >> 2;
+        DBG_LOG("here is the cmd = 0x%02X", dat[0]);
 #endif
         return Protocol_Cmd_Analy((uint8_t*)dat, (uint8_t)len);
     }
@@ -298,7 +300,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
     if(1) {
         ret = 1;
         /*命令处理*/
-        //cmd = dat[0] >> 2;
+        cmd = dat[0] >> 2;
         cmd = dat[1];
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
@@ -331,7 +333,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 /*比较设备ID*/
                 //if (*(uint32_t*)temp == WorkData.DeviceID) {
                 if(1) {
-                    // Borrow_Action();
+                    Borrow_Action();
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
                 break;
@@ -339,13 +341,13 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             case CMD_RETURN_UMBRELLA:
                 DBG_LOG("RepayInAction...");
                 Motor_staus = status_start_input_unbrella;
-                // Repay_Action();
+                Repay_Action();
                 break;
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");
                 Motor_staus = status_input_breakdown_unbrella;
-                // Breakdown_Repay();
+                Breakdown_Repay();
                 break;
             default:
                 break;

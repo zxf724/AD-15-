@@ -19,6 +19,7 @@
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum {
+    status_idle,
     //output unbrella
     status_output_unbrella_success,
     status_take_the_unbrella_soon,
@@ -35,7 +36,6 @@ typedef enum {
     status_input_breakdown_unbrella,
     status_restart_ouput,
     status_report_breakdown,
-    status_idle,
     //other situation
     status_motor_stuck,
     status_ir_stuck,

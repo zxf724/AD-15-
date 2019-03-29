@@ -226,12 +226,12 @@ void TestFun(void) {
     // /*****************/
     // static uint8_t flag_motor2 = 0, flag_if_is_touch = 0;
     // if(flag_motor2 == 0) {
-    //     MOTOR_FORWARD(2);
+    // MOTOR_FORWARD(2);
     //     flag_motor2 = 1;
     //     flag_if_is_touch = 1;
     // }
     // if(IF_IS_TOUCH(1) == 0) {
-    //     MOTOR_BACK(2);
+    // MOTOR_BACK(2);
     //     flag_if_is_touch = 0;
     // }
     // if((IF_IS_TOUCH(2) == 0) && (flag_if_is_touch == 0)) {
