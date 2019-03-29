@@ -548,14 +548,6 @@ static void Motor_TimerCB(void* p_context) {
         Motor_staus = status_motor_stuck;
         DBG_LOG("Motor is Stuck.");
     }
-    /*检查红外*/
-    if (IR_CHECK() == 0) {
-        LED_IR_OVER_FLASH();
-        Stop_Action(1);
-        IR_Status = 2;
-        Motor_staus = status_ir_stuck;
-        DBG_LOG("Motor IR Stuck.");
-    }
     /*延时检查到位*/
     if ((motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (RFID_Read > 0)) {
         motorTick = 0;

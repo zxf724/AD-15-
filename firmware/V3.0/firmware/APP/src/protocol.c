@@ -251,7 +251,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
         }
-        dat[0] = dat[0] >> 2;
+        // dat[0] = dat[0] >> 2;
         DBG_LOG("here is the cmd = 0x%02X", dat[0]);
 #endif
         return Protocol_Cmd_Analy((uint8_t*)dat, (uint8_t)len);
