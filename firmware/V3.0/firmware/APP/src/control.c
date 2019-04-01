@@ -904,7 +904,6 @@ static void TimerIdRFID(void* p_context) {
     if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0)) {
         // if(0) {
         // nrf_delay_ms(2000);
-        flag_RFID_GPRS_Read = 0;
         app_timer_stop(TimerId_Move);
         app_timer_stop(TimerId_Lock);
         DBG_LOG("È¡É¡³É¹¦");
