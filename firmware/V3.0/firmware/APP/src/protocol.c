@@ -98,7 +98,7 @@ void Protocol_DateProcPoll(void) {
         DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
         if (Protocol_Analyse(p, len) == 0) {
             DBG_LOG("Invalid BLE format, BLE disconnect.");
-            // user_BLE_Disconnected();
+            user_BLE_Disconnected();
         }
         DBG_LOG("RTC_ReadCount() - AuthOK_TS = %02u.s", RTC_ReadCount() - AuthOK_TS);
     } else {
@@ -109,7 +109,7 @@ void Protocol_DateProcPoll(void) {
         if (BLE_Connect && RTC_ReadCount() - AuthOK_TS > BLE_CONNECT_TIMEOUT) {
             AuthOK_TS = RTC_ReadCount();
             DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
-            // user_BLE_Disconnected();
+            user_BLE_Disconnected();
             DBG_LOG("Timeout disconnected.");
         }
     }
@@ -294,11 +294,10 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
     DBG_LOG("Command type valid！");
     /*比较滚动同步计数值*/
     run = (dat[6] << 8) | dat[5];
-    // if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
-    if(1) {
+    if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
         ret = 1;
         /*命令处理*/
-        //cmd = dat[0] >> 2;
+        cmd = dat[0] >> 2;
         cmd = dat[1];
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
@@ -327,8 +326,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 Motor_staus = status_borrow;
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
-                //if (*(uint32_t*)temp == WorkData.DeviceID) {
-                if(1) {
+                if (*(uint32_t*)temp == WorkData.DeviceID) {
                     Borrow_Action();
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
