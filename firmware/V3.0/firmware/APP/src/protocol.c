@@ -296,13 +296,12 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
     DBG_LOG("Command type valid！");
     /*比较滚动同步计数值*/
     run = (dat[6] << 8) | dat[5];
-    // if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
-    if(1) {
+    if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
         ret = 1;
         /*命令处理*/
         // cmd = dat[0] >> 2;
         // cmd = dat[1];
-        cmd = dat[0];
+        cmd = dat[0] | 0x01;
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
             /*校时*/
@@ -310,55 +309,55 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
-                // if (*(uint32_t*)temp == WorkData.DeviceID) {
-                if(1) {
-                    DBG_LOG("timing .....");
-                    memcpy(temp, (uint8_t*)&dat[11], 4);
-                    RTC_SetCount(*(uint32_t*)temp);
-                    if(WorkData.StockCount == 0) {
-                        Motor_staus = status_have_no_unbrella;
+                if (*(uint32_t*)temp == WorkData.DeviceID) {
+                    if(1) {
+                        DBG_LOG("timing .....");
+                        memcpy(temp, (uint8_t*)&dat[11], 4);
+                        RTC_SetCount(*(uint32_t*)temp);
+                        if(WorkData.StockCount == 0) {
+                            Motor_staus = status_have_no_unbrella;
+                        }
+                        temp[0] = 1;
+                        temp[1] = VERSION;
+                        temp[2] = WorkData.StockMax;
+                        temp[3] = WorkData.StockCount;
+                        AuthOK_TS = RTC_ReadCount();
+                        Send_Cmd(0x19, temp, 4);
+                        DBG_LOG("Running index timing, store:%u, receive:%u", authRunIndex, run);
                     }
-                    temp[0] = 1;
-                    temp[1] = VERSION;
-                    temp[2] = WorkData.StockMax;
-                    temp[3] = WorkData.StockCount;
-                    AuthOK_TS = RTC_ReadCount();
-                    Send_Cmd(0x19, temp, 4);
-                    DBG_LOG("Running index timing, store:%u, receive:%u", authRunIndex, run);
+                    break;
+                /*借伞*/
+                case CMD_BORROW_UMBRELLA:
+                    DBG_LOG("Borrow_Action .....");
+                    Motor_staus = status_start_output_unbrella;
+                    memcpy(temp, (uint8_t*)&dat[7], 4);
+                    /*比较设备ID*/
+                    //if (*(uint32_t*)temp == WorkData.DeviceID) {
+                    if(1) {
+                        Borrow_Action();
+                        DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
+                    }
+                    break;
+                /*还伞*/
+                case CMD_RETURN_UMBRELLA:
+                    DBG_LOG("RepayInAction...");
+                    Motor_staus = status_start_input_unbrella;
+                    Repay_Action();
+                    break;
+                /*还故障伞*/
+                case CMD_RETURN_BREAKDOWN_UMBRELLA:
+                    DBG_LOG("BreakDownAction...");
+                    Motor_staus = status_input_breakdown_unbrella;
+                    Breakdown_Repay();
+                    break;
+                default:
+                    break;
                 }
-                break;
-            /*借伞*/
-            case CMD_BORROW_UMBRELLA:
-                DBG_LOG("Borrow_Action .....");
-                Motor_staus = status_start_output_unbrella;
-                memcpy(temp, (uint8_t*)&dat[7], 4);
-                /*比较设备ID*/
-                //if (*(uint32_t*)temp == WorkData.DeviceID) {
-                if(1) {
-                    Borrow_Action();
-                    DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
-                }
-                break;
-            /*还伞*/
-            case CMD_RETURN_UMBRELLA:
-                DBG_LOG("RepayInAction...");
-                Motor_staus = status_start_input_unbrella;
-                Repay_Action();
-                break;
-            /*还故障伞*/
-            case CMD_RETURN_BREAKDOWN_UMBRELLA:
-                DBG_LOG("BreakDownAction...");
-                Motor_staus = status_input_breakdown_unbrella;
-                Breakdown_Repay();
-                break;
-            default:
-                break;
+        } else {
+            Send_Cmd(0x25, NULL, 0);
+            ret = 2;
+            DBG_LOG("Running index fault, store:%u, receive:%u", authRunIndex, run);
         }
-    } else {
-        Send_Cmd(0x25, NULL, 0);
-        ret = 2;
-        DBG_LOG("Running index fault, store:%u, receive:%u", authRunIndex, run);
+        authRunIndex = run;
+        return ret;
     }
-    authRunIndex = run;
-    return ret;
-}
