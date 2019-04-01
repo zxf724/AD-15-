@@ -299,8 +299,6 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
     if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
         ret = 1;
         /*命令处理*/
-        // cmd = dat[0] >> 2;
-        // cmd = dat[1];
         cmd = dat[0] | 0x01;
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
@@ -332,8 +330,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                     Motor_staus = status_start_output_unbrella;
                     memcpy(temp, (uint8_t*)&dat[7], 4);
                     /*比较设备ID*/
-                    //if (*(uint32_t*)temp == WorkData.DeviceID) {
-                    if(1) {
+                    if (*(uint32_t*)temp == WorkData.DeviceID) {
                         Borrow_Action();
                         DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                     }
