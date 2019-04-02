@@ -49,8 +49,8 @@ static uint8_t TTS_Step = 0, Direction = 0, move_status = 0, RFID_flag = 0,
                move_step = 0, timeout_status = 0, IR_Status = 0, borrow_flag = 0;
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
 static uint8_t flag_motor4 = 0, flag_if_is_have_unber = 0, flag_if_is_have_unb = 0,
-               flag_RFID_GPRS_Read = 0, flag_IR_CHECK = 0, flag_rfid = 0, flag_is_have = 0, flag_motor2 = 0, flag_solve_motor = 0,
-               flag_if_is_touch = 0, flag_IR_SW = 0;
+               flag_RFID_GPRS_Read = 0, flag_IR_CHECK = 0, flag_rfid = 0, flag_is_have = 0,
+               flag_motor2 = 0, flag_solve_motor = 0, flag_if_is_touch = 0, flag_IR_SW = 0;
 static char* TTS_Text = NULL;
 static uint16_t motorTick = 0;
 static uint32_t  RFID_Read = 0;
@@ -112,8 +112,14 @@ void Control_Polling(void) {
     } else if(flag_IR_SW == 0) {
         IO_L(IR_SW);
     }
+    //borrow,repay
     if(flag_RFID_GPRS_Read == 1) {
         RFID_Read = GPRS_ReadRFID(2);
+        DBG_LOG("RFID_Read = %u", RFID_Read);
+    }
+    //reapy browndown
+    if(flag_RFID_GPRS_Read == 2) {
+        RFID_Read = GPRS_ReadRFID(1);
         DBG_LOG("RFID_Read = %u", RFID_Read);
     }
     /*TTS播报*/
@@ -158,7 +164,6 @@ void Control_Polling(void) {
         switch (Motor_staus) {
             //output unbrella
             case status_start_output_unbrella:
-                DBG_LOG("RAM: StartOutputUnbrella.mp3");
                 TTS_Play("RAM:StartOutputUnbrella.mp3");
                 Motor_staus = status_idle;
                 break;
@@ -168,8 +173,8 @@ void Control_Polling(void) {
                     TTS_Play("RAM:OutputUnbrellaSuccess.mp3");
                     WorkData.StockCount--;
                     WorkData_Update();
-                    Protocol_Report_Umbrella_Borrow(RFID_Read, status);
-                    Report_Umbrella_Borrow_Status(RFID_Read, status);
+                    Protocol_Report_Umbrella(RFID_Read, status);
+                    Report_Umbrella_Status(RFID_Read, status);
                     borrow_flag = 0;
                 }
                 break;
@@ -188,6 +193,8 @@ void Control_Polling(void) {
                 break;
             case status_input_unbrella_success:
                 TTS_Play("RAM:InputUnbrellaSuccess.mp3");
+                Protocol_Report_Umbrella(RFID_Read, status);
+                Report_Umbrella_Status(RFID_Read, status);
                 Motor_staus = status_idle;
                 if (0 != RFID_Read) {
                     WorkData.StockCount++;
@@ -222,72 +229,10 @@ void Control_Polling(void) {
                 break;
             case status_report_breakdown:
                 TTS_Play("RAM:ReportBreakDown.mp3");
+                Protocol_Report_Umbrella(RFID_Read, status);
+                Report_Umbrella_Status(RFID_Read, status);
                 Motor_staus = status_idle;
                 break;
-            //others
-            // case status_motor_stuck:
-            //     TTS_Play("RAM:stuck.mp3");
-            //     Motor_staus = status_idle;
-            //     if (Direction == 1) {
-            //         Protocol_Report_Umbrella_Borrow(0, status);
-            //         Report_Umbrella_Borrow_Status(0, status);
-            //     } else if (Direction == 2) {
-            //         Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-            //     }
-            //     break;
-            // case status_ir_stuck:
-            //     Motor_staus = status_idle;
-            //     if (Direction == 1) {
-            //         if(IR_Status == 1) {
-            //             TTS_Play("RAM:exitfaultrestart.mp3");
-            //         } else if(IR_Status == 2) {
-            //             nrf_delay_ms(1000);
-            //             TTS_Play("RAM:fullexchange.mp3");//缺少
-            //             nrf_delay_ms(2000);
-            //             Reback_Action();
-            //         }
-            //         IR_Status = 0;
-            //         Protocol_Report_Umbrella_Borrow(0, status);
-            //         Report_Umbrella_Borrow_Status(0, status);
-            //     } else if (Direction == 2) {
-            //         if(IR_Status == 1) {
-            //             TTS_Play("RAM:rein.mp3");
-            //         } else if(IR_Status == 2) {
-            //             nrf_delay_ms(1000);
-            //             TTS_Play("RAM:rein.mp3");
-            //             nrf_delay_ms(2000);
-            //             Reforward_Action();
-            //         }
-            //         IR_Status = 0;
-            //         Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-            //     }
-            //     break;
-            // case status_timeout:
-            //     TTS_Play("RAM:fault.mp3");
-            //     Motor_staus = status_idle;
-            //     if (Direction == 1) {
-            //         Protocol_Report_Umbrella_Borrow(0, status);
-            //         Report_Umbrella_Borrow_Status(0, status);
-            //     } else if (Direction == 2) {
-            //         Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-            //     }
-            //     break;
-            // case status_empty:
-            //     TTS_Play("RAM:noneexchange.mp3");
-            //     Motor_staus = status_idle;
-            //     Protocol_Report_Umbrella_Borrow(0, status);
-            //     Report_Umbrella_Borrow_Status(0, status);
-            //     break;
-            // case status_full:
-            //     TTS_Play("RAM:fullexchange.mp3");
-            //     Motor_staus = status_idle;
-            //     Report_Umbrella_Repy_Status(0, status, RTC_ReadCount());
-            //     break;
-            // case status_repay_breakdown_complite:
-            //     TTS_Play("RAM:fullexchange.mp3"); //缺少
-            //     Motor_staus = status_idle;
-            //     //Report_Umbrella_Borrow_Status(0, status, RTC_ReadCount());
-            //     break;
             default:
                 break;
         }
@@ -758,7 +703,7 @@ void Breakdown_Repay(void) {
     //检测系列
     MOTOR_FORWARD(3);
     flag_IR_SW = 1;
-    flag_RFID_GPRS_Read = 1;
+    flag_RFID_GPRS_Read = 2;
     //TTS_Play("请将伞折叠好后伞头向里放入还伞口");
     DBG_LOG("请将伞折叠好后伞头向里放入还伞口");
     app_timer_start(TimerId_BreakDown, APP_TIMER_TICKS(MOVE_ACTION_TIME, APP_TIMER_PRESCALER), NULL);

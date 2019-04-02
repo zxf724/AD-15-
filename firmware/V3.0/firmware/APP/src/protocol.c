@@ -121,7 +121,7 @@ void Protocol_DateProcPoll(void) {
  * @param rfid   雨伞的RFID
  * @param status 电机的状态
  */
-void Protocol_Report_Umbrella_Borrow(uint32_t rfid, motor_status_t status) {
+void Protocol_Report_Umbrella(uint32_t rfid, motor_status_t status) {
     uint8_t buf[5];
     if (BLE_Connect) {
         *(uint32_t*)buf = rfid;

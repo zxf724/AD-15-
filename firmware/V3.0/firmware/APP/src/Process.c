@@ -85,7 +85,7 @@ BOOL CMD_Updata(char* cmd, cJSON* desired) {
  * @param rfid   ɡ��RFID
  * @param status �����״�?
  */
-BOOL Report_Umbrella_Borrow_Status(uint32_t rfid, motor_status_t status) {
+BOOL Report_Umbrella_Status(uint32_t rfid, motor_status_t status) {
     cJSON* desired = NULL;
     desired = cJSON_CreateObject();
     if (desired != NULL) {

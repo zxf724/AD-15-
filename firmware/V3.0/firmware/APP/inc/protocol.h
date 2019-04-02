@@ -58,7 +58,7 @@ void Protocol_Init(void);
 
 void Protocol_NewDate(uint8_t *dat, uint8_t len);
 void Protocol_DateProcPoll(void);
-void Protocol_Report_Umbrella_Borrow(uint32_t rfid, motor_status_t status);
+void Protocol_Report_Umbrella(uint32_t rfid, motor_status_t status);
 
 void Send_Cmd(uint8_t cmd, uint8_t *arg, uint8_t len);
 
