@@ -246,13 +246,13 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         dat++;
         len--;
 #if USE_AES == 1
-        AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
+        // AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
         }
-        dat[0] = dat[0] >> 2;
-        DBG_LOG("here is the cmd = 0x%02X", dat[0]);
+        // dat[0] = dat[0] >> 2;
+        DBG_LOG("here is the cmd = 0x%02X", dat[1]);
 #endif
         return Protocol_Cmd_Analy((uint8_t*)dat, (uint8_t)len);
     }
@@ -296,10 +296,12 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
     DBG_LOG("Command type valid！");
     /*比较滚动同步计数值*/
     run = (dat[6] << 8) | dat[5];
-    if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
+    // if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
+    if(1) {
         ret = 1;
         /*命令处理*/
-        cmd = dat[0] | 0x01;
+        // cmd = dat[0] | 0x01;
+        cmd = dat[1];
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
             /*校时*/
