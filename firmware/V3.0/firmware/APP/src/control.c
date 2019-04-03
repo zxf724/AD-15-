@@ -808,8 +808,9 @@ static void BreakdownInRepay(void* p_context) {
         flag_switch = 1;
         i = 0;
     }
-    if(i >= 100) {
+    if(i >= 80) {
         DBG_LOG("请尽快还伞");
+        Motor_staus = status_input_unbrella_soon;
         i = 0;
         j++;
         DBG_LOG("j = %d", j);
@@ -817,8 +818,7 @@ static void BreakdownInRepay(void* p_context) {
     if((j >= 3) && (flag_time == 0)) {
         DBG_LOG("十五秒到，故障，没有还伞");
         MOTOR_BACK(3);
-        app_timer_stop(TimerId_BreakDown);
-        flag_motor3 = 0;
+        Motor_staus = status_report_breakdown;
         flag_time = 0;
         flag_switch = 0;
         flag_RFID_GPRS_Read = 0;
