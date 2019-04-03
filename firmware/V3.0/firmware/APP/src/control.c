@@ -46,7 +46,7 @@ APP_TIMER_DEF(TimerId_BreakDown);
 APP_TIMER_DEF(TimerId_RFID);
 
 static uint8_t TTS_Step = 0, Direction = 0, move_status = 0, RFID_flag = 0,
-               move_step = 0, timeout_status = 0, IR_Status = 0, borrow_flag = 0;
+               move_step = 0, timeout_status = 0, IR_Status = 0;
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
 static uint8_t flag_motor4 = 0, flag_if_is_have_unber = 0, flag_if_is_have_unb = 0,
                flag_RFID_GPRS_Read = 0, flag_IR_CHECK = 0, flag_rfid = 0, flag_is_have = 0,
@@ -175,7 +175,6 @@ void Control_Polling(void) {
                     WorkData_Update();
                     Protocol_Report_Umbrella(RFID_Read, status);
                     Report_Umbrella_Status(RFID_Read, status);
-                    borrow_flag = 0;
                 }
                 break;
             case status_take_the_unbrella_soon:
@@ -278,7 +277,6 @@ void Borrow_Action(void) {
     } else {
         DBG_LOG("Borrow_Action NOT stuck!");
         // Motor_staus = status_borrow;
-        borrow_flag = 2;
         LED_ON(STATUS);
         app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
     }
