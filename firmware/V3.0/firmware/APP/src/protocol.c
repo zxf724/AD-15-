@@ -309,7 +309,8 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
-                if (*(uint32_t*)temp == WorkData.DeviceID) {
+                // if (*(uint32_t*)temp == WorkData.DeviceID) {
+                if(1) {
                     DBG_LOG("timing .....");
                     memcpy(temp, (uint8_t*)&dat[11], 4);
                     RTC_SetCount(*(uint32_t*)temp);
@@ -331,7 +332,8 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 Motor_staus = status_start_output_unbrella;
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
-                if (*(uint32_t*)temp == WorkData.DeviceID) {
+                // if (*(uint32_t*)temp == WorkData.DeviceID) {
+                if(1) {
                     Borrow_Action();
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }

@@ -45,7 +45,7 @@ APP_TIMER_DEF(TimerId_In_Repay);
 APP_TIMER_DEF(TimerId_BreakDown);
 APP_TIMER_DEF(TimerId_RFID);
 
-static uint8_t TTS_Step = 0, Direction = 0, move_status = 0, RFID_flag = 0,
+static uint8_t TTS_Step = 0, move_status = 0, RFID_flag = 0,
                move_step = 0, timeout_status = 0, IR_Status = 0;
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
 static uint8_t flag_motor4 = 0, flag_if_is_have_unber = 0, flag_if_is_have_unb = 0,
@@ -260,7 +260,6 @@ void Borrow_Action(void) {
     flag_IR_SW = 1;
     motorTick = 0;
     nrf_delay_ms(80);
-    Direction = 1;
     flag_RFID_GPRS_Read = 1;
     WorkData.StockCount = 3;        //单独测试
     if (WorkData.StockCount == 0) {
@@ -283,12 +282,10 @@ void Borrow_Action(void) {
 }
 
 static void Reback_Action(void) {
-    Direction = 2;
     MOTOR_BACK(1);
     app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
 }
 static void Reforward_Action(void) {
-    Direction = 1;
     MOTOR_FORWARD(1);
     app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
 }
@@ -301,7 +298,6 @@ void Repay_Action(void) {
     app_timer_stop(TimerId_Lock);
     flag_IR_SW = 1;
     motorTick = 0;
-    Direction = 2;
     nrf_delay_ms(80);
     WorkData.StockCount = 9; //test
     if (WorkData.StockCount >= WorkData.StockMax) {
@@ -633,7 +629,6 @@ static void RepayInAction(void *a) {
     static uint8_t i, flag_is_have = 0;
     static uint8_t flag_motor41 = 0;
     static uint16_t motorTick1 = 0;
-    Direction = 1;
     app_timer_stop(TimerId_RFID);
     app_timer_stop(TimerId_Lock);
     WorkData.StockCount = 3;        //单独测试
@@ -844,12 +839,12 @@ static void BreakdownInRepay(void* p_context) {
  */
 static void TimerIdRFID(void* p_context) {
     //红外检测
-    if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0)) {
-        // if(0) {
+    static uint8_t step = 0;
+    step++;
+    if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0) && (step >= 20)) {
         // nrf_delay_ms(2000);
         app_timer_stop(TimerId_Move);
         app_timer_stop(TimerId_Lock);
-        DBG_LOG("取伞成功");
         Motor_staus = status_output_unbrella_success;
         //关闭开关门
         MOTOR_FORWARD(4);
