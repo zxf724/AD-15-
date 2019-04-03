@@ -98,7 +98,7 @@ void Protocol_DateProcPoll(void) {
         DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
         if (Protocol_Analyse(p, len) == 0) {
             DBG_LOG("Invalid BLE format, BLE disconnect.");
-            // user_BLE_Disconnected();
+            user_BLE_Disconnected();
         }
         DBG_LOG("RTC_ReadCount() - AuthOK_TS = %02u.s", RTC_ReadCount() - AuthOK_TS);
     } else {
@@ -109,7 +109,7 @@ void Protocol_DateProcPoll(void) {
         if (BLE_Connect && RTC_ReadCount() - AuthOK_TS > BLE_CONNECT_TIMEOUT) {
             AuthOK_TS = RTC_ReadCount();
             DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
-            // user_BLE_Disconnected();
+            user_BLE_Disconnected();
             DBG_LOG("Timeout disconnected.");
         }
     }
@@ -239,6 +239,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
     DBG_LOG("Protocol_Analyse:");
     for (i = 0; i < len; i++) {
         DBG_LOG("0x%02X.", (uint8_t) * (dat + i));
+        // printf("0x%02X.", (uint8_t) * (dat + i));
     }
     /*单包命令*/
     if (dat[0] == 0) {
@@ -250,6 +251,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
+            // printf("0x%02X.", (uint8_t) * (dat + i));
         }
         dat[0] = dat[0] >> 2;
         DBG_LOG("here is the cmd = 0x%02X", dat[0]);
@@ -307,6 +309,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
+                WorkData.DeviceID = 1;
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
                     DBG_LOG("timing .....");
                     memcpy(temp, (uint8_t*)&dat[11], 4);
