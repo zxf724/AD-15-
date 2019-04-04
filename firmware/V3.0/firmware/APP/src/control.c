@@ -478,6 +478,7 @@ static void Motor_TimerCB(void* p_context) {
     }
     if ((flag_if_is_have_unber == 1) && (RFID_flag > 0)) {
         MOTOR_STOP(1);
+        Motor_staus = status_start_output_unbrella;
     }
     /*延时检查是否过流*/
     if (motorTick > 10 && MOTOR_IS_STUCK()) {
@@ -492,10 +493,8 @@ static void Motor_TimerCB(void* p_context) {
         motorTick = 0;
         Stop_Action(1);
         // if (Motor_staus == status_start_output_unbrella) {
-        if (RFID_Read > 0) {
-            Move_Forward_Action();
-            DBG_LOG("In Move_Forward_Action()");
-        }
+        Move_Forward_Action();
+        DBG_LOG("In Move_Forward_Action()");        // }
         // }
     }
     /*超时停止*/
@@ -801,7 +800,7 @@ static void BreakdownInRepay(void* p_context) {
         flag_switch = 1;
         i = 0;
     }
-    if(i >= 80) {
+    if(i >= 50) {
         DBG_LOG("请尽快还伞");
         Motor_staus = status_input_unbrella_soon;
         i = 0;

@@ -99,7 +99,7 @@ int main(void) {
         Protocol_DateProcPoll();
         CommandReceive_Poll();
         Control_Polling();
-        GPRS_Polling();
+        // GPRS_Polling();
         // MQTT_Conn_Polling();
         /*Ω¯»Î–›√ﬂ*/
         if (user_uart_RecLength() == 0) {
