@@ -100,7 +100,7 @@ int main(void) {
         CommandReceive_Poll();
         Control_Polling();
         GPRS_Polling();
-        // MQTT_Conn_Polling();
+        MQTT_Conn_Polling();
         /*Ω¯»Î–›√ﬂ*/
         if (user_uart_RecLength() == 0) {
             sd_app_evt_wait();
