@@ -98,7 +98,7 @@ void Protocol_DateProcPoll(void) {
         DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
         if (Protocol_Analyse(p, len) == 0) {
             DBG_LOG("Invalid BLE format, BLE disconnect.");
-            user_BLE_Disconnected();
+            // user_BLE_Disconnected();
         }
         DBG_LOG("RTC_ReadCount() - AuthOK_TS = %02u.s", RTC_ReadCount() - AuthOK_TS);
     } else {
@@ -109,7 +109,7 @@ void Protocol_DateProcPoll(void) {
         if (BLE_Connect && RTC_ReadCount() - AuthOK_TS > BLE_CONNECT_TIMEOUT) {
             AuthOK_TS = RTC_ReadCount();
             DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
-            user_BLE_Disconnected();
+            // user_BLE_Disconnected();
             DBG_LOG("Timeout disconnected.");
         }
     }
@@ -167,6 +167,7 @@ void Send_Cmd(uint8_t cmd, uint8_t* arg, uint8_t len) {
     buf[0] = 0;
     buf[1] = cmd << 2;
     buf[1] |= MSG_TYPE_CMD;
+    DBG_LOG("before encryption: buf[1] = 0X%x", buf[1]);
     /*真随机数*/
     memcpy(&buf[2], (uint8_t*)Create_Random(), 4);
     /*滚动计数值*/
@@ -188,6 +189,8 @@ void Send_Cmd(uint8_t cmd, uint8_t* arg, uint8_t len) {
     memcpy(ecb_data.key, Key_Default, 16);
     sd_ecb_block_encrypt(&ecb_data);
     memcpy(&buf[1], ecb_data.ciphertext, 16);
+    DBG_LOG("buf[0] = 0x%x", buf[0]);
+    DBG_LOG("after encryption: buf[1] = 0x%x", buf[1]);
     user_BLE_Send(buf, 17);
 #else
     user_BLE_Send(buf, len);
@@ -251,8 +254,6 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
         }
-        dat[0] = dat[0] >> 2;
-        DBG_LOG("here is the cmd = 0x%02X", dat[0]);
 #endif
         return Protocol_Cmd_Analy((uint8_t*)dat, (uint8_t)len);
     }
@@ -294,18 +295,20 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
         return 0;
     }
     DBG_LOG("Command type valid！");
+    dat[0] = dat[0] >> 2;
+    DBG_LOG("here is the cmd = 0x%02X", dat[0]);
     /*比较滚动同步计数值*/
     run = (dat[6] << 8) | dat[5];
     if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
         ret = 1;
         /*命令处理*/
-        cmd = dat[0] | 0x01;
+        cmd = dat[0];
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
             /*校时*/
             case CMD_TIME_RALIB:
                 memcpy(temp, (uint8_t*)&dat[7], 4);
-                //tmp = (dat[7] << 8) | (dat[8] << 6) | (dat[9] << 4) | dat[10];
+                //tmp = (dat[7] << 24) | (dat[8] << 16) | (dat[9] << 8) | dat[10];
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
                 WorkData.DeviceID = 1;
