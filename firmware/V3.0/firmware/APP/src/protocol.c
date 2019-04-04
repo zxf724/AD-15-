@@ -334,6 +334,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 // if (*(uint32_t*)temp == WorkData.DeviceID) {
                 if(1) {
                     Borrow_Action();
+                    Motor_staus = status_start_output_unbrella;
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
                 break;
