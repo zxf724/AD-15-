@@ -480,7 +480,7 @@ static void Motor_TimerCB(void* p_context) {
         MOTOR_FORWARD(1);
         flag_if_is_have_unber = 1;
     }
-    if ((flag_if_is_have_unber == 1) && (RFID_flag > 0)) {
+    if ((flag_if_is_have_unber == 1) && (RFID_Read > 0)) {
         MOTOR_STOP(1);
     }
     /*延时检查是否过流*/
