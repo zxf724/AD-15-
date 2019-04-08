@@ -220,6 +220,9 @@ void TestFun(void) {
     //     DBG_LOG("hello,world!");
     //     MOTOR_STOP(1);
     // }
+    // if(IF_IS_TOUCH(7) == 0){
+    //   DBG_LOG("here!!");
+    // }
     // MOTOR_BACK(1);
     // /*****************/
     // /*test push unberally motor--finish*/
@@ -245,6 +248,9 @@ void TestFun(void) {
     // if(IR_CHECK() == 0) {   // output 1 when it cover
     //     DBG_LOG("here is in the infrared sensor");
     //     DBG_LOG("here is the ");
+    // }
+    // if(IR_CHECK() == 1){
+    //   DBG_LOG("done!!");
     // }
     // /**********************/
     // /*test switch door motor---finish*/
@@ -295,7 +301,6 @@ void TestFun(void) {
     // /**********************/
     // /*test video*/
     // /**********************/
-    // nrf_delay_ms(2000);
     // TTS_Play("RAM:FullUnbrella.mp3");
     // nrf_delay_ms(3000);
     // TTS_Play("RAM:HaveNoUnbrella.mp3");
