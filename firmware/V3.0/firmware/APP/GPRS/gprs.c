@@ -679,7 +679,7 @@ static uint16_t TCPIP_Send(uint8_t* data, uint16_t len) {
  * @param text   待播报的文本
  */
 static void  TTS_Play(char* text) {
-    GPRS_AT_PRINTF("QAUDPLAY=\"%s\",0,10,0", text);
+    GPRS_AT_PRINTF("QAUDPLAY=\"%s\",0,50,0", text);
     GPRS_WAIT_ACK("OK", 3000);
 }
 
