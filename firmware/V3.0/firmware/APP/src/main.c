@@ -244,6 +244,7 @@ void TestFun(void) {
     // IO_H(IR_SW);
     // if(IR_CHECK() == 0) {   // output 1 when it cover
     //     DBG_LOG("here is in the infrared sensor");
+    //     DBG_LOG("here is the ");
     // }
     // /**********************/
     // /*test switch door motor---finish*/
@@ -287,6 +288,9 @@ void TestFun(void) {
     // /*test  RFID*/
     // /*7E 1B A7 12 04 6D 18 C9 A5 49*/
     // /* 6D 18 C9 A5 is data 04 is data len*/
+    // static uint32_t  RFID_Read = 0;
+    // RFID_Read = GPRS_ReadRFID(2);
+    // DBG_LOG("RFID_Read = %u", RFID_Read);
     // /**********************/
     // /**********************/
     // /*test video*/
@@ -295,17 +299,6 @@ void TestFun(void) {
     // TTS_Play("RAM:FullUnbrella.mp3");
     // nrf_delay_ms(3000);
     // TTS_Play("RAM:HaveNoUnbrella.mp3");
-    // /**********************/
-    // /*test RFID_READ*/
-    // /**********************/
-    // static uint32_t RFID_Read = 0;
-    // RFID_Read = GPRS_ReadRFID(2);
-    // if(RFID_Read > 0) {
-    //     DBG_LOG("RFID_Read = %u", RFID_Read);
-    // } else {
-    //     DBG_LOG("RFID_Read = %u", RFID_Read);
-    // }
-    // nrf_delay_ms(1000);
 }
 
 /**÷ÿ÷√∫Ø ˝

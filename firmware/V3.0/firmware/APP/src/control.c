@@ -464,46 +464,49 @@ static void Move_TimerCB(void * p_context) {
  */
 static void Motor_TimerCB(void* p_context) {
     /*打开开关门电机*/
-    if(flag_motor4 == 0) {
-        MOTOR_BACK(4);
-        flag_motor4 = 1;
-    }
-    if(IF_IS_TOUCH(3) == 0) {
-        MOTOR_STOP(4);
-    }
+    // if(flag_motor4 == 0) {
+    //     MOTOR_BACK(4);
+    //     flag_motor4 = 1;
+    // }
+    // if(IF_IS_TOUCH(3) == 0) {
+    //     MOTOR_STOP(4);
+    // }
     //判断是否有伞
     if((RFID_Read == 0) && (flag_if_is_have_unber == 0)) {
-        MOTOR_FORWARD(1);
+        // MOTOR_FORWARD(1);
         flag_if_is_have_unber = 1;
+        DBG_LOG("判断是否有伞");
     }
-    if ((flag_if_is_have_unber == 1) && (RFID_flag > 0)) {
+    DBG_LOG("flag_if_is_have_unber = %d",flag_if_is_have_unber);
+    if ((flag_if_is_have_unber == 1) && (RFID_Read > 0)) {
         MOTOR_STOP(1);
         Motor_staus = status_start_output_unbrella;
+        DBG_LOG("停止");
     }
     /*延时检查是否过流*/
-    if (motorTick > 10 && MOTOR_IS_STUCK()) {
-        LED_MOTOR_OVER_FLASH();
-        app_timer_stop(TimerId_Lock);
-        Stop_Action(1);
-        Motor_staus = status_motor_stuck;
-        DBG_LOG("Motor is Stuck.");
-    }
-    /*延时检查到位*/
-    if ((motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (RFID_Read > 0)) {
-        motorTick = 0;
-        Stop_Action(1);
-        // if (Motor_staus == status_start_output_unbrella) {
-        Move_Forward_Action();
-        DBG_LOG("In Move_Forward_Action()");        // }
-        // }
-    }
-    /*超时停止*/
-    if (motorTick++ >= MOTOR_OVERFLOW_TIMES) {
-        motorTick = 0;
-        Stop_Action(1);
-        Motor_staus = status_timeout;
-        DBG_LOG("Motor Running Timeout.");
-    }
+    // if (motorTick > 10 && MOTOR_IS_STUCK()) {
+    //     LED_MOTOR_OVER_FLASH();
+    //     app_timer_stop(TimerId_Lock);
+    //     Stop_Action(1);
+    //     Motor_staus = status_motor_stuck;
+    //     DBG_LOG("Motor is Stuck.");
+    // }
+    // /*延时检查到位*/
+    // if ((motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (RFID_Read > 0)) {
+    //     motorTick = 0;
+    //     Stop_Action(1);
+    //     // if (Motor_staus == status_start_output_unbrella) {
+    //     Move_Forward_Action();
+    //     DBG_LOG("In Move_Forward_Action()");        // }
+    //     // }
+    // }
+    // /*超时停止*/
+    // if (motorTick++ >= MOTOR_OVERFLOW_TIMES) {
+    //     motorTick = 0;
+    //     Stop_Action(1);
+    //     Motor_staus = status_timeout;
+    //     DBG_LOG("Motor Running Timeout.");
+    // }
 }
 /**
  * 网络指示灯定时器回调
