@@ -19,8 +19,7 @@
 
 #if DEBUG == 1
 #define DBG_LOG(format, ...)            do {Switch_Uart_Init(0); \
-        printf("> "format"\r\n", ##__VA_ARGS__); \
-        Switch_Uart_Init(1);} while(0)
+        printf("> "format"\r\n", ##__VA_ARGS__);} while(0)
 #define DBG_SEND(data, len)             do {UART_TX_PIN_SELECT(TX_PIN_NUMBER); \
         user_uart_SendData(data, len);\
         UART_TX_PIN_SELECT(UART_TX_DEFAULT_PIN);} while(0)
