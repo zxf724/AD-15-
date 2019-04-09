@@ -275,7 +275,6 @@ void Borrow_Action(void) {
         DBG_LOG("Borrow_Action IR Stuck.");
     } else {
         DBG_LOG("Borrow_Action NOT stuck!");
-        // Motor_staus = status_borrow;
         LED_ON(STATUS);
         app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
     }
@@ -738,11 +737,17 @@ static void TimerIdInRepay(void* p_context) {
                 app_timer_stop(TimerId_In_Repay);
             }
         }
-        if((RFID_Read > 0) && (IR_CHECK() == 1) && (step1 >= 50)) {
+        if((RFID_Read > 0) && (IR_CHECK() == 1) && (step1 >= 25)) {
             if(flag_already == 0) {
                 MOTOR_FORWARD(4);
                 flag_already = 1;
             }
+        }
+        if(IR_CHECK() == 1){
+            DBG_LOG("IR_CHECK() == 1");
+        }
+        if(RFID_Read > 0){
+            DBG_LOG("RFID_Read > 0");
         }
         if((IF_IS_TOUCH(5) == 0) && (flag_already == 1)) {
             MOTOR_STOP(4);

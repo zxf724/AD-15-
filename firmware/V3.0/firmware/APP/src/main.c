@@ -210,7 +210,7 @@ void TestFun(void) {
     // /*****************/
     // static uint8_t step = 0, flag_motor1 = 0;
     // if(flag_motor1 == 0) {
-    //     MOTOR_FORWARD(1);
+        // MOTOR_FORWARD(1);
     //     flag_motor1 = 1;
     // }
     // step++;

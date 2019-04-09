@@ -342,7 +342,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             case CMD_RETURN_UMBRELLA:
                 DBG_LOG("RepayInAction...");
                 Motor_staus = status_start_input_unbrella;
-                // Repay_Action();
+                Repay_Action();
                 break;
             /*ªππ ’œ…°*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
