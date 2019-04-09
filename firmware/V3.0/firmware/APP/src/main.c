@@ -95,7 +95,7 @@ int main(void) {
     for (;;) {
         TestFun();
         // Reset();
-        // WatchDog_Clear();
+        WatchDog_Clear();
         Protocol_DateProcPoll();
         CommandReceive_Poll();
         Control_Polling();
