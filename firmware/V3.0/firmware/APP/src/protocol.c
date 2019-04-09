@@ -249,7 +249,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         dat++;
         len--;
 #if USE_AES == 1
-        // AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
+        AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
@@ -308,7 +308,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             /*校时*/
             case CMD_TIME_RALIB:
                 memcpy(temp, (uint8_t*)&dat[7], 4);
-                for(uint i=0;i<=3;i++){
+                for(uint8_t i=0;i<=3;i++){
                     DBG_LOG("dat[%d] = %d",i,temp[i]);
                 }
                 //tmp = (dat[7] << 24) | (dat[8] << 16) | (dat[9] << 8) | dat[10];
