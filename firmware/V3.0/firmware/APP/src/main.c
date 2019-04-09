@@ -100,7 +100,7 @@ int main(void) {
         CommandReceive_Poll();
         Control_Polling();
         GPRS_Polling();
-        // MQTT_Conn_Polling();
+        MQTT_Conn_Polling();
         /*进入休眠*/
         if (user_uart_RecLength() == 0) {
             sd_app_evt_wait();
@@ -210,7 +210,7 @@ void TestFun(void) {
     // /*****************/
     // static uint8_t step = 0, flag_motor1 = 0;
     // if(flag_motor1 == 0) {
-    //     MOTOR_FORWARD(1);
+        // MOTOR_FORWARD(1);
     //     flag_motor1 = 1;
     // }
     // step++;
@@ -219,6 +219,9 @@ void TestFun(void) {
     // if((IF_IS_TOUCH(7) == 0) && (step >= 100)) {
     //     DBG_LOG("hello,world!");
     //     MOTOR_STOP(1);
+    // }
+    // if(IF_IS_TOUCH(7) == 0){
+    //   DBG_LOG("here!!");
     // }
     // MOTOR_BACK(1);
     // /*****************/
@@ -244,6 +247,10 @@ void TestFun(void) {
     // IO_H(IR_SW);
     // if(IR_CHECK() == 0) {   // output 1 when it cover
     //     DBG_LOG("here is in the infrared sensor");
+    //     DBG_LOG("here is the ");
+    // }
+    // if(IR_CHECK() == 1){
+    //   DBG_LOG("done!!");
     // }
     // /**********************/
     // /*test switch door motor---finish*/
@@ -287,25 +294,16 @@ void TestFun(void) {
     // /*test  RFID*/
     // /*7E 1B A7 12 04 6D 18 C9 A5 49*/
     // /* 6D 18 C9 A5 is data 04 is data len*/
+    // static uint32_t  RFID_Read = 0;
+    // RFID_Read = GPRS_ReadRFID(2);
+    // DBG_LOG("RFID_Read = %u", RFID_Read);
     // /**********************/
     // /**********************/
     // /*test video*/
     // /**********************/
-    // nrf_delay_ms(2000);
     // TTS_Play("RAM:FullUnbrella.mp3");
     // nrf_delay_ms(3000);
     // TTS_Play("RAM:HaveNoUnbrella.mp3");
-    // /**********************/
-    // /*test RFID_READ*/
-    // /**********************/
-    // static uint32_t RFID_Read = 0;
-    // RFID_Read = GPRS_ReadRFID(2);
-    // if(RFID_Read > 0) {
-    //     DBG_LOG("RFID_Read = %u", RFID_Read);
-    // } else {
-    //     DBG_LOG("RFID_Read = %u", RFID_Read);
-    // }
-    // nrf_delay_ms(1000);
 }
 
 /**重置函数

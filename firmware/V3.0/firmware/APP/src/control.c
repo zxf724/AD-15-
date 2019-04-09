@@ -45,7 +45,7 @@ APP_TIMER_DEF(TimerId_In_Repay);
 APP_TIMER_DEF(TimerId_BreakDown);
 APP_TIMER_DEF(TimerId_RFID);
 
-static uint8_t TTS_Step = 0, Direction = 0, move_status = 0, RFID_flag = 0,
+static uint8_t TTS_Step = 0, move_status = 0, RFID_flag = 0,
                move_step = 0, timeout_status = 0, IR_Status = 0;
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
 static uint8_t flag_motor4 = 0, flag_if_is_have_unber = 0, flag_if_is_have_unb = 0,
@@ -260,7 +260,6 @@ void Borrow_Action(void) {
     flag_IR_SW = 1;
     motorTick = 0;
     nrf_delay_ms(80);
-    Direction = 1;
     flag_RFID_GPRS_Read = 1;
     WorkData.StockCount = 3;        //单独测试
     if (WorkData.StockCount == 0) {
@@ -276,19 +275,16 @@ void Borrow_Action(void) {
         DBG_LOG("Borrow_Action IR Stuck.");
     } else {
         DBG_LOG("Borrow_Action NOT stuck!");
-        // Motor_staus = status_borrow;
         LED_ON(STATUS);
         app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
     }
 }
 
 static void Reback_Action(void) {
-    Direction = 2;
     MOTOR_BACK(1);
     app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
 }
 static void Reforward_Action(void) {
-    Direction = 1;
     MOTOR_FORWARD(1);
     app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
 }
@@ -301,7 +297,6 @@ void Repay_Action(void) {
     app_timer_stop(TimerId_Lock);
     flag_IR_SW = 1;
     motorTick = 0;
-    Direction = 2;
     nrf_delay_ms(80);
     WorkData.StockCount = 9; //test
     if (WorkData.StockCount >= WorkData.StockMax) {
@@ -480,10 +475,11 @@ static void Motor_TimerCB(void* p_context) {
         MOTOR_FORWARD(1);
         flag_if_is_have_unber = 1;
     }
-    if ((flag_if_is_have_unber == 1) && (RFID_Read > 0)) {
+    if ((flag_if_is_have_unber == 1) && (RFID_Read > 0) && (IF_IS_TOUCH(7) == 0)) {
         MOTOR_STOP(1);
+        Motor_staus = status_start_output_unbrella;
     }
-    /*延时检查是否过流*/
+    // /*延时检查是否过流*/
     if (motorTick > 10 && MOTOR_IS_STUCK()) {
         LED_MOTOR_OVER_FLASH();
         app_timer_stop(TimerId_Lock);
@@ -495,12 +491,10 @@ static void Motor_TimerCB(void* p_context) {
     if ((motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (RFID_Read > 0)) {
         motorTick = 0;
         Stop_Action(1);
-        // if (Motor_staus == status_start_output_unbrella) {
-        if (RFID_Read > 0) {
-            Move_Forward_Action();
-            DBG_LOG("In Move_Forward_Action()");
+        if (Motor_staus == status_start_output_unbrella) {
+        Move_Forward_Action();
+        DBG_LOG("In Move_Forward_Action()");
         }
-        // }
     }
     /*超时停止*/
     if (motorTick++ >= MOTOR_OVERFLOW_TIMES) {
@@ -633,7 +627,6 @@ static void RepayInAction(void *a) {
     static uint8_t i, flag_is_have = 0;
     static uint8_t flag_motor41 = 0;
     static uint16_t motorTick1 = 0;
-    Direction = 1;
     app_timer_stop(TimerId_RFID);
     app_timer_stop(TimerId_Lock);
     WorkData.StockCount = 3;        //单独测试
@@ -702,7 +695,6 @@ void Breakdown_Repay(void) {
     MOTOR_FORWARD(3);
     flag_IR_SW = 1;
     flag_RFID_GPRS_Read = 2;
-    //TTS_Play("请将伞折叠好后伞头向里放入还伞口");
     DBG_LOG("请将伞折叠好后伞头向里放入还伞口");
     app_timer_start(TimerId_BreakDown, APP_TIMER_TICKS(MOVE_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
 }
@@ -745,11 +737,17 @@ static void TimerIdInRepay(void* p_context) {
                 app_timer_stop(TimerId_In_Repay);
             }
         }
-        if((RFID_Read > 0) && (IR_CHECK() == 1) && (step1 >= 50)) {
+        if((RFID_Read > 0) && (IR_CHECK() == 1) && (step1 >= 25)) {
             if(flag_already == 0) {
                 MOTOR_FORWARD(4);
                 flag_already = 1;
             }
+        }
+        if(IR_CHECK() == 1){
+            DBG_LOG("IR_CHECK() == 1");
+        }
+        if(RFID_Read > 0){
+            DBG_LOG("RFID_Read > 0");
         }
         if((IF_IS_TOUCH(5) == 0) && (flag_already == 1)) {
             MOTOR_STOP(4);
@@ -804,9 +802,8 @@ static void BreakdownInRepay(void* p_context) {
     DBG_LOG("i = %d", i);
     if(RFID_Read > 0) {
         flag_switch = 1;
-        i = 0;
     }
-    if(i >= 80) {
+    if(i >= 50) {
         DBG_LOG("请尽快还伞");
         Motor_staus = status_input_unbrella_soon;
         i = 0;
@@ -844,12 +841,12 @@ static void BreakdownInRepay(void* p_context) {
  */
 static void TimerIdRFID(void* p_context) {
     //红外检测
-    if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0)) {
-        // if(0) {
+    static uint8_t step = 0;
+    step++;
+    if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0) && (step >= 20)) {
         // nrf_delay_ms(2000);
         app_timer_stop(TimerId_Move);
         app_timer_stop(TimerId_Lock);
-        DBG_LOG("取伞成功");
         Motor_staus = status_output_unbrella_success;
         //关闭开关门
         MOTOR_FORWARD(4);

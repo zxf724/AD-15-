@@ -25,10 +25,10 @@
 /* Exported constants --------------------------------------------------------*/
 #define MSG_TYPE_CMD			      1
 #define MSG_TYPE_DATA			      3
-#define CMD_TIME_RALIB		      0x35    //校时
-#define CMD_BORROW_UMBRELLA	    0x1A    //借伞
-#define CMD_RETURN_UMBRELLA     0xA1    //还伞
-#define CMD_RETURN_BREAKDOWN_UMBRELLA     0x1C  //还故障伞
+#define CMD_TIME_RALIB		      0x35    //school time
+#define CMD_BORROW_UMBRELLA	    0x1A    //borrow unbrally 
+#define CMD_RETURN_UMBRELLA     0xA1    //repay unbrally
+#define CMD_RETURN_BREAKDOWN_UMBRELLA     0x1C  //repay browndown unbrally
 
 
 /*协议接收处理，接收缓存栈条目的最大数量，需为2的冥次方值 */

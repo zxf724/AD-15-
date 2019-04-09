@@ -98,7 +98,7 @@ void Protocol_DateProcPoll(void) {
         DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
         if (Protocol_Analyse(p, len) == 0) {
             DBG_LOG("Invalid BLE format, BLE disconnect.");
-            // user_BLE_Disconnected();
+            user_BLE_Disconnected();
         }
         DBG_LOG("RTC_ReadCount() - AuthOK_TS = %02u.s", RTC_ReadCount() - AuthOK_TS);
     } else {
@@ -109,7 +109,7 @@ void Protocol_DateProcPoll(void) {
         if (BLE_Connect && RTC_ReadCount() - AuthOK_TS > BLE_CONNECT_TIMEOUT) {
             AuthOK_TS = RTC_ReadCount();
             DBG_LOG("AuthOK_TS %02u.s", AuthOK_TS);
-            // user_BLE_Disconnected();
+            user_BLE_Disconnected();
             DBG_LOG("Timeout disconnected.");
         }
     }
@@ -249,7 +249,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         dat++;
         len--;
 #if USE_AES == 1
-        AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
+        // AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
@@ -308,6 +308,9 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             /*校时*/
             case CMD_TIME_RALIB:
                 memcpy(temp, (uint8_t*)&dat[7], 4);
+                for(uint i=0;i<=3;i++){
+                    DBG_LOG("dat[%d] = %d",i,temp[i]);
+                }
                 //tmp = (dat[7] << 24) | (dat[8] << 16) | (dat[9] << 8) | dat[10];
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
@@ -331,11 +334,11 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             /*借伞*/
             case CMD_BORROW_UMBRELLA:
                 DBG_LOG("Borrow_Action .....");
-                Motor_staus = status_start_output_unbrella;
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
                     Borrow_Action();
+                    Motor_staus = status_start_output_unbrella;
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
                 break;
