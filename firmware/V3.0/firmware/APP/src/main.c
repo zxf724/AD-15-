@@ -93,6 +93,7 @@ int main(void) {
     LED_OFF(STATUS);
     LED_OFF(NET);
     for (;;) {
+      DBG_LOG("test!!");
         TestFun();
         // Reset();
         // WatchDog_Clear();

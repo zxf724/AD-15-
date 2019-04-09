@@ -84,8 +84,8 @@ void Switch_Uart_Init(uint8_t uart) {
             NRF_UART0->PSELTXD = UART_RX_DEFAULT_PIN;
             break;
         case 1:
-            NRF_UART0->PSELRXD = RFID_RX_PIN;
-            NRF_UART0->PSELTXD = RFID_TX_PIN;
+            NRF_UART0->PSELRXD = UART_TX_DEFAULT_PIN;//RFID_RX_PIN;
+            NRF_UART0->PSELTXD = UART_RX_DEFAULT_PIN;//RFID_TX_PIN;
             break;
     }
 }
