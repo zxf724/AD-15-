@@ -77,19 +77,24 @@ static void services_init(void) {
 static void ble_stack_init(void) {
     uint32_t err_code;
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+    DBG_LOG("error 1");
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_RC_250_PPM_500MS_CALIBRATION, NULL); //NRF_CLOCK_LFCLKSRC_XTAL_20_PPM
     ble_enable_params_t ble_enable_params;
     err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
                PERIPHERAL_LINK_COUNT, &ble_enable_params);
     APP_ERROR_CHECK(err_code);
     //Check the ram settings against the used number of links
+    DBG_LOG("error 2");
     CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT, PERIPHERAL_LINK_COUNT);
     // Enable BLE stack.
+    DBG_LOG("error 3");
     err_code = softdevice_enable(&ble_enable_params);
     APP_ERROR_CHECK(err_code);
     // Register with the SoftDevice handler module for BLE events.
+    DBG_LOG("error 4");
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
     APP_ERROR_CHECK(err_code);
+    DBG_LOG("error 5");
     // Register with the SoftDevice handler module for BLE events.
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     APP_ERROR_CHECK(err_code);
