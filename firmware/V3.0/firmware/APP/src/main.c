@@ -73,7 +73,7 @@ static void wdt_event_handler(void);
   * @retval none.
   */
 int main(void) {
-    // wdt_init(10000);
+    wdt_init(10000);
     FlashWRPProcess();
     APP_TIMER_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, false);
     BSP_Init();
@@ -93,13 +93,15 @@ int main(void) {
     LED_OFF(STATUS);
     LED_OFF(NET);
     for (;;) {
+        DBG_LOG("test!!");
+        nrf_delay_ms(1000);
         TestFun();
         // Reset();
         WatchDog_Clear();
         Protocol_DateProcPoll();
         CommandReceive_Poll();
         Control_Polling();
-        GPRS_Polling();
+        // GPRS_Polling();
         // MQTT_Conn_Polling();
         /*Ω¯»Î–›√ﬂ*/
         if (user_uart_RecLength() == 0) {
