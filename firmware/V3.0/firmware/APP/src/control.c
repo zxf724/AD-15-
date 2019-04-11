@@ -93,6 +93,7 @@ void Control_Init(void) {
     app_timer_create(&TimerId_LED_NET, APP_TIMER_MODE_SINGLE_SHOT, LED_NET_TimerCB);
     app_timer_create(&TimerId_LED_STATUS, APP_TIMER_MODE_SINGLE_SHOT, LED_STATUS_TimerCB);
     app_timer_create(&TimerId_TTS, APP_TIMER_MODE_SINGLE_SHOT, TTS_TimerCB);
+    
     CMD_ENT_DEF(control, funControl);
     Cmd_AddEntrance(CMD_ENT(control));
     DBG_LOG("Device control init.");
