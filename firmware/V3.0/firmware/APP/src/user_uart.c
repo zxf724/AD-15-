@@ -55,7 +55,9 @@ void user_uart_init(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate) 
 #if UART_TX_USE_INT == 1
     FIFO_Init(&UART_SendFIFO, UART_Send_Buffer, UART_TX_BUF_SIZE);
 #endif
-// app_timer_create(&TimerId_UARTresume, APP_TIMER_MODE_SINGLE_SHOT, UART_Resume_TimerCB);
+
+    app_timer_create(&TimerId_UARTresume, APP_TIMER_MODE_SINGLE_SHOT, UART_Resume_TimerCB);
+    
     NRF_UART0->EVENTS_RXDRDY = 0;
     NRF_UART0->EVENTS_TXDRDY = 0;
     NRF_UART0->EVENTS_ERROR = 0;
@@ -73,10 +75,26 @@ void user_uart_init(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate) 
 #endif
     nrf_drv_common_irq_enable(UART0_IRQn, APP_IRQ_PRIORITY_LOW);
     NRF_UART0->ENABLE = UART_ENABLE_ENABLE_Enabled;
+
+//start serial port 
+if (!nrf_drv_gpiote_is_init()) {
+    nrf_drv_gpiote_init();
+  }
+
+  nrf_drv_gpiote_in_config_t config = GPIOTE_CONFIG_IN_SENSE_HITOLO(false);
+  config.pull = NRF_GPIO_PIN_PULLUP;
+
+  nrf_drv_gpiote_in_init(RX_PIN_NUMBER, &config, uart_incoming_handler);
+
+  nrf_drv_gpiote_in_event_enable(RX_PIN_NUMBER, false);
+//end serial port 
+
 #if (DEBUG == 1)
     DBG_LOG("UART init...");
 #endif
 }
+
+
 void Switch_Uart_Init(uint8_t uart) {
     switch(uart) {
         case 0:
@@ -84,8 +102,8 @@ void Switch_Uart_Init(uint8_t uart) {
             NRF_UART0->PSELTXD = UART_RX_DEFAULT_PIN;
             break;
         case 1:
-            NRF_UART0->PSELRXD = RFID_RX_PIN;
-            NRF_UART0->PSELTXD = RFID_TX_PIN;
+            NRF_UART0->PSELRXD = RX_PIN_NUMBER;//RFID_RX_PIN;
+            NRF_UART0->PSELTXD = TX_PIN_NUMBER;//RFID_TX_PIN;
             break;
     }
 }
@@ -222,7 +240,6 @@ static void uart_incoming_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_
     if (UART_MutexCount == 0) {
         NRF_UART0->TASKS_STOPRX = 1;
         rxPIN = pin;
-        nrf_drv_gpiote_in_event_disable(RFID_RX_PIN);
         nrf_drv_gpiote_in_event_disable(RX_PIN_NUMBER);
         app_timer_start(TimerId_UARTresume, APP_TIMER_TICKS(20, APP_TIMER_PRESCALER), NULL);
     }
@@ -243,8 +260,7 @@ static void UART_Resume_TimerCB(void* p_context) {
         step = 1;
     } else {
         step = 0;
-        UART_RX_PIN_SELECT(UART_RX_DEFAULT_PIN);
-        nrf_drv_gpiote_in_event_enable(RFID_RX_PIN, false);
+        UART_RX_PIN_SELECT(M26RX);
         nrf_drv_gpiote_in_event_enable(RX_PIN_NUMBER, false);
     }
 }

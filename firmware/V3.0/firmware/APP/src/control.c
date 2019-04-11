@@ -93,6 +93,7 @@ void Control_Init(void) {
     app_timer_create(&TimerId_LED_NET, APP_TIMER_MODE_SINGLE_SHOT, LED_NET_TimerCB);
     app_timer_create(&TimerId_LED_STATUS, APP_TIMER_MODE_SINGLE_SHOT, LED_STATUS_TimerCB);
     app_timer_create(&TimerId_TTS, APP_TIMER_MODE_SINGLE_SHOT, TTS_TimerCB);
+    
     CMD_ENT_DEF(control, funControl);
     Cmd_AddEntrance(CMD_ENT(control));
     DBG_LOG("Device control init.");
@@ -844,7 +845,6 @@ static void TimerIdRFID(void* p_context) {
     static uint8_t step = 0;
     step++;
     if((IR_CHECK() == 1) && (flag_IR_CHECK == 1) && (RFID_Read == 0) && (step >= 20)) {
-        // nrf_delay_ms(2000);
         app_timer_stop(TimerId_Move);
         app_timer_stop(TimerId_Lock);
         Motor_staus = status_output_unbrella_success;
