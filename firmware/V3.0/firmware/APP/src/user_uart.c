@@ -55,7 +55,9 @@ void user_uart_init(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate) 
 #if UART_TX_USE_INT == 1
     FIFO_Init(&UART_SendFIFO, UART_Send_Buffer, UART_TX_BUF_SIZE);
 #endif
-// app_timer_create(&TimerId_UARTresume, APP_TIMER_MODE_SINGLE_SHOT, UART_Resume_TimerCB);
+
+    app_timer_create(&TimerId_UARTresume, APP_TIMER_MODE_SINGLE_SHOT, UART_Resume_TimerCB);
+    
     NRF_UART0->EVENTS_RXDRDY = 0;
     NRF_UART0->EVENTS_TXDRDY = 0;
     NRF_UART0->EVENTS_ERROR = 0;
@@ -100,8 +102,8 @@ void Switch_Uart_Init(uint8_t uart) {
             NRF_UART0->PSELTXD = UART_RX_DEFAULT_PIN;
             break;
         case 1:
-            NRF_UART0->PSELRXD = UART_TX_DEFAULT_PIN;//RFID_RX_PIN;
-            NRF_UART0->PSELTXD = UART_RX_DEFAULT_PIN;//RFID_TX_PIN;
+            NRF_UART0->PSELRXD = RX_PIN_NUMBER;//RFID_RX_PIN;
+            NRF_UART0->PSELTXD = TX_PIN_NUMBER;//RFID_TX_PIN;
             break;
     }
 }

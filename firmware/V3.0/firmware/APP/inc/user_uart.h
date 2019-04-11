@@ -12,14 +12,15 @@
 #define UART_TX_BUF_SIZE                256        /**< UART TX buffer size. */
 #define UART_RX_BUF_SIZE                512        /**< UART RX buffer size. */
 
-#define UART_TX_DEFAULT_PIN             RX_PIN_NUMBER//GSM_TXD_PIN
-#define UART_RX_DEFAULT_PIN             TX_PIN_NUMBER//GSM_RXD_PIN
+#define UART_TX_DEFAULT_PIN             GSM_TXD_PIN
+#define UART_RX_DEFAULT_PIN             GSM_RXD_PIN
 
 #define UART_RESUME_DELAY               1000
 
 #if DEBUG == 1
-#define DBG_LOG(format, ...)            do {Switch_Uart_Init(0); \
-        printf("> "format"\r\n", ##__VA_ARGS__);} while(0)
+#define DBG_LOG(format, ...)            do {Switch_Uart_Init(1); \
+        printf("> "format"\r\n", ##__VA_ARGS__);\
+        Switch_Uart_Init(0);} while(0)
 #define DBG_SEND(data, len)             do {UART_TX_PIN_SELECT(TX_PIN_NUMBER); \
         user_uart_SendData(data, len);\
         UART_TX_PIN_SELECT(UART_TX_DEFAULT_PIN);} while(0)
