@@ -360,6 +360,11 @@ void Reset(void) {
       nrf_delay_ms(200);
       break;
     }
+    //test
+    while(1){
+      nrf_delay_ms(200);
+      break;
+    }
 }
 
 
