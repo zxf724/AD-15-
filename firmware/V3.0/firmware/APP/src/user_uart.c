@@ -84,7 +84,7 @@ if (!nrf_drv_gpiote_is_init()) {
   nrf_drv_gpiote_in_config_t config = GPIOTE_CONFIG_IN_SENSE_HITOLO(false);
   config.pull = NRF_GPIO_PIN_PULLUP;
 
-  nrf_drv_gpiote_in_init(RX_PIN_NUMBER, &config, uart_incoming_handler);
+  nrf_drv_gpiote_in_init(RX_PIN_NUMBER, &config, uart_incoming_handler);  //回调函数设置
 
   nrf_drv_gpiote_in_event_enable(RX_PIN_NUMBER, false);
 //end serial port 
