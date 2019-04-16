@@ -262,7 +262,6 @@ void Borrow_Action(void) {
     motorTick = 0;
     nrf_delay_ms(80);
     flag_RFID_GPRS_Read = 1;
-    WorkData.StockCount = 3;        //µ•∂¿≤‚ ‘
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
         Motor_staus = status_have_no_unbrella;

@@ -93,7 +93,7 @@ int main(void) {
     LED_OFF(STATUS);
     LED_OFF(NET);
     for (;;) {
-        TestFun();
+        // TestFun();
         // Reset();
         WatchDog_Clear();
         Protocol_DateProcPoll();
@@ -205,105 +205,105 @@ static void wdt_event_handler(void) {
   * @}
   */
 void TestFun(void) {
-    // /*****************/
-    // /*test main motor--finish*/
-    // /*****************/
-    // static uint8_t step = 0, flag_motor1 = 0;
-    // if(flag_motor1 == 0) {
-        // MOTOR_FORWARD(1);
-    //     flag_motor1 = 1;
-    // }
-    // step++;
-    // DBG_LOG("step = %d", step);
-    // DBG_LOG("flag_motor1 = %d", flag_motor1);
-    // if((IF_IS_TOUCH(7) == 0) && (step >= 100)) {
-    //     DBG_LOG("hello,world!");
-    //     MOTOR_STOP(1);
-    // }
-    // if(IF_IS_TOUCH(7) == 0){
-    //   DBG_LOG("here!!");
-    // }
-    // MOTOR_BACK(1);
-    // /*****************/
-    // /*test push unberally motor--finish*/
-    // /*****************/
-    // static uint8_t flag_motor2 = 0, flag_if_is_touch = 0;
-    // if(flag_motor2 == 0) {
-    // MOTOR_FORWARD(2);
-    //     flag_motor2 = 1;
-    //     flag_if_is_touch = 1;
-    // }
-    // if(IF_IS_TOUCH(1) == 0) {
-    // MOTOR_BACK(2);
-    //     flag_if_is_touch = 0;
-    // }
-    // if((IF_IS_TOUCH(2) == 0) && (flag_if_is_touch == 0)) {
-    //     MOTOR_STOP(2);
-    //     flag_motor2 = 0;
-    // }
-    // /**********************/
-    // /*test infrared sensor*/
-    // /**********************/
-    // IO_H(IR_SW);
-    // if(IR_CHECK() == 0) {   // output 1 when it cover
-    //     DBG_LOG("here is in the infrared sensor");
-    //     DBG_LOG("here is the ");
-    // }
-    // if(IR_CHECK() == 1){
-    //   DBG_LOG("done!!");
-    // }
-    // /**********************/
-    // /*test switch door motor---finish*/
-    // /**********************/
-    // static uint8_t flag_motor4 = 0, flag_if_is_touch = 0;
-    // if(flag_motor4 == 0) {
-    //     MOTOR_BACK(4);
-    //     flag_motor4 = 1;
-    //     flag_if_is_touch = 1;
-    //     DBG_LOG("test!");
-    // }
-    // if(IF_IS_TOUCH(3) == 0) {
-    //     MOTOR_STOP(4);
-    //     MOTOR_FORWARD(4);
-    //     flag_if_is_touch = 0;
-    //     DBG_LOG("test in if_is_touch(3)");
-    // }
-    // if((IF_IS_TOUCH(5) == 0) && (flag_if_is_touch == 0)) {
-    //     MOTOR_STOP(4);
-    //     flag_motor4 = 0;
-    // }
-    // /**********************/
-    // /*test fault umberlla motor---finish*/
-    // /**********************/
-    // static uint8_t flag_motor3 = 0, flag_if_is_touch = 0;
-    // if(flag_motor3 == 0) {
-    //     MOTOR_FORWARD(3);
-    //     flag_motor3 = 1;
-    //     flag_if_is_touch = 1;
-    // }
-    // if(IF_IS_TOUCH(4) == 0) {
-    //     MOTOR_STOP(3);
-    //     MOTOR_BACK(3);
-    //     flag_if_is_touch = 0;
-    // }
-    // if((IF_IS_TOUCH(6) == 0) && (flag_if_is_touch == 0)) {
-    //     MOTOR_STOP(3);
-    //     flag_motor3 = 0;
-    // }
-    // /**********************/
-    // /*test  RFID*/
-    // /*7E 1B A7 12 04 6D 18 C9 A5 49*/
-    // /* 6D 18 C9 A5 is data 04 is data len*/
-    // static uint32_t  RFID_Read = 0;
-    // RFID_Read = GPRS_ReadRFID(2);
-    // DBG_LOG("RFID_Read = %u", RFID_Read);
-    // /**********************/
-    // /**********************/
-    // /*test video*/
-    // /**********************/
-    // TTS_Play("RAM:FullUnbrella.mp3");
-    // nrf_delay_ms(3000);
-    // TTS_Play("RAM:HaveNoUnbrella.mp3");
+    /*****************/
+    /*test main motor--finish*/
+    /*****************/
+    static uint8_t step = 0, flag_motor1 = 0;
+    if(flag_motor1 == 0) {
+        MOTOR_FORWARD(1);
+        flag_motor1 = 1;
+    }
+    step++;
+    DBG_LOG("step = %d", step);
+    DBG_LOG("flag_motor1 = %d", flag_motor1);
+    if((IF_IS_TOUCH(7) == 0) && (step >= 100)) {
+        DBG_LOG("hello,world!");
+        MOTOR_STOP(1);
+    }
+    if(IF_IS_TOUCH(7) == 0){
+      DBG_LOG("here!!");
+    }
+    MOTOR_BACK(1);
+    /*****************/
+    /*test push unberally motor--finish*/
+    /*****************/
+    static uint8_t flag_motor2 = 0, flag_if_is_touch = 0;
+    if(flag_motor2 == 0) {
+    MOTOR_FORWARD(2);
+        flag_motor2 = 1;
+        flag_if_is_touch = 1;
+    }
+    if(IF_IS_TOUCH(1) == 0) {
+    MOTOR_BACK(2);
+        flag_if_is_touch = 0;
+    }
+    if((IF_IS_TOUCH(2) == 0) && (flag_if_is_touch == 0)) {
+        MOTOR_STOP(2);
+        flag_motor2 = 0;
+    }
+    /**********************/
+    /*test infrared sensor*/
+    /**********************/
+    IO_H(IR_SW);
+    if(IR_CHECK() == 0) {   // output 1 when it cover
+        DBG_LOG("here is in the infrared sensor");
+        DBG_LOG("here is the ");
+    }
+    if(IR_CHECK() == 1){
+      DBG_LOG("done!!");
+    }
+    /**********************/
+    /*test switch door motor---finish*/
+    /**********************/
+    static uint8_t flag_motor4 = 0, flag_if_is_touch = 0;
+    if(flag_motor4 == 0) {
+        MOTOR_BACK(4);
+        flag_motor4 = 1;
+        flag_if_is_touch = 1;
+        DBG_LOG("test!");
+    }
+    if(IF_IS_TOUCH(3) == 0) {
+        MOTOR_STOP(4);
+        MOTOR_FORWARD(4);
+        flag_if_is_touch = 0;
+        DBG_LOG("test in if_is_touch(3)");
+    }
+    if((IF_IS_TOUCH(5) == 0) && (flag_if_is_touch == 0)) {
+        MOTOR_STOP(4);
+        flag_motor4 = 0;
+    }
+    /**********************/
+    /*test fault umberlla motor---finish*/
+    /**********************/
+    static uint8_t flag_motor3 = 0, flag_if_is_touch = 0;
+    if(flag_motor3 == 0) {
+        MOTOR_FORWARD(3);
+        flag_motor3 = 1;
+        flag_if_is_touch = 1;
+    }
+    if(IF_IS_TOUCH(4) == 0) {
+        MOTOR_STOP(3);
+        MOTOR_BACK(3);
+        flag_if_is_touch = 0;
+    }
+    if((IF_IS_TOUCH(6) == 0) && (flag_if_is_touch == 0)) {
+        MOTOR_STOP(3);
+        flag_motor3 = 0;
+    }
+    /**********************/
+    /*test  RFID*/
+    /*7E 1B A7 12 04 6D 18 C9 A5 49*/
+    /* 6D 18 C9 A5 is data 04 is data len*/
+    static uint32_t  RFID_Read = 0;
+    RFID_Read = GPRS_ReadRFID(2);
+    DBG_LOG("RFID_Read = %u", RFID_Read);
+    /**********************/
+    /**********************/
+    /*test video*/
+    /**********************/
+    TTS_Play("RAM:FullUnbrella.mp3");
+    nrf_delay_ms(3000);
+    TTS_Play("RAM:HaveNoUnbrella.mp3");
 }
 
 /**÷ÿ÷√∫Ø ˝

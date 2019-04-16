@@ -90,17 +90,9 @@
 //OLD IO
 #define GSM_TXD_PIN             M26RX//M26TX
 #define GSM_RXD_PIN             M26TX//M26RX
-#define GSM_PWRKEY_PIN          31//M26_DTR
-#define GSM_EN_PIN              31//M26_EN
+#define GSM_PWRKEY_PIN          M26_DTR
+#define GSM_EN_PIN              M26_EN
 
-//old io
-#define IR_EN_PIN               31
-
-#define FORWARD_SENSOR_PIN      31
-#define BACK_SENSOR_PIN         31
-
-#define RFID_IO                 31
-#define RFID_RE                 31
 
 /**
 	* @}
