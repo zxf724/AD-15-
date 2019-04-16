@@ -71,8 +71,6 @@ void BSP_Init(void) {
     nrf_gpio_pin_set(GSM_TXD_PIN);
     nrf_gpio_pin_set(RFID_TX_PIN);
     //old io config
-    nrf_gpio_cfg_input(FORWARD_SENSOR_PIN, NRF_GPIO_PIN_PULLUP);
-    nrf_gpio_cfg_input(BACK_SENSOR_PIN, NRF_GPIO_PIN_PULLUP);
     nrf_gpio_cfg_input(M_SEN_1, NRF_GPIO_PIN_PULLDOWN);
     nrf_gpio_cfg_input(M_SEN_2, NRF_GPIO_PIN_PULLDOWN);
     nrf_gpio_pin_set(TX_PIN_NUMBER);

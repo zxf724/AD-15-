@@ -45,6 +45,7 @@ static void gap_params_init(void) {
     DBG_LOG("MAC is : %02X%02X%02X%02X%02X%02X", mac_addr.addr[0], mac_addr.addr[1], mac_addr.addr[2], mac_addr.addr[3], mac_addr.addr[4], mac_addr.addr[5]);
     sprintf(p, "-%02X%02X%02X", mac_addr.addr[3], mac_addr.addr[4], mac_addr.addr[5]);
     err_code = sd_ble_gap_device_name_set(&sec_mode, (const uint8_t*)name, strlen(name));
+    DBG_LOG("name err_code is %d",err_code);
 #if (DEBUG == 1)
     DBG_LOG("Device Name:%s", name);
 #endif
@@ -76,7 +77,7 @@ static void services_init(void) {
 static void ble_stack_init(void) {
     uint32_t err_code;
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL);
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL); //NRF_CLOCK_LFCLKSRC_XTAL_20_PPM
     ble_enable_params_t ble_enable_params;
     err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
                PERIPHERAL_LINK_COUNT, &ble_enable_params);

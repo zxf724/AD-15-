@@ -121,11 +121,11 @@ void Protocol_DateProcPoll(void) {
  * @param rfid   雨伞的RFID
  * @param status 电机的状态
  */
-void Protocol_Report_Umbrella_Borrow(uint32_t rfid, motor_status_t status) {
+void Protocol_Report_Umbrella(uint32_t rfid, motor_status_t status) {
     uint8_t buf[5];
     if (BLE_Connect) {
         *(uint32_t*)buf = rfid;
-        if (status == status_borrow_complite) {
+        if (status == status_output_unbrella_success) {
             buf[4] = 0x55;
         } else if (status == status_ir_stuck) {
             buf[4] = 0xAA;
@@ -167,6 +167,7 @@ void Send_Cmd(uint8_t cmd, uint8_t* arg, uint8_t len) {
     buf[0] = 0;
     buf[1] = cmd << 2;
     buf[1] |= MSG_TYPE_CMD;
+    DBG_LOG("before encryption: buf[1] = 0X%x", buf[1]);
     /*真随机数*/
     memcpy(&buf[2], (uint8_t*)Create_Random(), 4);
     /*滚动计数值*/
@@ -188,6 +189,8 @@ void Send_Cmd(uint8_t cmd, uint8_t* arg, uint8_t len) {
     memcpy(ecb_data.key, Key_Default, 16);
     sd_ecb_block_encrypt(&ecb_data);
     memcpy(&buf[1], ecb_data.ciphertext, 16);
+    DBG_LOG("buf[0] = 0x%x", buf[0]);
+    DBG_LOG("after encryption: buf[1] = 0x%x", buf[1]);
     user_BLE_Send(buf, 17);
 #else
     user_BLE_Send(buf, len);
@@ -292,25 +295,33 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
         return 0;
     }
     DBG_LOG("Command type valid！");
+    dat[0] = dat[0] >> 2;
+    DBG_LOG("here is the cmd = 0x%02X", dat[0]);
     /*比较滚动同步计数值*/
     run = (dat[6] << 8) | dat[5];
     if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
         ret = 1;
         /*命令处理*/
-        cmd = dat[0] >> 2;
-        cmd = dat[1];
+        cmd = dat[0];
         DBG_LOG("Receive command 0x%X.", (uint8_t)cmd);
         switch (cmd) {
             /*校时*/
             case CMD_TIME_RALIB:
                 memcpy(temp, (uint8_t*)&dat[7], 4);
+                for(uint8_t i=0;i<=3;i++){
+                    DBG_LOG("dat[%d] = %d",i,temp[i]);
+                }
+                //tmp = (dat[7] << 24) | (dat[8] << 16) | (dat[9] << 8) | dat[10];
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
+                WorkData.DeviceID = 1;  
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
                     DBG_LOG("timing .....");
                     memcpy(temp, (uint8_t*)&dat[11], 4);
                     RTC_SetCount(*(uint32_t*)temp);
-                    if(WorkData.StockCount == 0)  Motor_staus = status_empty;
+                    if(WorkData.StockCount == 0) {
+                        Motor_staus = status_have_no_unbrella;
+                    }
                     temp[0] = 1;
                     temp[1] = VERSION;
                     temp[2] = WorkData.StockMax;
@@ -323,24 +334,24 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
             /*借伞*/
             case CMD_BORROW_UMBRELLA:
                 DBG_LOG("Borrow_Action .....");
-                Motor_staus = status_borrow;
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
                     Borrow_Action();
+                    Motor_staus = status_start_output_unbrella;
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
                 break;
             /*还伞*/
             case CMD_RETURN_UMBRELLA:
                 DBG_LOG("RepayInAction...");
-                Motor_staus = status_repay;
+                Motor_staus = status_start_input_unbrella;
                 Repay_Action();
                 break;
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");
-                Motor_staus = status_repay_breakdown;
+                Motor_staus = status_input_breakdown_unbrella;
                 Breakdown_Repay();
                 break;
             default:

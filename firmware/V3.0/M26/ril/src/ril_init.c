@@ -51,7 +51,6 @@ const char* g_InitCmds[] = {
     "AT+CGREG=1\r", // GPRS registration events
     "AT+CLIP=1\r",  // Display RING number
     "AT+COLP=0\r"   // no connected line identification
-    "ATE=1\r"   // no connected line identification
 
 //......  More customization setting can add here
 };
