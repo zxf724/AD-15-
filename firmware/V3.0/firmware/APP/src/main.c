@@ -345,26 +345,6 @@ void Reset(void) {
     if((IF_IS_TOUCH(7) == 0) && (flag_motor1 == 1)) {
         MOTOR_STOP(1);
     }
-    //test
-    while(1){
-      nrf_delay_ms(200);
-      break;
-    }
-    //test
-    while(1){
-      nrf_delay_ms(200);
-      break;
-    }
-     //test
-    while(1){
-      nrf_delay_ms(200);
-      break;
-    }
-    //test
-    while(1){
-      nrf_delay_ms(200);
-      break;
-    }
 }
 
 
