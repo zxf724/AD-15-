@@ -91,7 +91,7 @@ static uint8_t RTC_GetWeek(uint16_t Year, uint8_t Month, uint8_t Date);
   * @param  none.
   * @retval none.
   */
-void RTC_Init(void)
+void RTCInit(void)
 {
     app_timer_create(&TimerId_RTC, APP_TIMER_MODE_REPEATED, RTC_CountTick);
     app_timer_start(TimerId_RTC, APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER), NULL);

@@ -18,7 +18,7 @@ static void IWDG_Config(void);
 *************************************************/
 void System_Initializes(void)
 {
-    BSP_Initializes();
+    BSPInitializes();
 
     TIM1_SetCounter(0);
     TIM1_TimeBaseInit(0, TIM1_COUNTERMODE_UP, 15999, 0);

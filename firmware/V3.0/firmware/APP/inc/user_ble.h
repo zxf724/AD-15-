@@ -32,9 +32,9 @@
 extern BOOL BLE_Connect;
 extern int8_t BLE_RSSI;
 
-void user_BLE_Start(void);
+void UserBLEStart(void);
 void user_BLE_Disconnected(void);
-void user_BLE_Connected(void);
+void UserBLEConnected(void);
 void user_BLE_Send(uint8_t *data, uint16_t len);
 
 #endif

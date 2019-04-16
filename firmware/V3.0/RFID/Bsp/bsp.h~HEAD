@@ -71,7 +71,7 @@ extern uint32_t TS_Index;
 /* º¯ÊýÉêÃ÷ ------------------------------------------------------------------*/
 void CLK_Configuration(void);
 void GPIO_Basic_Configuration(void);
-void BSP_Initializes(void);
+void BSPInitializes(void);
 
 
 #endif /* _BSP_H */

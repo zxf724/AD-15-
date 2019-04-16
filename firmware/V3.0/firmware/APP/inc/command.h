@@ -49,9 +49,9 @@
 /** @addtogroup COMMAND_Exported_Functions
   * @{
   */
-void Command_Init(void);
+void CommandInit(void);
 
-void CommandReceive_Poll(void);
+void CommandReceivePoll(void);
 
 
 /**

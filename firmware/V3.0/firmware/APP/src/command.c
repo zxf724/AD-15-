@@ -94,7 +94,7 @@ static void funUICR(int argc, char* argv[]);
   * @param  none.
   * @retval none
   */
-void Command_Init(void) {
+void CommandInit(void) {
     CMD_ENT_DEF(system, funSystem);
     Cmd_AddEntrance(CMD_ENT(system));
     CMD_ENT_DEF(FICR, funFICR);
@@ -109,7 +109,7 @@ void Command_Init(void) {
 /**
   * @brief  ÃüÁî´¦ÀíÂÖÑ¯.
   */
-void CommandReceive_Poll(void) {
+void CommandReceivePoll(void) {
     char* p = NULL;
     static uint16_t index = 0;
     if (NRF_UART0->PSELRXD == RX_PIN_NUMBER) {

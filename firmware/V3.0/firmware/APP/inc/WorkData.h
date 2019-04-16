@@ -75,7 +75,7 @@ extern pstorage_handle_t  psLog;
 #define STROE_LOG_POINT(i)				((StoreLog_t*)((uint8_t *)psLog.block_id + sizeof(StoreLog_t) * i))
 
 /* Exported functions --------------------------------------------------------*/
-void WorkData_Init(void);
+void WorkDataInit(void);
 void DataBackInit(BOOL reset);
 BOOL WorkData_Update(void);
 

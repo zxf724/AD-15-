@@ -56,13 +56,13 @@ void GPIO_Basic_Configuration(void)
 }
 
 /************************************************
-函数名称 ： BSP_Initializes
+函数名称 ： BSPInitializes
 功    能 ： 板级支持包初始化
 参    数 ： 无
 返 回 值 ： 无
 作    者 ： Huang Fugui
 *************************************************/
-void BSP_Initializes(void)
+void BSPInitializes(void)
 {
     CLK_Configuration();
     GPIO_Basic_Configuration();

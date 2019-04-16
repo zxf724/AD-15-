@@ -62,7 +62,7 @@ typedef nrf_wdt_rr_register_t nrf_drv_wdt_channel_id;
  *
  * @return    NRF_SUCCESS on success, NRF_ERROR_INVALID_STATE if module ws already initialized.
  */
-ret_code_t nrf_drv_wdt_init(nrf_drv_wdt_config_t const * p_config,
+ret_code_t nrf_drv_WdtInit(nrf_drv_wdt_config_t const * p_config,
                             nrf_wdt_event_handler_t     wdt_event_handler);
 
 /**

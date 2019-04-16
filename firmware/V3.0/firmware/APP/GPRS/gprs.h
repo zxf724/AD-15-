@@ -55,9 +55,9 @@ typedef enum {
 /* Exported variables --------------------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
-void GPRS_Init(void);
+void GPRSInit(void);
 
-void GPRS_Polling(void);
+void GPRSPolling(void);
 
 void GPRS_ReStart(void);
 void GPRS_SetOnOff(BOOL onoff);
@@ -72,6 +72,7 @@ int8_t GPRS_IsSocketConnect(void);
 void GPRS_SetSocketParam(char *server, uint16_t port);
 int16_t GPRS_SocketReadData(uint8_t* data, uint16_t len);
 uint16_t GPRS_SocketRecDataLength(void);
+uint32_t GPRS_ReadRFID(uint8_t num);
 
 #endif
 

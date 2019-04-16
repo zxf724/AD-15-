@@ -32,11 +32,11 @@
 extern uint16_t UART_MutexCount;
 
 
-void user_uart_init(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate);
+void UserUartInit(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate);
 void Switch_Uart_Init(uint8_t uart);
 BOOL user_uart_SendByte(uint8_t sentbyte);
 BOOL user_uart_ReadByte(uint8_t* readbyte);
-uint16_t user_uart_RecLength(void);
+uint16_t UserUartRecLength(void);
 uint16_t user_uart_SendData(uint8_t* data, uint16_t len);
 uint16_t user_uart_ReadData(uint8_t* data, uint16_t len);
 

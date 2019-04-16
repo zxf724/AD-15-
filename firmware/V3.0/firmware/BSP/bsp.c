@@ -26,7 +26,7 @@
   * @param  none.
   * @retval none
   */
-void BSP_Init(void) {
+void BSPInit(void) {
     //主电机1，推伞电机2，故障电机3，开关门电机4
     nrf_gpio_cfg_output(M_CTR_R1);
     nrf_gpio_cfg_output(M_CTR_L1);

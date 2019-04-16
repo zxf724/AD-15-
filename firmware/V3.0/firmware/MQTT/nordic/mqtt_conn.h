@@ -57,9 +57,9 @@ extern  uint32_t DataFlowCnt;
 /* Exported variables --------------------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
-void MQTT_Conn_Init(void);
+void MQTTConnInit(void);
 
-void MQTT_Conn_Polling(void);
+void MQTTConnPolling(void);
 
 BOOL MQTT_IsConnected(void);
 

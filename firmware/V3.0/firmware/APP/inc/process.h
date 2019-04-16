@@ -35,12 +35,12 @@
 /* Exported variables --------------------------------------------------------*/
 
 /* Exported functions --------------------------------------------------------*/
-void Process_Init(void);
+void ProcessInit(void);
 
 BOOL CMD_Updata(char* cmd, cJSON* desired);
 void Status_Updata(void);
 
-BOOL Report_Umbrella_Status(uint32_t rfid, motor_status_t status);
-BOOL Report_Umbrella_Repy_Status(uint32_t rfid, motor_status_t status, uint32_t ts);
+BOOL Report_Umbrella_Status(uint32_t rfid, motor_status_Enum status);
+BOOL Report_Umbrella_Repy_Status(uint32_t rfid, motor_status_Enum status, uint32_t ts);
 
 #endif

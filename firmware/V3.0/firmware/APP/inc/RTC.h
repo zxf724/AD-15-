@@ -75,7 +75,7 @@ static volatile bool ready_flag;
 /** @addtogroup RTC_Exported_Functions
   * @{
   */
-void RTC_Init(void);
+void RTCInit(void);
 
 uint32_t RTC_ReadCount(void);
 void RTC_SetCount(uint32_t cnt);
