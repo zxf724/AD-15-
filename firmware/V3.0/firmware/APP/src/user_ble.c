@@ -77,7 +77,7 @@ static void services_init(void) {
 static void ble_stack_init(void) {
     uint32_t err_code;
     // Initialize the SoftDevice handler module.
-    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_XTAL_20_PPM, NULL); //NRF_CLOCK_LFCLKSRC_XTAL_20_PPM
+    SOFTDEVICE_HANDLER_INIT(NRF_CLOCK_LFCLKSRC_RC_250_PPM_250MS_CALIBRATION, NULL); //NRF_CLOCK_LFCLKSRC_XTAL_20_PPM
     ble_enable_params_t ble_enable_params;
     err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
                PERIPHERAL_LINK_COUNT, &ble_enable_params);

@@ -314,7 +314,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 //tmp = (dat[7] << 24) | (dat[8] << 16) | (dat[9] << 8) | dat[10];
                 DBG_LOG("*(uint32_t*)temp = %d", *(uint32_t*)temp);
                 /*比较设备ID*/
-                WorkData.DeviceID = 1;
+                WorkData.DeviceID = 1;  
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
                     DBG_LOG("timing .....");
                     memcpy(temp, (uint8_t*)&dat[11], 4);

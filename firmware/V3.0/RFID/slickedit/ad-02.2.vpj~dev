@@ -1,0 +1,390 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+	Version="10.0"
+	VendorName="SlickEdit"
+	TemplateName="Other C/C++"
+	WorkingDir=".">
+	<Config
+		Name="Debug"
+		Type="cpp"
+		DebugCallbackName="gdb"
+		OutputFile="%bdad-02"
+		CompilerConfigName="Latest Version">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				OutputExts="*.o"
+				SaveOption="SaveCurrent"
+				RunFromDir="%rw">
+				<Exec CmdLine='cc -c -g %i %defd -o "%bd%n.o" "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link">
+				<Exec CmdLine='cc -g -o "%o" %f %libs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+		</Menu>
+	</Config>
+	<Config
+		Name="Release"
+		Type="cpp"
+		DebugCallbackName="gdb"
+		OutputFile="%bdad-02"
+		CompilerConfigName="Latest Version">
+		<Menu>
+			<Target
+				Name="Compile"
+				MenuCaption="&amp;Compile"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveCurrent"
+				OutputExts="*.o"
+				RunFromDir="%rw">
+				<Exec CmdLine='cc -c -O %i %defd -o "%bd%n.o" "%f"'/>
+			</Target>
+			<Target
+				Name="Link"
+				MenuCaption="&amp;Link">
+				<Exec CmdLine='cc -O -o "%o" %f %libs'/>
+			</Target>
+			<Target
+				Name="Build"
+				MenuCaption="&amp;Build"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Rebuild"
+				MenuCaption="&amp;Rebuild"
+				CaptureOutputWith="ProcessBuffer"
+				SaveOption="SaveWorkspaceFiles"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+			</Target>
+			<Target
+				Name="Debug"
+				MenuCaption="&amp;Debug"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='vsdebugio -prog "%o"'/>
+			</Target>
+			<Target
+				Name="Execute"
+				MenuCaption="E&amp;xecute"
+				SaveOption="SaveNone"
+				BuildFirst="1"
+				CaptureOutputWith="ProcessBuffer"
+				RunFromDir="%rw">
+				<Exec CmdLine='"%o"'/>
+			</Target>
+		</Menu>
+	</Config>
+	<Rules Name="Compile">
+		<Rule
+			InputExts="*.s"
+			OutputExts="*.o"
+			LinkObject="1">
+			<Exec CmdLine='as -o "%bd%n.o" "%f"'/>
+		</Rule>
+	</Rules>
+	<CustomFolders>
+		<Folder
+			Name="Source Files"
+			Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
+			GUID="{F3A2437A-672D-456A-B6C5-10647B7B0D97}"></Folder>
+		<Folder
+			Name="Header Files"
+			Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
+			GUID="{4A3734A9-E72A-4426-0184-FE21FB69CEA5}"></Folder>
+		<Folder
+			Name="Resource Files"
+			Filters="*.ico;*.cur;*.dlg"
+			GUID="{8C68A951-0117-462F-5687-C321FDF1BAAA}"/>
+		<Folder
+			Name="Bitmaps"
+			Filters="*.bmp"
+			GUID="{2C5A46F6-8555-4469-01D3-38D62A8226A9}"/>
+		<Folder
+			Name="Other Files"
+			Filters=""
+			GUID="{DA222594-1B9E-432E-2F94-15F9BDD56DBA}"></Folder>
+	</CustomFolders>
+	<Files AutoFolders="DirectoryView">
+		<Folder Name="c:/">
+			<Folder Name="Program Files (x86)">
+				<Folder Name="IAR Systems">
+					<Folder Name="Embedded Workbench 7.3">
+						<Folder Name="stm8">
+							<Folder Name="inc">
+								<Folder Name="c">
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/assert.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cassert"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ccomplex"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cctype"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cerrno"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cfenv"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cfloat"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cinttypes"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ciso646"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/climits"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/clocale"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cmath"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/complex.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/csetjmp"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/csignal"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstdarg"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstdbool"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstddef"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstdint"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstdio"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstdlib"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cstring"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ctgmath"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ctime"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ctype.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cwchar"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/cwctype"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/DLib_Config_Full.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/DLib_Config_Normal.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/DLib_Defaults.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/DLib_Product.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/DLib_Threads.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/errno.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/fenv.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/float.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/intrinsics.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/inttypes.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/iso646.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/limits.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/locale.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/math.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/setjmp.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/signal.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/stdarg.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/stdbool.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/stddef.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/stdint.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/stdio.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/stdlib.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/string.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/target.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/tgmath.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/time.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/uchar.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/wchar.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/wctype.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xencoding_limits.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xlocale.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xlocale_alconv.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xlocale_c.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xlocale_lconv.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xlocalelist.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xlocaleuse.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xmtx.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xtgmath.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xtls.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/xxlocale.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ycheck.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/yfuns.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ymath.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ysizet.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/ystdio.h"/>
+									<F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.3/stm8/inc/c/yvals.h"/>
+								</Folder>
+							</Folder>
+						</Folder>
+					</Folder>
+				</Folder>
+			</Folder>
+		</Folder>
+		<Folder Name="..">
+			<F N="../rfid.dep"/>
+			<F N="../rfid.ewd"/>
+			<F N="../rfid.ewp"/>
+			<F N="../rfid.eww"/>
+		</Folder>
+		<Folder Name="../App">
+			<F N="../App/app.c"/>
+			<F N="../App/app.h"/>
+			<F N="../App/main.c"/>
+			<F N="../App/MFRC522_API.c"/>
+			<F N="../App/MFRC522_API.h"/>
+			<F N="../App/prjlib.c"/>
+			<F N="../App/prjlib.h"/>
+			<F N="../App/stm8s_conf.h"/>
+			<F N="../App/stm8s_it.c"/>
+			<F N="../App/stm8s_it.h"/>
+			<F N="../App/user_comm.h"/>
+		</Folder>
+		<Folder Name="../Bsp">
+			<F N="../Bsp/bsp.c"/>
+			<F N="../Bsp/bsp.h"/>
+			<F N="../Bsp/MFRC522_Dev.c"/>
+			<F N="../Bsp/MFRC522_Dev.h"/>
+			<F N="../Bsp/MFRC522_SPI.c"/>
+			<F N="../Bsp/MFRC522_SPI.h"/>
+			<F N="../Bsp/timer.c"/>
+			<F N="../Bsp/timer.h"/>
+			<F N="../Bsp/uart.c"/>
+			<F N="../Bsp/uart.h"/>
+		</Folder>
+		<Folder Name="../Doc">
+			<F N="../Doc/ReadMe.txt"/>
+		</Folder>
+		<Folder Name="../rfid">
+			<Folder Name="Obj">
+				<F N="../rfid/Obj/app.pbi"/>
+				<F N="../rfid/Obj/app.pbi.cout"/>
+				<F N="../rfid/Obj/bsp.pbi"/>
+				<F N="../rfid/Obj/bsp.pbi.cout"/>
+				<F N="../rfid/Obj/global_variable.pbi"/>
+				<F N="../rfid/Obj/global_variable.pbi.cout"/>
+				<F N="../rfid/Obj/main.pbi"/>
+				<F N="../rfid/Obj/main.pbi.cout"/>
+				<F N="../rfid/Obj/MFRC522_API.pbi"/>
+				<F N="../rfid/Obj/MFRC522_API.pbi.cout"/>
+				<F N="../rfid/Obj/MFRC522_Dev.pbi"/>
+				<F N="../rfid/Obj/MFRC522_Dev.pbi.cout"/>
+				<F N="../rfid/Obj/MFRC522_SPI.pbi"/>
+				<F N="../rfid/Obj/MFRC522_SPI.pbi.cout"/>
+				<F N="../rfid/Obj/rfid.pbd"/>
+				<F N="../rfid/Obj/rfid.pbd.browse"/>
+				<F N="../rfid/Obj/stm8s_clk.pbi"/>
+				<F N="../rfid/Obj/stm8s_clk.pbi.cout"/>
+				<F N="../rfid/Obj/stm8s_gpio.pbi"/>
+				<F N="../rfid/Obj/stm8s_gpio.pbi.cout"/>
+				<F N="../rfid/Obj/stm8s_it.pbi"/>
+				<F N="../rfid/Obj/stm8s_it.pbi.cout"/>
+				<F N="../rfid/Obj/stm8s_tim1.pbi"/>
+				<F N="../rfid/Obj/stm8s_tim1.pbi.cout"/>
+				<F N="../rfid/Obj/stm8s_tim2.pbi"/>
+				<F N="../rfid/Obj/stm8s_tim2.pbi.cout"/>
+				<F N="../rfid/Obj/stm8s_tim4.pbi"/>
+				<F N="../rfid/Obj/stm8s_tim4.pbi.cout"/>
+				<F N="../rfid/Obj/stm8s_uart1.pbi"/>
+				<F N="../rfid/Obj/stm8s_uart1.pbi.cout"/>
+				<F N="../rfid/Obj/timer.pbi"/>
+				<F N="../rfid/Obj/timer.pbi.cout"/>
+				<F N="../rfid/Obj/uart.pbi"/>
+				<F N="../rfid/Obj/uart.pbi.cout"/>
+			</Folder>
+		</Folder>
+		<Folder Name="../settings">
+			<F N="../settings/Demo.dbgdt"/>
+			<F N="../settings/Demo.Debug.cspy.bat"/>
+			<F N="../settings/Demo.Debug.driver.xcl"/>
+			<F N="../settings/Demo.Debug.general.xcl"/>
+			<F N="../settings/Demo.dni"/>
+			<F N="../settings/Demo.wsdt"/>
+			<F N="../settings/Demo.wspos"/>
+			<F N="../settings/rfid.dbgdt"/>
+			<F N="../settings/rfid.Debug.cspy.bat"/>
+			<F N="../settings/rfid.Debug.driver.xcl"/>
+			<F N="../settings/rfid.Debug.general.xcl"/>
+			<F N="../settings/rfid.dni"/>
+			<F N="../settings/rfid.rfid.cspy.bat"/>
+			<F N="../settings/rfid.rfid.driver.xcl"/>
+			<F N="../settings/rfid.rfid.general.xcl"/>
+		</Folder>
+		<Folder Name="../STM8S_StdPeriph_Driver">
+			<Folder Name="inc">
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_adc1.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_adc2.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_awu.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_beep.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_can.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_clk.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_exti.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_flash.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_gpio.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_i2c.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_itc.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_iwdg.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_rst.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_spi.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_tim1.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_tim2.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_tim3.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_tim4.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_tim5.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_tim6.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_uart1.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_uart2.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_uart3.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_uart4.h"/>
+				<F N="../STM8S_StdPeriph_Driver/inc/stm8s_wwdg.h"/>
+			</Folder>
+			<Folder Name="src">
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_adc1.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_adc2.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_awu.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_beep.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_can.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_clk.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_exti.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_flash.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_gpio.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_i2c.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_itc.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_iwdg.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_rst.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_spi.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_tim1.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_tim2.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_tim3.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_tim4.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_tim5.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_tim6.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_uart1.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_uart2.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_uart3.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_uart4.c"/>
+				<F N="../STM8S_StdPeriph_Driver/src/stm8s_wwdg.c"/>
+			</Folder>
+		</Folder>
+		<F N="ad-02.2.vpj"/>
+		<F N="ad-02.2.vpw"/>
+		<F N="ad-02.2.vpwhist"/>
+		<F N="ad-02.2.vtg"/>
+	</Files>
+</Project>

@@ -1,0 +1,1564 @@
+<!DOCTYPE Project SYSTEM "http://www.slickedit.com/dtd/vse/10.0/vpj.dtd">
+<Project
+  Version="10.0"
+  VendorName="SlickEdit"
+  TemplateName="Other C/C++"
+  WorkingDir=".">
+  <Config
+    Name="Debug"
+    Type="cpp"
+    DebugCallbackName="gdb"
+    OutputFile="%bdAD-15"
+    CompilerConfigName="Latest Version">
+    <Menu>
+      <Target
+        Name="Compile"
+        MenuCaption="&amp;Compile"
+        CaptureOutputWith="ProcessBuffer"
+        OutputExts="*.o"
+        SaveOption="SaveCurrent"
+        RunFromDir="%rw">
+        <Exec CmdLine='cc -c -g %i %defd -o "%bd%n.o" "%f"'/>
+      </Target>
+      <Target
+        Name="Link"
+        MenuCaption="&amp;Link">
+        <Exec CmdLine='cc -g -o "%o" %f %libs'/>
+      </Target>
+      <Target
+        Name="Build"
+        MenuCaption="&amp;Build"
+        CaptureOutputWith="ProcessBuffer"
+        SaveOption="SaveWorkspaceFiles"
+        RunFromDir="%rw">
+        <Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+      </Target>
+      <Target
+        Name="Rebuild"
+        MenuCaption="&amp;Rebuild"
+        CaptureOutputWith="ProcessBuffer"
+        SaveOption="SaveWorkspaceFiles"
+        RunFromDir="%rw">
+        <Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+      </Target>
+      <Target
+        Name="Debug"
+        MenuCaption="&amp;Debug"
+        SaveOption="SaveNone"
+        BuildFirst="1"
+        CaptureOutputWith="ProcessBuffer"
+        RunFromDir="%rw">
+        <Exec CmdLine='vsdebugio -prog "%o"'/>
+      </Target>
+      <Target
+        Name="Execute"
+        MenuCaption="E&amp;xecute"
+        SaveOption="SaveNone"
+        BuildFirst="1"
+        CaptureOutputWith="ProcessBuffer"
+        RunFromDir="%rw">
+        <Exec CmdLine='"%o"'/>
+      </Target>
+    </Menu>
+  </Config>
+  <Config
+    Name="Release"
+    Type="cpp"
+    DebugCallbackName="gdb"
+    OutputFile="%bdAD-15"
+    CompilerConfigName="Latest Version">
+    <Menu>
+      <Target
+        Name="Compile"
+        MenuCaption="&amp;Compile"
+        CaptureOutputWith="ProcessBuffer"
+        SaveOption="SaveCurrent"
+        OutputExts="*.o"
+        RunFromDir="%rw">
+        <Exec CmdLine='cc -c -O %i %defd -o "%bd%n.o" "%f"'/>
+      </Target>
+      <Target
+        Name="Link"
+        MenuCaption="&amp;Link">
+        <Exec CmdLine='cc -O -o "%o" %f %libs'/>
+      </Target>
+      <Target
+        Name="Build"
+        MenuCaption="&amp;Build"
+        CaptureOutputWith="ProcessBuffer"
+        SaveOption="SaveWorkspaceFiles"
+        RunFromDir="%rw">
+        <Exec CmdLine='"%(VSLICKBIN1)vsbuild" build "%w" "%r"'/>
+      </Target>
+      <Target
+        Name="Rebuild"
+        MenuCaption="&amp;Rebuild"
+        CaptureOutputWith="ProcessBuffer"
+        SaveOption="SaveWorkspaceFiles"
+        RunFromDir="%rw">
+        <Exec CmdLine='"%(VSLICKBIN1)vsbuild" rebuild "%w" "%r"'/>
+      </Target>
+      <Target
+        Name="Debug"
+        MenuCaption="&amp;Debug"
+        SaveOption="SaveNone"
+        BuildFirst="1"
+        CaptureOutputWith="ProcessBuffer"
+        RunFromDir="%rw">
+        <Exec CmdLine='vsdebugio -prog "%o"'/>
+      </Target>
+      <Target
+        Name="Execute"
+        MenuCaption="E&amp;xecute"
+        SaveOption="SaveNone"
+        BuildFirst="1"
+        CaptureOutputWith="ProcessBuffer"
+        RunFromDir="%rw">
+        <Exec CmdLine='"%o"'/>
+      </Target>
+    </Menu>
+  </Config>
+  <Rules Name="Compile">
+    <Rule
+      InputExts="*.s"
+      OutputExts="*.o"
+      LinkObject="1">
+      <Exec CmdLine='as -o "%bd%n.o" "%f"'/>
+    </Rule>
+  </Rules>
+  <CustomFolders>
+    <Folder
+      Name="Source Files"
+      Filters="*.c;*.C;*.cc;*.cpp;*.cp;*.cxx;*.c++;*.prg;*.pas;*.dpr;*.asm;*.s;*.bas;*.java;*.cs;*.sc;*.e;*.cob;*.html;*.rc;*.tcl;*.py;*.pl;*.d;*.m;*.mm;*.go;*.groovy;*.gsh"
+      GUID="{E0AD1F7D-C418-414D-0813-0A104607E5A6}"></Folder>
+    <Folder
+      Name="Header Files"
+      Filters="*.h;*.H;*.hh;*.hpp;*.hxx;*.h++;*.inc;*.sh;*.cpy;*.if"
+      GUID="{AD7E8C85-4BF7-47CE-26F8-507F0AB88899}"></Folder>
+    <Folder
+      Name="Resource Files"
+      Filters="*.ico;*.cur;*.dlg"
+      GUID="{4BF290B0-DA60-402D-7938-0B7AB3DCD5B0}"/>
+    <Folder
+      Name="Bitmaps"
+      Filters="*.bmp"
+      GUID="{6DE9DB56-848D-4F17-7EBD-A401F571B9B4}"/>
+    <Folder
+      Name="Other Files"
+      Filters=""
+      GUID="{9B106BBF-6FCC-4146-0ABD-515917EFF9A5}"></Folder>
+  </CustomFolders>
+  <Files AutoFolders="DirectoryView">
+    <Folder Name="c:/">
+      <Folder Name="Program Files (x86)">
+        <Folder Name="IAR Systems">
+          <Folder Name="Embedded Workbench 7.5">
+            <Folder Name="arm">
+              <Folder Name="inc">
+                <Folder Name="c">
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/arm_cmse.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/arm_interrupt.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/arm_itm.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/arm_neon.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/assert.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cassert"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ccomplex"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cctype"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cerrno"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cfenv"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cfloat"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cinttypes"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ciso646"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/climits"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/clocale"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cmath"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cmsis_iar.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/complex.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/csetjmp"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/csignal"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstdarg"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstdbool"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstddef"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstdint"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstdio"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstdlib"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cstring"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ctgmath"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ctime"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ctype.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cwchar"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/cwctype"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Config_Full.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Config_Normal.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Defaults.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Product.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Product_fenv.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Product_string.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/DLib_Threads.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/errno.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/fenv.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/float.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/iar_dlmalloc.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/iar_dynamic_init.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/intrinsics.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/inttypes.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/io_macros.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/iso646.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/limits.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/locale.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/math.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/setjmp.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/signal.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/stdarg.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/stdbool.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/stddef.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/stdint.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/stdio.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/stdlib.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/string.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/target.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/tgmath.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/time.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/uchar.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/wchar.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/wctype.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xencoding_limits.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xlocale.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xlocale_alconv.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xlocale_c.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xlocale_lconv.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xlocalelist.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xlocaleuse.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xmtx.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xtgmath.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xtls.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/xxlocale.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ycheck.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/yfuns.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ymath.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ysizet.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/ystdio.h"/>
+                  <F N="c:/Program Files (x86)/IAR Systems/Embedded Workbench 7.5/arm/inc/c/yvals.h"/>
+                </Folder>
+              </Folder>
+            </Folder>
+          </Folder>
+        </Folder>
+      </Folder>
+    </Folder>
+    <Folder Name="../APP">
+      <Folder Name="bootloader">
+        <F N="../APP/bootloader/bootloader.c"/>
+        <F N="../APP/bootloader/bootloader.h"/>
+        <F N="../APP/bootloader/main_boot.c"/>
+        <F N="../APP/bootloader/protocol_boot.c"/>
+      </Folder>
+      <Folder Name="GPRS">
+        <F N="../APP/GPRS/gprs.c"/>
+        <F N="../APP/GPRS/gprs.h"/>
+      </Folder>
+      <Folder Name="inc">
+        <F N="../APP/inc/command.h"/>
+        <F N="../APP/inc/control.h"/>
+        <F N="../APP/inc/includes.h"/>
+        <F N="../APP/inc/prjlib.h"/>
+        <F N="../APP/inc/profession.h"/>
+        <F N="../APP/inc/protocol.h"/>
+        <F N="../APP/inc/RTC.h"/>
+        <F N="../APP/inc/user_ble.h"/>
+        <F N="../APP/inc/user_uart.h"/>
+        <F N="../APP/inc/WorkData.h"/>
+      </Folder>
+      <Folder Name="src">
+        <F N="../APP/src/command.c"/>
+        <F N="../APP/src/control.c"/>
+        <F N="../APP/src/main.c"/>
+        <F N="../APP/src/prjlib.c"/>
+        <F N="../APP/src/profession.c"/>
+        <F N="../APP/src/protocol.c"/>
+        <F N="../APP/src/RTC.c"/>
+        <F N="../APP/src/user_ble.c"/>
+        <F N="../APP/src/user_uart.c"/>
+        <F N="../APP/src/workdata.c"/>
+      </Folder>
+      <Folder Name="tiny-AES128">
+        <F N="../APP/tiny-AES128/aes.c"/>
+        <F N="../APP/tiny-AES128/aes.h"/>
+        <F N="../APP/tiny-AES128/origin.txt"/>
+        <F N="../APP/tiny-AES128/unlicense.txt"/>
+      </Folder>
+    </Folder>
+    <Folder Name="../BSP">
+      <Folder Name="config">
+        <F N="../BSP/config/nrf_drv_config.h"/>
+        <F N="../BSP/config/nrf_drv_config_90.h"/>
+        <F N="../BSP/config/pstorage_platform.h"/>
+      </Folder>
+      <F N="../BSP/boards.h"/>
+      <F N="../BSP/bsp.c"/>
+      <F N="../BSP/bsp.h"/>
+    </Folder>
+    <Folder Name="../MQTT">
+      <Folder Name="FreeRTOS">
+        <F N="../MQTT/FreeRTOS/MQTTFreeRTOS.c"/>
+        <F N="../MQTT/FreeRTOS/MQTTFreeRTOS.h"/>
+      </Folder>
+      <Folder Name="MQTTPacket">
+        <F N="../MQTT/MQTTPacket/MQTTConnect.h"/>
+        <F N="../MQTT/MQTTPacket/MQTTConnectClient.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTConnectServer.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTDeserializePublish.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTFormat.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTFormat.h"/>
+        <F N="../MQTT/MQTTPacket/MQTTPacket.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTPacket.h"/>
+        <F N="../MQTT/MQTTPacket/MQTTPublish.h"/>
+        <F N="../MQTT/MQTTPacket/MQTTSerializePublish.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTSubscribe.h"/>
+        <F N="../MQTT/MQTTPacket/MQTTSubscribeClient.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTSubscribeServer.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTUnsubscribe.h"/>
+        <F N="../MQTT/MQTTPacket/MQTTUnsubscribeClient.c"/>
+        <F N="../MQTT/MQTTPacket/MQTTUnsubscribeServer.c"/>
+        <F N="../MQTT/MQTTPacket/StackTrace.h"/>
+      </Folder>
+      <Folder Name="nordic">
+        <F N="../MQTT/nordic/MQTT_Conn.c"/>
+        <F N="../MQTT/nordic/mqtt_conn.h"/>
+        <F N="../MQTT/nordic/MQTTClient.c"/>
+        <F N="../MQTT/nordic/MQTTClient.h"/>
+        <F N="../MQTT/nordic/MQTTnordic.c"/>
+        <F N="../MQTT/nordic/MQTTnordic.h"/>
+      </Folder>
+    </Folder>
+    <Folder Name="../ProjectIAR">
+      <Folder Name="BLEE">
+        <Folder Name="Exe">
+          <F N="../ProjectIAR/BLEE/Exe/AD-09.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AD-09_Ver1_nodebug.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AD-09_Ver2_debug.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AD-09_Ver_3_release.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AD-11.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AD-15.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AE-01.hex"/>
+          <F N="../ProjectIAR/BLEE/Exe/AutoStand.out"/>
+        </Folder>
+        <Folder Name="List">
+          <F N="../ProjectIAR/BLEE/List/AutoStand.map"/>
+        </Folder>
+        <Folder Name="Obj">
+          <F N="../ProjectIAR/BLEE/Obj/AD-15.pbd"/>
+          <F N="../ProjectIAR/BLEE/Obj/AD-15.pbd.browse"/>
+          <F N="../ProjectIAR/BLEE/Obj/AD-15.pbd.linf"/>
+          <F N="../ProjectIAR/BLEE/Obj/aes.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/aes.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/aes.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_button.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_button.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_error.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_error.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_fifo.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_fifo.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_pwm.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_pwm.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_timer.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_timer.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_trace.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_trace.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_uart_fifo.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/app_uart_fifo.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/ble_advdata.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/ble_advdata.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/ble_nus.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/ble_nus.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/ble_srv_common.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/ble_srv_common.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/bsp.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/bsp.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/bsp.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/command.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/command.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/command.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/control.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/control.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/control.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/DataSave.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/DataSave.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/DataSave.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/iar_startup_nrf51.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/main.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/main.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/main.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_adc.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_adc.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_assert.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_assert.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_delay.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_delay.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_common.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_common.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_gpiote.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_gpiote.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_ppi.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_ppi.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_rng.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_rng.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_spi.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_spi.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_timer.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_timer.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_twi.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_twi.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_uart.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_uart.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_wdt.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_drv_wdt.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_ic_info.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_ic_info.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_log.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_log.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_nvmc.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/nrf_nvmc.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/prjlib.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/prjlib.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/prjlib.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/protocol.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/protocol.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/protocol.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/pstorage.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/pstorage.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/retarget.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/retarget.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/RTC.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/RTC.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/RTC.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/softdevice_handler.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/softdevice_handler.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/spi_flash.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/spi_flash.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/system_nrf51.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/system_nrf51.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/system_nrf51.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/user_ble.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/user_ble.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/user_ble.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/user_uart.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/user_uart.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/user_uart.pbi.xcl"/>
+          <F N="../ProjectIAR/BLEE/Obj/workdata.o"/>
+          <F N="../ProjectIAR/BLEE/Obj/workdata.pbi"/>
+          <F N="../ProjectIAR/BLEE/Obj/workdata.pbi.xcl"/>
+        </Folder>
+      </Folder>
+      <Folder Name="bootloader">
+        <Folder Name="Exe">
+          <F N="../ProjectIAR/bootloader/Exe/AD-09_BOOT_AES_DEBUG.hex"/>
+          <F N="../ProjectIAR/bootloader/Exe/AD-11_BOOT.hex"/>
+          <F N="../ProjectIAR/bootloader/Exe/AD-15_BOOT.hex"/>
+          <F N="../ProjectIAR/bootloader/Exe/AE-01_BOOT.hex"/>
+        </Folder>
+        <Folder Name="Obj">
+          <F N="../ProjectIAR/bootloader/Obj/aes.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/aes.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/bootloader.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/bootloader.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/command.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/command.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/control.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/control.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/main_boot.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/main_boot.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/prjlib.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/prjlib.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/protocol_boot.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/protocol_boot.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/RTC.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/RTC.pbi.xcl"/>
+          <F N="../ProjectIAR/bootloader/Obj/user_ble.pbi"/>
+          <F N="../ProjectIAR/bootloader/Obj/user_ble.pbi.xcl"/>
+        </Folder>
+      </Folder>
+      <Folder Name="settings">
+        <F N="../ProjectIAR/settings/AD-15.BLEE.cspy.bat"/>
+        <F N="../ProjectIAR/settings/AD-15.BLEE.driver.xcl"/>
+        <F N="../ProjectIAR/settings/AD-15.BLEE.general.xcl"/>
+        <F N="../ProjectIAR/settings/AD-15.crun"/>
+        <F N="../ProjectIAR/settings/AD-15.dbgdt"/>
+        <F N="../ProjectIAR/settings/AD-15.dni"/>
+        <F N="../ProjectIAR/settings/AD-15.wsdt"/>
+        <F N="../ProjectIAR/settings/AD-15_BOOT.bootloader.cspy.bat"/>
+        <F N="../ProjectIAR/settings/AD-15_BOOT.bootloader.driver.xcl"/>
+        <F N="../ProjectIAR/settings/AD-15_BOOT.bootloader.general.xcl"/>
+        <F N="../ProjectIAR/settings/AD-15_BOOT.crun"/>
+        <F N="../ProjectIAR/settings/AD-15_BOOT.dbgdt"/>
+        <F N="../ProjectIAR/settings/AD-15_BOOT.dni"/>
+      </Folder>
+      <F N="../ProjectIAR/AD-15.dep"/>
+      <F N="../ProjectIAR/AD-15.ewd"/>
+      <F N="../ProjectIAR/AD-15.ewp"/>
+      <F N="../ProjectIAR/AD-15.ewt"/>
+      <F N="../ProjectIAR/AD-15.eww"/>
+      <F N="../ProjectIAR/AD-15.icf"/>
+      <F N="../ProjectIAR/AD-15_BOOT.dep"/>
+      <F N="../ProjectIAR/AD-15_BOOT.ewd"/>
+      <F N="../ProjectIAR/AD-15_BOOT.ewp"/>
+      <F N="../ProjectIAR/AD-15_Boot.icf"/>
+    </Folder>
+    <Folder Name="../SDK">
+      <Folder Name="ant">
+        <Folder Name="ant_channel_config">
+          <F N="../SDK/ant/ant_channel_config/ant_channel_config.c"/>
+          <F N="../SDK/ant/ant_channel_config/ant_channel_config.h"/>
+        </Folder>
+        <Folder Name="ant_encryption">
+          <F N="../SDK/ant/ant_encryption/ant_encrypt_config.c"/>
+          <F N="../SDK/ant/ant_encryption/ant_encrypt_config.h"/>
+          <F N="../SDK/ant/ant_encryption/ant_encrypt_negotiation_slave.c"/>
+          <F N="../SDK/ant/ant_encryption/ant_encrypt_negotiation_slave.h"/>
+        </Folder>
+        <Folder Name="ant_key_manager">
+          <Folder Name="config">
+            <F N="../SDK/ant/ant_key_manager/config/ant_key_manager_config.h"/>
+          </Folder>
+          <F N="../SDK/ant/ant_key_manager/ant_key_manager.c"/>
+          <F N="../SDK/ant/ant_key_manager/ant_key_manager.h"/>
+        </Folder>
+        <Folder Name="ant_profiles">
+          <Folder Name="ant_bpwr">
+            <Folder Name="pages">
+              <Folder Name="logger">
+                <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/logger/ant_bpwr_page_logger.h"/>
+              </Folder>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_common_data.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_common_data.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_1.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_1.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_16.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_16.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_17.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_17.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_18.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_18.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_torque.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_page_torque.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/pages/ant_bpwr_pages.h"/>
+            </Folder>
+            <Folder Name="simulator">
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/simulator/ant_bpwr_simulator.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/simulator/ant_bpwr_simulator.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/simulator/ant_bpwr_simulator_local.h"/>
+            </Folder>
+            <Folder Name="utils">
+              <F N="../SDK/ant/ant_profiles/ant_bpwr/utils/ant_bpwr_utils.h"/>
+            </Folder>
+            <F N="../SDK/ant/ant_profiles/ant_bpwr/ant_bpwr.c"/>
+            <F N="../SDK/ant/ant_profiles/ant_bpwr/ant_bpwr.h"/>
+            <F N="../SDK/ant/ant_profiles/ant_bpwr/ant_bpwr_local.h"/>
+          </Folder>
+          <Folder Name="ant_bsc">
+            <Folder Name="pages">
+              <Folder Name="logger">
+                <F N="../SDK/ant/ant_profiles/ant_bsc/pages/logger/ant_bsc_page_logger.h"/>
+              </Folder>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_combined_page_0.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_combined_page_0.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_0.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_0.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_1.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_1.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_2.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_2.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_3.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_3.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_4.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_4.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_5.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_page_5.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/pages/ant_bsc_pages.h"/>
+            </Folder>
+            <Folder Name="simulator">
+              <F N="../SDK/ant/ant_profiles/ant_bsc/simulator/ant_bsc_simulator.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/simulator/ant_bsc_simulator.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_bsc/simulator/ant_bsc_simulator_local.h"/>
+            </Folder>
+            <Folder Name="utils">
+              <F N="../SDK/ant/ant_profiles/ant_bsc/utils/ant_bsc_utils.h"/>
+            </Folder>
+            <F N="../SDK/ant/ant_profiles/ant_bsc/ant_bsc.c"/>
+            <F N="../SDK/ant/ant_profiles/ant_bsc/ant_bsc.h"/>
+            <F N="../SDK/ant/ant_profiles/ant_bsc/ant_bsc_local.h"/>
+          </Folder>
+          <Folder Name="ant_common">
+            <Folder Name="ant_request_controller">
+              <F N="../SDK/ant/ant_profiles/ant_common/ant_request_controller/ant_request_controller.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_common/ant_request_controller/ant_request_controller.h"/>
+            </Folder>
+            <Folder Name="pages">
+              <Folder Name="logger">
+                <F N="../SDK/ant/ant_profiles/ant_common/pages/logger/ant_common_page_logger.h"/>
+              </Folder>
+              <F N="../SDK/ant/ant_profiles/ant_common/pages/ant_common_page_70.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_common/pages/ant_common_page_70.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_common/pages/ant_common_page_80.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_common/pages/ant_common_page_80.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_common/pages/ant_common_page_81.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_common/pages/ant_common_page_81.h"/>
+            </Folder>
+          </Folder>
+          <Folder Name="ant_hrm">
+            <Folder Name="pages">
+              <Folder Name="logger">
+                <F N="../SDK/ant/ant_profiles/ant_hrm/pages/logger/ant_hrm_page_logger.h"/>
+              </Folder>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_0.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_0.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_1.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_1.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_2.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_2.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_3.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_3.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_4.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_page_4.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/pages/ant_hrm_pages.h"/>
+            </Folder>
+            <Folder Name="simulator">
+              <F N="../SDK/ant/ant_profiles/ant_hrm/simulator/ant_hrm_simulator.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/simulator/ant_hrm_simulator.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_hrm/simulator/ant_hrm_simulator_local.h"/>
+            </Folder>
+            <Folder Name="utils">
+              <F N="../SDK/ant/ant_profiles/ant_hrm/utils/ant_hrm_utils.h"/>
+            </Folder>
+            <F N="../SDK/ant/ant_profiles/ant_hrm/ant_hrm.c"/>
+            <F N="../SDK/ant/ant_profiles/ant_hrm/ant_hrm.h"/>
+            <F N="../SDK/ant/ant_profiles/ant_hrm/ant_hrm_local.h"/>
+          </Folder>
+          <Folder Name="ant_sdm">
+            <Folder Name="pages">
+              <Folder Name="logger">
+                <F N="../SDK/ant/ant_profiles/ant_sdm/pages/logger/ant_sdm_page_logger.h"/>
+              </Folder>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_common_data.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_common_data.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_1.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_1.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_16.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_16.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_2.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_2.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_22.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_22.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_3.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_page_3.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/pages/ant_sdm_pages.h"/>
+            </Folder>
+            <Folder Name="simulator">
+              <F N="../SDK/ant/ant_profiles/ant_sdm/simulator/ant_sdm_simulator.c"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/simulator/ant_sdm_simulator.h"/>
+              <F N="../SDK/ant/ant_profiles/ant_sdm/simulator/ant_sdm_simulator_local.h"/>
+            </Folder>
+            <Folder Name="utils">
+              <F N="../SDK/ant/ant_profiles/ant_sdm/utils/ant_sdm_utils.h"/>
+            </Folder>
+            <F N="../SDK/ant/ant_profiles/ant_sdm/ant_sdm.c"/>
+            <F N="../SDK/ant/ant_profiles/ant_sdm/ant_sdm.h"/>
+            <F N="../SDK/ant/ant_profiles/ant_sdm/ant_sdm_local.h"/>
+          </Folder>
+        </Folder>
+        <Folder Name="ant_search_config">
+          <F N="../SDK/ant/ant_search_config/ant_search_config.c"/>
+          <F N="../SDK/ant/ant_search_config/ant_search_config.h"/>
+        </Folder>
+        <Folder Name="ant_stack_config">
+          <Folder Name="config">
+            <F N="../SDK/ant/ant_stack_config/config/ant_stack_config_defs.h"/>
+          </Folder>
+          <F N="../SDK/ant/ant_stack_config/ant_stack_config.c"/>
+          <F N="../SDK/ant/ant_stack_config/ant_stack_config.h"/>
+        </Folder>
+        <Folder Name="ant_state_indicator">
+          <F N="../SDK/ant/ant_state_indicator/ant_state_indicator.c"/>
+          <F N="../SDK/ant/ant_state_indicator/ant_state_indicator.h"/>
+        </Folder>
+      </Folder>
+      <Folder Name="ble">
+        <Folder Name="ble_advertising">
+          <F N="../SDK/ble/ble_advertising/ble_advertising.c"/>
+          <F N="../SDK/ble/ble_advertising/ble_advertising.h"/>
+        </Folder>
+        <Folder Name="ble_db_discovery">
+          <F N="../SDK/ble/ble_db_discovery/ble_db_discovery.c"/>
+          <F N="../SDK/ble/ble_db_discovery/ble_db_discovery.h"/>
+        </Folder>
+        <Folder Name="ble_debug_assert_handler">
+          <F N="../SDK/ble/ble_debug_assert_handler/ble_debug_assert_handler.c"/>
+          <F N="../SDK/ble/ble_debug_assert_handler/ble_debug_assert_handler.h"/>
+        </Folder>
+        <Folder Name="ble_dtm">
+          <F N="../SDK/ble/ble_dtm/ble_dtm.c"/>
+          <F N="../SDK/ble/ble_dtm/ble_dtm.h"/>
+        </Folder>
+        <Folder Name="ble_error_log">
+          <F N="../SDK/ble/ble_error_log/ble_error_log.c"/>
+          <F N="../SDK/ble/ble_error_log/ble_error_log.h"/>
+        </Folder>
+        <Folder Name="ble_racp">
+          <F N="../SDK/ble/ble_racp/ble_racp.c"/>
+          <F N="../SDK/ble/ble_racp/ble_racp.h"/>
+        </Folder>
+        <Folder Name="ble_radio_notification">
+          <F N="../SDK/ble/ble_radio_notification/ble_radio_notification.c"/>
+          <F N="../SDK/ble/ble_radio_notification/ble_radio_notification.h"/>
+        </Folder>
+        <Folder Name="ble_services">
+          <Folder Name="ble_ancs_c">
+            <F N="../SDK/ble/ble_services/ble_ancs_c/ble_ancs_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_ancs_c/ble_ancs_c.h"/>
+          </Folder>
+          <Folder Name="ble_ans_c">
+            <F N="../SDK/ble/ble_services/ble_ans_c/ble_ans_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_ans_c/ble_ans_c.h"/>
+          </Folder>
+          <Folder Name="ble_bas">
+            <F N="../SDK/ble/ble_services/ble_bas/ble_bas.c"/>
+            <F N="../SDK/ble/ble_services/ble_bas/ble_bas.h"/>
+          </Folder>
+          <Folder Name="ble_bas_c">
+            <F N="../SDK/ble/ble_services/ble_bas_c/ble_bas_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_bas_c/ble_bas_c.h"/>
+          </Folder>
+          <Folder Name="ble_bps">
+            <F N="../SDK/ble/ble_services/ble_bps/ble_bps.c"/>
+            <F N="../SDK/ble/ble_services/ble_bps/ble_bps.h"/>
+          </Folder>
+          <Folder Name="ble_cscs">
+            <F N="../SDK/ble/ble_services/ble_cscs/ble_cscs.c"/>
+            <F N="../SDK/ble/ble_services/ble_cscs/ble_cscs.h"/>
+            <F N="../SDK/ble/ble_services/ble_cscs/ble_sc_ctrlpt.c"/>
+            <F N="../SDK/ble/ble_services/ble_cscs/ble_sc_ctrlpt.h"/>
+          </Folder>
+          <Folder Name="ble_cts_c">
+            <F N="../SDK/ble/ble_services/ble_cts_c/ble_cts_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_cts_c/ble_cts_c.h"/>
+          </Folder>
+          <Folder Name="ble_dfu">
+            <F N="../SDK/ble/ble_services/ble_dfu/ble_dfu.c"/>
+            <F N="../SDK/ble/ble_services/ble_dfu/ble_dfu.h"/>
+          </Folder>
+          <Folder Name="ble_dis">
+            <F N="../SDK/ble/ble_services/ble_dis/ble_dis.c"/>
+            <F N="../SDK/ble/ble_services/ble_dis/ble_dis.h"/>
+          </Folder>
+          <Folder Name="ble_gls">
+            <F N="../SDK/ble/ble_services/ble_gls/ble_gls.c"/>
+            <F N="../SDK/ble/ble_services/ble_gls/ble_gls.h"/>
+            <F N="../SDK/ble/ble_services/ble_gls/ble_gls_db.c"/>
+            <F N="../SDK/ble/ble_services/ble_gls/ble_gls_db.h"/>
+          </Folder>
+          <Folder Name="ble_hids">
+            <F N="../SDK/ble/ble_services/ble_hids/ble_hids.c"/>
+            <F N="../SDK/ble/ble_services/ble_hids/ble_hids.h"/>
+          </Folder>
+          <Folder Name="ble_hrs">
+            <F N="../SDK/ble/ble_services/ble_hrs/ble_hrs.c"/>
+            <F N="../SDK/ble/ble_services/ble_hrs/ble_hrs.h"/>
+          </Folder>
+          <Folder Name="ble_hrs_c">
+            <F N="../SDK/ble/ble_services/ble_hrs_c/ble_hrs_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_hrs_c/ble_hrs_c.h"/>
+          </Folder>
+          <Folder Name="ble_hts">
+            <F N="../SDK/ble/ble_services/ble_hts/ble_hts.c"/>
+            <F N="../SDK/ble/ble_services/ble_hts/ble_hts.h"/>
+          </Folder>
+          <Folder Name="ble_ias">
+            <F N="../SDK/ble/ble_services/ble_ias/ble_ias.c"/>
+            <F N="../SDK/ble/ble_services/ble_ias/ble_ias.h"/>
+          </Folder>
+          <Folder Name="ble_ias_c">
+            <F N="../SDK/ble/ble_services/ble_ias_c/ble_ias_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_ias_c/ble_ias_c.h"/>
+          </Folder>
+          <Folder Name="ble_lbs">
+            <F N="../SDK/ble/ble_services/ble_lbs/ble_lbs.c"/>
+            <F N="../SDK/ble/ble_services/ble_lbs/ble_lbs.h"/>
+          </Folder>
+          <Folder Name="ble_lls">
+            <F N="../SDK/ble/ble_services/ble_lls/ble_lls.c"/>
+            <F N="../SDK/ble/ble_services/ble_lls/ble_lls.h"/>
+          </Folder>
+          <Folder Name="ble_nus">
+            <F N="../SDK/ble/ble_services/ble_nus/ble_nus.c"/>
+            <F N="../SDK/ble/ble_services/ble_nus/ble_nus.h"/>
+          </Folder>
+          <Folder Name="ble_nus_c">
+            <F N="../SDK/ble/ble_services/ble_nus_c/ble_nus_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_nus_c/ble_nus_c.h"/>
+          </Folder>
+          <Folder Name="ble_rscs">
+            <F N="../SDK/ble/ble_services/ble_rscs/ble_rscs.c"/>
+            <F N="../SDK/ble/ble_services/ble_rscs/ble_rscs.h"/>
+          </Folder>
+          <Folder Name="ble_rscs_c">
+            <F N="../SDK/ble/ble_services/ble_rscs_c/ble_rscs_c.c"/>
+            <F N="../SDK/ble/ble_services/ble_rscs_c/ble_rscs_c.h"/>
+          </Folder>
+          <Folder Name="ble_tps">
+            <F N="../SDK/ble/ble_services/ble_tps/ble_tps.c"/>
+            <F N="../SDK/ble/ble_services/ble_tps/ble_tps.h"/>
+          </Folder>
+          <Folder Name="experimental_ble_lns">
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_ln_common.h"/>
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_ln_cp.c"/>
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_ln_cp.h"/>
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_ln_db.c"/>
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_ln_db.h"/>
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_lns.c"/>
+            <F N="../SDK/ble/ble_services/experimental_ble_lns/ble_lns.h"/>
+          </Folder>
+        </Folder>
+        <Folder Name="common">
+          <F N="../SDK/ble/common/ble_advdata.c"/>
+          <F N="../SDK/ble/common/ble_advdata.h"/>
+          <F N="../SDK/ble/common/ble_conn_params.c"/>
+          <F N="../SDK/ble/common/ble_conn_params.h"/>
+          <F N="../SDK/ble/common/ble_conn_state.c"/>
+          <F N="../SDK/ble/common/ble_conn_state.h"/>
+          <F N="../SDK/ble/common/ble_date_time.h"/>
+          <F N="../SDK/ble/common/ble_gatt_db.h"/>
+          <F N="../SDK/ble/common/ble_sensor_location.h"/>
+          <F N="../SDK/ble/common/ble_srv_common.c"/>
+          <F N="../SDK/ble/common/ble_srv_common.h"/>
+        </Folder>
+        <Folder Name="device_manager">
+          <Folder Name="config">
+            <F N="../SDK/ble/device_manager/config/device_manager_cnfg.h"/>
+          </Folder>
+          <F N="../SDK/ble/device_manager/device_manager.h"/>
+          <F N="../SDK/ble/device_manager/device_manager_central.c"/>
+          <F N="../SDK/ble/device_manager/device_manager_peripheral.c"/>
+        </Folder>
+        <Folder Name="peer_manager">
+          <F N="../SDK/ble/peer_manager/gatt_cache_manager.c"/>
+          <F N="../SDK/ble/peer_manager/gatt_cache_manager.h"/>
+          <F N="../SDK/ble/peer_manager/gattc_cache_manager.c"/>
+          <F N="../SDK/ble/peer_manager/gattc_cache_manager.h"/>
+          <F N="../SDK/ble/peer_manager/gatts_cache_manager.c"/>
+          <F N="../SDK/ble/peer_manager/gatts_cache_manager.h"/>
+          <F N="../SDK/ble/peer_manager/id_manager.c"/>
+          <F N="../SDK/ble/peer_manager/id_manager.h"/>
+          <F N="../SDK/ble/peer_manager/peer_data.c"/>
+          <F N="../SDK/ble/peer_manager/peer_data.h"/>
+          <F N="../SDK/ble/peer_manager/peer_data_storage.c"/>
+          <F N="../SDK/ble/peer_manager/peer_data_storage.h"/>
+          <F N="../SDK/ble/peer_manager/peer_database.c"/>
+          <F N="../SDK/ble/peer_manager/peer_database.h"/>
+          <F N="../SDK/ble/peer_manager/peer_id.c"/>
+          <F N="../SDK/ble/peer_manager/peer_id.h"/>
+          <F N="../SDK/ble/peer_manager/peer_manager.c"/>
+          <F N="../SDK/ble/peer_manager/peer_manager.h"/>
+          <F N="../SDK/ble/peer_manager/peer_manager_types.h"/>
+          <F N="../SDK/ble/peer_manager/pm_buffer.c"/>
+          <F N="../SDK/ble/peer_manager/pm_buffer.h"/>
+          <F N="../SDK/ble/peer_manager/pm_mutex.c"/>
+          <F N="../SDK/ble/peer_manager/pm_mutex.h"/>
+          <F N="../SDK/ble/peer_manager/security_dispatcher.c"/>
+          <F N="../SDK/ble/peer_manager/security_dispatcher.h"/>
+          <F N="../SDK/ble/peer_manager/security_manager.c"/>
+          <F N="../SDK/ble/peer_manager/security_manager.h"/>
+        </Folder>
+      </Folder>
+      <Folder Name="device">
+        <F N="../SDK/device/compiler_abstraction.h"/>
+        <F N="../SDK/device/nrf.h"/>
+        <F N="../SDK/device/nrf51.h"/>
+        <F N="../SDK/device/nrf51_bitfields.h"/>
+        <F N="../SDK/device/nrf51_deprecated.h"/>
+        <F N="../SDK/device/nrf51_to_nrf52.h"/>
+        <F N="../SDK/device/nrf52.h"/>
+        <F N="../SDK/device/nrf52_bitfields.h"/>
+      </Folder>
+      <Folder Name="drivers_ext">
+        <Folder Name="adns2080">
+          <F N="../SDK/drivers_ext/adns2080/adns2080.c"/>
+          <F N="../SDK/drivers_ext/adns2080/adns2080.h"/>
+        </Folder>
+        <Folder Name="cherry8x16">
+          <F N="../SDK/drivers_ext/cherry8x16/cherry8x16.c"/>
+          <F N="../SDK/drivers_ext/cherry8x16/cherry8x16.h"/>
+        </Folder>
+        <Folder Name="ds1624">
+          <F N="../SDK/drivers_ext/ds1624/ds1624.c"/>
+          <F N="../SDK/drivers_ext/ds1624/ds1624.h"/>
+        </Folder>
+        <Folder Name="mpu6050">
+          <F N="../SDK/drivers_ext/mpu6050/mpu6050.c"/>
+          <F N="../SDK/drivers_ext/mpu6050/mpu6050.h"/>
+        </Folder>
+        <Folder Name="nrf6350">
+          <F N="../SDK/drivers_ext/nrf6350/nrf6350.c"/>
+          <F N="../SDK/drivers_ext/nrf6350/nrf6350.h"/>
+        </Folder>
+        <Folder Name="segger_rtt">
+          <F N="../SDK/drivers_ext/segger_rtt/RTT_Syscalls_GCC.c"/>
+          <F N="../SDK/drivers_ext/segger_rtt/RTT_Syscalls_IAR.c"/>
+          <F N="../SDK/drivers_ext/segger_rtt/RTT_Syscalls_KEIL.c"/>
+          <F N="../SDK/drivers_ext/segger_rtt/SEGGER_RTT.c"/>
+          <F N="../SDK/drivers_ext/segger_rtt/SEGGER_RTT.h"/>
+          <F N="../SDK/drivers_ext/segger_rtt/SEGGER_RTT_Conf.h"/>
+          <F N="../SDK/drivers_ext/segger_rtt/SEGGER_RTT_printf.c"/>
+        </Folder>
+        <Folder Name="synaptics_touchpad">
+          <F N="../SDK/drivers_ext/synaptics_touchpad/synaptics_touchpad.c"/>
+          <F N="../SDK/drivers_ext/synaptics_touchpad/synaptics_touchpad.h"/>
+        </Folder>
+      </Folder>
+      <Folder Name="drivers_nrf">
+        <Folder Name="ble_flash">
+          <F N="../SDK/drivers_nrf/ble_flash/ble_flash.c"/>
+          <F N="../SDK/drivers_nrf/ble_flash/ble_flash.h"/>
+        </Folder>
+        <Folder Name="clock">
+          <F N="../SDK/drivers_nrf/clock/nrf_drv_clock.c"/>
+          <F N="../SDK/drivers_nrf/clock/nrf_drv_clock.h"/>
+        </Folder>
+        <Folder Name="common">
+          <F N="../SDK/drivers_nrf/common/nrf_drv_common.c"/>
+          <F N="../SDK/drivers_nrf/common/nrf_drv_common.h"/>
+        </Folder>
+        <Folder Name="config">
+          <F N="../SDK/drivers_nrf/config/nrf_drv_config.h"/>
+          <F N="../SDK/drivers_nrf/config/nrf_drv_config_validation.h"/>
+        </Folder>
+        <Folder Name="delay">
+          <F N="../SDK/drivers_nrf/delay/nrf_delay.c"/>
+          <F N="../SDK/drivers_nrf/delay/nrf_delay.h"/>
+        </Folder>
+        <Folder Name="gpiote">
+          <F N="../SDK/drivers_nrf/gpiote/nrf_drv_gpiote.c"/>
+          <F N="../SDK/drivers_nrf/gpiote/nrf_drv_gpiote.h"/>
+        </Folder>
+        <Folder Name="hal">
+          <F N="../SDK/drivers_nrf/hal/nrf_adc.c"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_adc.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_clock.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_ecb.c"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_ecb.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_egu.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_gpio.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_gpiote.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_i2s.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_lpcomp.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_nvmc.c"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_nvmc.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_pdm.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_ppi.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_pwm.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_qdec.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_rng.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_rtc.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_saadc.c"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_saadc.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_spi.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_spim.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_spis.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_temp.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_timer.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_twi.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_twim.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_twis.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_uart.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_uarte.h"/>
+          <F N="../SDK/drivers_nrf/hal/nrf_wdt.h"/>
+        </Folder>
+        <Folder Name="i2s">
+          <F N="../SDK/drivers_nrf/i2s/nrf_drv_i2s.c"/>
+          <F N="../SDK/drivers_nrf/i2s/nrf_drv_i2s.h"/>
+        </Folder>
+        <Folder Name="lpcomp">
+          <F N="../SDK/drivers_nrf/lpcomp/nrf_drv_lpcomp.c"/>
+          <F N="../SDK/drivers_nrf/lpcomp/nrf_drv_lpcomp.h"/>
+        </Folder>
+        <Folder Name="nrf_soc_nosd">
+          <F N="../SDK/drivers_nrf/nrf_soc_nosd/nrf_error.h"/>
+          <F N="../SDK/drivers_nrf/nrf_soc_nosd/nrf_soc.c"/>
+          <F N="../SDK/drivers_nrf/nrf_soc_nosd/nrf_soc.h"/>
+        </Folder>
+        <Folder Name="pdm">
+          <F N="../SDK/drivers_nrf/pdm/nrf_drv_pdm.c"/>
+          <F N="../SDK/drivers_nrf/pdm/nrf_drv_pdm.h"/>
+        </Folder>
+        <Folder Name="ppi">
+          <F N="../SDK/drivers_nrf/ppi/nrf_drv_ppi.c"/>
+          <F N="../SDK/drivers_nrf/ppi/nrf_drv_ppi.h"/>
+        </Folder>
+        <Folder Name="pstorage">
+          <Folder Name="config">
+            <F N="../SDK/drivers_nrf/pstorage/config/pstorage_platform.h"/>
+          </Folder>
+          <F N="../SDK/drivers_nrf/pstorage/pstorage.c"/>
+          <F N="../SDK/drivers_nrf/pstorage/pstorage.h"/>
+          <F N="../SDK/drivers_nrf/pstorage/pstorage_nosd.c"/>
+          <F N="../SDK/drivers_nrf/pstorage/pstorage_raw.c"/>
+        </Folder>
+        <Folder Name="pwm">
+          <F N="../SDK/drivers_nrf/pwm/nrf_drv_pwm.c"/>
+          <F N="../SDK/drivers_nrf/pwm/nrf_drv_pwm.h"/>
+        </Folder>
+        <Folder Name="qdec">
+          <F N="../SDK/drivers_nrf/qdec/nrf_drv_qdec.c"/>
+          <F N="../SDK/drivers_nrf/qdec/nrf_drv_qdec.h"/>
+        </Folder>
+        <Folder Name="radio_config">
+          <F N="../SDK/drivers_nrf/radio_config/radio_config.c"/>
+          <F N="../SDK/drivers_nrf/radio_config/radio_config.h"/>
+        </Folder>
+        <Folder Name="rng">
+          <F N="../SDK/drivers_nrf/rng/nrf_drv_rng.c"/>
+          <F N="../SDK/drivers_nrf/rng/nrf_drv_rng.h"/>
+        </Folder>
+        <Folder Name="rtc">
+          <F N="../SDK/drivers_nrf/rtc/nrf_drv_rtc.c"/>
+          <F N="../SDK/drivers_nrf/rtc/nrf_drv_rtc.h"/>
+        </Folder>
+        <Folder Name="saadc">
+          <F N="../SDK/drivers_nrf/saadc/nrf_drv_saadc.c"/>
+          <F N="../SDK/drivers_nrf/saadc/nrf_drv_saadc.h"/>
+        </Folder>
+        <Folder Name="sdio">
+          <Folder Name="config">
+            <F N="../SDK/drivers_nrf/sdio/config/sdio_config.h"/>
+          </Folder>
+          <F N="../SDK/drivers_nrf/sdio/sdio.c"/>
+          <F N="../SDK/drivers_nrf/sdio/sdio.h"/>
+        </Folder>
+        <Folder Name="spi_master">
+          <F N="../SDK/drivers_nrf/spi_master/nrf_drv_spi.c"/>
+          <F N="../SDK/drivers_nrf/spi_master/nrf_drv_spi.h"/>
+          <F N="../SDK/drivers_nrf/spi_master/spi_5W_master.c"/>
+          <F N="../SDK/drivers_nrf/spi_master/spi_5W_master.h"/>
+        </Folder>
+        <Folder Name="spi_slave">
+          <F N="../SDK/drivers_nrf/spi_slave/nrf_drv_spis.c"/>
+          <F N="../SDK/drivers_nrf/spi_slave/nrf_drv_spis.h"/>
+        </Folder>
+        <Folder Name="swi">
+          <F N="../SDK/drivers_nrf/swi/nrf_drv_swi.c"/>
+          <F N="../SDK/drivers_nrf/swi/nrf_drv_swi.h"/>
+        </Folder>
+        <Folder Name="timer">
+          <F N="../SDK/drivers_nrf/timer/nrf_drv_timer.c"/>
+          <F N="../SDK/drivers_nrf/timer/nrf_drv_timer.h"/>
+        </Folder>
+        <Folder Name="twi_master">
+          <Folder Name="deprecated">
+            <Folder Name="config">
+              <F N="../SDK/drivers_nrf/twi_master/deprecated/config/twi_master_config.h"/>
+            </Folder>
+            <F N="../SDK/drivers_nrf/twi_master/deprecated/twi_hw_master.c"/>
+            <F N="../SDK/drivers_nrf/twi_master/deprecated/twi_master.h"/>
+            <F N="../SDK/drivers_nrf/twi_master/deprecated/twi_sw_master.c"/>
+          </Folder>
+          <F N="../SDK/drivers_nrf/twi_master/nrf_drv_twi.c"/>
+          <F N="../SDK/drivers_nrf/twi_master/nrf_drv_twi.h"/>
+        </Folder>
+        <Folder Name="twis_slave">
+          <F N="../SDK/drivers_nrf/twis_slave/nrf_drv_twis.c"/>
+          <F N="../SDK/drivers_nrf/twis_slave/nrf_drv_twis.h"/>
+          <F N="../SDK/drivers_nrf/twis_slave/nrf_drv_twis_inst.def"/>
+        </Folder>
+        <Folder Name="uart">
+          <F N="../SDK/drivers_nrf/uart/nrf_drv_uart.c"/>
+          <F N="../SDK/drivers_nrf/uart/nrf_drv_uart.h"/>
+        </Folder>
+        <Folder Name="wdt">
+          <F N="../SDK/drivers_nrf/wdt/nrf_drv_wdt.c"/>
+          <F N="../SDK/drivers_nrf/wdt/nrf_drv_wdt.h"/>
+        </Folder>
+      </Folder>
+      <Folder Name="experimental_nfc">
+        <Folder Name="ndef">
+          <Folder Name="connection_handover">
+            <Folder Name="ac_rec">
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/ac_rec/nfc_ac_rec.c"/>
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/ac_rec/nfc_ac_rec.h"/>
+            </Folder>
+            <Folder Name="ep_oob_rec">
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/ep_oob_rec/nfc_ep_oob_rec.c"/>
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/ep_oob_rec/nfc_ep_oob_rec.h"/>
+            </Folder>
+            <Folder Name="hs_rec">
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/hs_rec/nfc_hs_rec.c"/>
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/hs_rec/nfc_hs_rec.h"/>
+            </Folder>
+            <Folder Name="le_oob_rec">
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/le_oob_rec/nfc_le_oob_rec.c"/>
+              <F N="../SDK/experimental_nfc/ndef/connection_handover/le_oob_rec/nfc_le_oob_rec.h"/>
+            </Folder>
+            <F N="../SDK/experimental_nfc/ndef/connection_handover/nfc_ble_pair_msg.c"/>
+            <F N="../SDK/experimental_nfc/ndef/connection_handover/nfc_ble_pair_msg.h"/>
+          </Folder>
+          <Folder Name="generic">
+            <Folder Name="message">
+              <F N="../SDK/experimental_nfc/ndef/generic/message/nfc_ndef_msg.c"/>
+              <F N="../SDK/experimental_nfc/ndef/generic/message/nfc_ndef_msg.h"/>
+            </Folder>
+            <Folder Name="record">
+              <F N="../SDK/experimental_nfc/ndef/generic/record/nfc_ndef_record.c"/>
+              <F N="../SDK/experimental_nfc/ndef/generic/record/nfc_ndef_record.h"/>
+            </Folder>
+          </Folder>
+          <Folder Name="launchapp">
+            <F N="../SDK/experimental_nfc/ndef/launchapp/nfc_launchapp_msg.c"/>
+            <F N="../SDK/experimental_nfc/ndef/launchapp/nfc_launchapp_msg.h"/>
+            <F N="../SDK/experimental_nfc/ndef/launchapp/nfc_launchapp_rec.c"/>
+            <F N="../SDK/experimental_nfc/ndef/launchapp/nfc_launchapp_rec.h"/>
+          </Folder>
+          <Folder Name="uri">
+            <F N="../SDK/experimental_nfc/ndef/uri/nfc_uri_msg.c"/>
+            <F N="../SDK/experimental_nfc/ndef/uri/nfc_uri_msg.h"/>
+            <F N="../SDK/experimental_nfc/ndef/uri/nfc_uri_rec.c"/>
+            <F N="../SDK/experimental_nfc/ndef/uri/nfc_uri_rec.h"/>
+          </Folder>
+        </Folder>
+        <Folder Name="t2t_lib">
+          <Folder Name="hal_t2t">
+            <F N="../SDK/experimental_nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c"/>
+            <F N="../SDK/experimental_nfc/t2t_lib/hal_t2t/hal_nfc_t2t.h"/>
+            <F N="../SDK/experimental_nfc/t2t_lib/hal_t2t/hal_nfc_t2t_logger.h"/>
+          </Folder>
+          <F N="../SDK/experimental_nfc/t2t_lib/nfc_fixes.h"/>
+          <F N="../SDK/experimental_nfc/t2t_lib/nfc_t2t_lib.h"/>
+        </Folder>
+        <Folder Name="t2t_parser">
+          <F N="../SDK/experimental_nfc/t2t_parser/nfc_t2t_parser.c"/>
+          <F N="../SDK/experimental_nfc/t2t_parser/nfc_t2t_parser.h"/>
+          <F N="../SDK/experimental_nfc/t2t_parser/nfc_tlv_block.h"/>
+        </Folder>
+      </Folder>
+      <Folder Name="libraries">
+        <Folder Name="ant_fs">
+          <F N="../SDK/libraries/ant_fs/antfs.c"/>
+          <F N="../SDK/libraries/ant_fs/antfs.h"/>
+          <F N="../SDK/libraries/ant_fs/crc.c"/>
+          <F N="../SDK/libraries/ant_fs/crc.h"/>
+          <F N="../SDK/libraries/ant_fs/defines.h"/>
+        </Folder>
+        <Folder Name="bootloader_dfu">
+          <Folder Name="ble_transport">
+            <F N="../SDK/libraries/bootloader_dfu/ble_transport/hci_mem_pool_internal.h"/>
+          </Folder>
+          <Folder Name="experimental">
+            <F N="../SDK/libraries/bootloader_dfu/experimental/dfu_init_template_signing.c"/>
+            <F N="../SDK/libraries/bootloader_dfu/experimental/nrf_sec.h"/>
+          </Folder>
+          <Folder Name="hci_transport">
+            <F N="../SDK/libraries/bootloader_dfu/hci_transport/hci_mem_pool_internal.h"/>
+            <F N="../SDK/libraries/bootloader_dfu/hci_transport/hci_transport_config.h"/>
+          </Folder>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader_settings.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader_settings.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader_types.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader_util.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/bootloader_util.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_app_handler.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_app_handler.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_bank_internal.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_ble_svc.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_ble_svc_internal.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_dual_bank.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_init.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_init_template.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_single_bank.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_transport.h"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_transport_ble.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_transport_serial.c"/>
+          <F N="../SDK/libraries/bootloader_dfu/dfu_types.h"/>
+        </Folder>
+        <Folder Name="button">
+          <F N="../SDK/libraries/button/app_button.c"/>
+          <F N="../SDK/libraries/button/app_button.h"/>
+        </Folder>
+        <Folder Name="console">
+          <F N="../SDK/libraries/console/console.c"/>
+          <F N="../SDK/libraries/console/console.h"/>
+        </Folder>
+        <Folder Name="crc16">
+          <F N="../SDK/libraries/crc16/crc16.c"/>
+          <F N="../SDK/libraries/crc16/crc16.h"/>
+        </Folder>
+        <Folder Name="crc32">
+          <F N="../SDK/libraries/crc32/crc32.c"/>
+          <F N="../SDK/libraries/crc32/crc32.h"/>
+        </Folder>
+        <Folder Name="experimental_section_vars">
+          <F N="../SDK/libraries/experimental_section_vars/section_vars.h"/>
+        </Folder>
+        <Folder Name="fds">
+          <F N="../SDK/libraries/fds/fds.c"/>
+          <F N="../SDK/libraries/fds/fds.h"/>
+          <F N="../SDK/libraries/fds/fds_config.h"/>
+          <F N="../SDK/libraries/fds/fds_internal_defs.h"/>
+        </Folder>
+        <Folder Name="fifo">
+          <F N="../SDK/libraries/fifo/app_fifo.c"/>
+          <F N="../SDK/libraries/fifo/app_fifo.h"/>
+        </Folder>
+        <Folder Name="fstorage">
+          <F N="../SDK/libraries/fstorage/fstorage.c"/>
+          <F N="../SDK/libraries/fstorage/fstorage.h"/>
+          <F N="../SDK/libraries/fstorage/fstorage_config.h"/>
+          <F N="../SDK/libraries/fstorage/fstorage_nosd.c"/>
+        </Folder>
+        <Folder Name="gpiote">
+          <F N="../SDK/libraries/gpiote/app_gpiote.c"/>
+          <F N="../SDK/libraries/gpiote/app_gpiote.h"/>
+          <F N="../SDK/libraries/gpiote/app_gpiote_fast_detect.c"/>
+        </Folder>
+        <Folder Name="hardfault">
+          <Folder Name="nrf51">
+            <Folder Name="handler">
+              <F N="../SDK/libraries/hardfault/nrf51/handler/hardfault_handler_gcc.c"/>
+              <F N="../SDK/libraries/hardfault/nrf51/handler/hardfault_handler_iar.c"/>
+              <F N="../SDK/libraries/hardfault/nrf51/handler/hardfault_handler_keil.c"/>
+            </Folder>
+          </Folder>
+          <Folder Name="nrf52">
+            <Folder Name="handler">
+              <F N="../SDK/libraries/hardfault/nrf52/handler/hardfault_handler_gcc.c"/>
+              <F N="../SDK/libraries/hardfault/nrf52/handler/hardfault_handler_iar.c"/>
+              <F N="../SDK/libraries/hardfault/nrf52/handler/hardfault_handler_keil.c"/>
+            </Folder>
+          </Folder>
+          <F N="../SDK/libraries/hardfault/hardfault.h"/>
+          <F N="../SDK/libraries/hardfault/hardfault_implementation.c"/>
+        </Folder>
+        <Folder Name="hci">
+          <Folder Name="config">
+            <F N="../SDK/libraries/hci/config/hci_mem_pool_internal.h"/>
+            <F N="../SDK/libraries/hci/config/hci_transport_config.h"/>
+          </Folder>
+          <F N="../SDK/libraries/hci/hci_mem_pool.c"/>
+          <F N="../SDK/libraries/hci/hci_mem_pool.h"/>
+          <F N="../SDK/libraries/hci/hci_slip.c"/>
+          <F N="../SDK/libraries/hci/hci_slip.h"/>
+          <F N="../SDK/libraries/hci/hci_transport.c"/>
+          <F N="../SDK/libraries/hci/hci_transport.h"/>
+        </Folder>
+        <Folder Name="ic_info">
+          <F N="../SDK/libraries/ic_info/nrf_ic_info.c"/>
+          <F N="../SDK/libraries/ic_info/nrf_ic_info.h"/>
+        </Folder>
+        <Folder Name="led_softblink">
+          <F N="../SDK/libraries/led_softblink/led_softblink.c"/>
+          <F N="../SDK/libraries/led_softblink/led_softblink.h"/>
+        </Folder>
+        <Folder Name="low_power_pwm">
+          <F N="../SDK/libraries/low_power_pwm/low_power_pwm.c"/>
+          <F N="../SDK/libraries/low_power_pwm/low_power_pwm.h"/>
+        </Folder>
+        <Folder Name="mailbox">
+          <F N="../SDK/libraries/mailbox/app_mailbox.c"/>
+          <F N="../SDK/libraries/mailbox/app_mailbox.h"/>
+          <F N="../SDK/libraries/mailbox/app_mailbox_local.h"/>
+        </Folder>
+        <Folder Name="mem_manager">
+          <F N="../SDK/libraries/mem_manager/mem_manager.c"/>
+          <F N="../SDK/libraries/mem_manager/mem_manager.h"/>
+        </Folder>
+        <Folder Name="pwm">
+          <F N="../SDK/libraries/pwm/app_pwm.c"/>
+          <F N="../SDK/libraries/pwm/app_pwm.h"/>
+        </Folder>
+        <Folder Name="scheduler">
+          <F N="../SDK/libraries/scheduler/app_scheduler.c"/>
+          <F N="../SDK/libraries/scheduler/app_scheduler.h"/>
+          <F N="../SDK/libraries/scheduler/app_scheduler_serconn.c"/>
+        </Folder>
+        <Folder Name="sensorsim">
+          <F N="../SDK/libraries/sensorsim/sensorsim.c"/>
+          <F N="../SDK/libraries/sensorsim/sensorsim.h"/>
+        </Folder>
+        <Folder Name="sha256">
+          <F N="../SDK/libraries/sha256/sha256.c"/>
+          <F N="../SDK/libraries/sha256/sha256.h"/>
+        </Folder>
+        <Folder Name="simple_timer">
+          <F N="../SDK/libraries/simple_timer/app_simple_timer.c"/>
+          <F N="../SDK/libraries/simple_timer/app_simple_timer.h"/>
+        </Folder>
+        <Folder Name="slip">
+          <F N="../SDK/libraries/slip/slip.c"/>
+          <F N="../SDK/libraries/slip/slip.h"/>
+        </Folder>
+        <Folder Name="timer">
+          <F N="../SDK/libraries/timer/app_timer.c"/>
+          <F N="../SDK/libraries/timer/app_timer.h"/>
+          <F N="../SDK/libraries/timer/app_timer_appsh.c"/>
+          <F N="../SDK/libraries/timer/app_timer_appsh.h"/>
+          <F N="../SDK/libraries/timer/app_timer_ble_gzll.c"/>
+          <F N="../SDK/libraries/timer/app_timer_freertos.c"/>
+          <F N="../SDK/libraries/timer/app_timer_rtx.c"/>
+        </Folder>
+        <Folder Name="trace">
+          <F N="../SDK/libraries/trace/app_trace.c"/>
+          <F N="../SDK/libraries/trace/app_trace.h"/>
+        </Folder>
+        <Folder Name="twi">
+          <F N="../SDK/libraries/twi/app_twi.c"/>
+          <F N="../SDK/libraries/twi/app_twi.h"/>
+        </Folder>
+        <Folder Name="uart">
+          <F N="../SDK/libraries/uart/app_uart.c"/>
+          <F N="../SDK/libraries/uart/app_uart.h"/>
+          <F N="../SDK/libraries/uart/app_uart_fifo.c"/>
+          <F N="../SDK/libraries/uart/retarget.c"/>
+        </Folder>
+        <Folder Name="util">
+          <F N="../SDK/libraries/util/app_error.c"/>
+          <F N="../SDK/libraries/util/app_error.h"/>
+          <F N="../SDK/libraries/util/app_util.h"/>
+          <F N="../SDK/libraries/util/app_util_bds.h"/>
+          <F N="../SDK/libraries/util/app_util_platform.c"/>
+          <F N="../SDK/libraries/util/app_util_platform.h"/>
+          <F N="../SDK/libraries/util/common.h"/>
+          <F N="../SDK/libraries/util/nordic_common.h"/>
+          <F N="../SDK/libraries/util/nrf_assert.c"/>
+          <F N="../SDK/libraries/util/nrf_assert.h"/>
+          <F N="../SDK/libraries/util/nrf_log.c"/>
+          <F N="../SDK/libraries/util/nrf_log.h"/>
+          <F N="../SDK/libraries/util/sdk_common.h"/>
+          <F N="../SDK/libraries/util/sdk_errors.h"/>
+          <F N="../SDK/libraries/util/sdk_macros.h"/>
+          <F N="../SDK/libraries/util/sdk_mapped_flags.c"/>
+          <F N="../SDK/libraries/util/sdk_mapped_flags.h"/>
+          <F N="../SDK/libraries/util/sdk_os.h"/>
+          <F N="../SDK/libraries/util/sdk_resources.h"/>
+        </Folder>
+      </Folder>
+      <Folder Name="properitary_rf">
+        <Folder Name="esb">
+          <F N="../SDK/properitary_rf/esb/nrf_esb.h"/>
+          <F N="../SDK/properitary_rf/esb/nrf_esb_constants.h"/>
+          <F N="../SDK/properitary_rf/esb/nrf_esb_resources.h"/>
+        </Folder>
+        <Folder Name="gzll">
+          <Folder Name="config">
+            <F N="../SDK/properitary_rf/gzll/config/nrf_gzp_config.h"/>
+          </Folder>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzll.h"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzll_constants.h"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzll_resources.h"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzp.c"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzp.h"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzp_device.c"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzp_host.c"/>
+          <F N="../SDK/properitary_rf/gzll/nrf_gzp_host_nrf51.c"/>
+        </Folder>
+      </Folder>
+      <Folder Name="softdevice">
+        <Folder Name="common">
+          <Folder Name="softdevice_handler">
+            <F N="../SDK/softdevice/common/softdevice_handler/ant_stack_handler_types.h"/>
+            <F N="../SDK/softdevice/common/softdevice_handler/app_ram_base.h"/>
+            <F N="../SDK/softdevice/common/softdevice_handler/ble_stack_handler_types.h"/>
+            <F N="../SDK/softdevice/common/softdevice_handler/softdevice_handler.c"/>
+            <F N="../SDK/softdevice/common/softdevice_handler/softdevice_handler.h"/>
+            <F N="../SDK/softdevice/common/softdevice_handler/softdevice_handler_appsh.c"/>
+            <F N="../SDK/softdevice/common/softdevice_handler/softdevice_handler_appsh.h"/>
+          </Folder>
+        </Folder>
+        <Folder Name="s130">
+          <Folder Name="doc">
+            <F N="../SDK/softdevice/s130/doc/s130_nrf51822_1.0.0_licence_agreement.txt"/>
+            <F N="../SDK/softdevice/s130/doc/s130_nrf51822_2.0.0-7.alpha_licence_agreement.pdf"/>
+            <F N="../SDK/softdevice/s130/doc/s130_nrf51822_2.0.0-7.alpha_readme.txt"/>
+            <F N="../SDK/softdevice/s130/doc/s130_nrf51822_2.0.0-7.alpha_releasenotes.pdf"/>
+            <F N="../SDK/softdevice/s130/doc/s130_nrf51_2.0.0-7.alpha_licence_agreement.txt"/>
+          </Folder>
+          <Folder Name="headers">
+            <Folder Name="nrf51">
+              <F N="../SDK/softdevice/s130/headers/nrf51/nrf_mbr.h"/>
+            </Folder>
+            <F N="../SDK/softdevice/s130/headers/ble.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_err.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_gap.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_gatt.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_gattc.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_gatts.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_hci.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_l2cap.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_ranges.h"/>
+            <F N="../SDK/softdevice/s130/headers/ble_types.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_error.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_error_sdm.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_error_soc.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_sd_def.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_sdm.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_soc.h"/>
+            <F N="../SDK/softdevice/s130/headers/nrf_svc.h"/>
+            <F N="../SDK/softdevice/s130/headers/softdevice_assert.h"/>
+          </Folder>
+          <Folder Name="hex">
+            <F N="../SDK/softdevice/s130/hex/s130_nrf51_2.0.0-7.alpha_softdevice.hex"/>
+          </Folder>
+          <Folder Name="toolchain">
+            <Folder Name="armgcc">
+              <F N="../SDK/softdevice/s130/toolchain/armgcc/armgcc_s130_nrf51422_xxaa.ld"/>
+              <F N="../SDK/softdevice/s130/toolchain/armgcc/armgcc_s130_nrf51422_xxac.ld"/>
+              <F N="../SDK/softdevice/s130/toolchain/armgcc/armgcc_s130_nrf51822_xxaa.ld"/>
+              <F N="../SDK/softdevice/s130/toolchain/armgcc/armgcc_s130_nrf51822_xxab.ld"/>
+            </Folder>
+            <Folder Name="iar">
+              <F N="../SDK/softdevice/s130/toolchain/iar/iar_s130_nrf51422_xxaa.icf"/>
+              <F N="../SDK/softdevice/s130/toolchain/iar/iar_s130_nrf51422_xxac.icf"/>
+              <F N="../SDK/softdevice/s130/toolchain/iar/iar_s130_nrf51822_xxaa.icf"/>
+              <F N="../SDK/softdevice/s130/toolchain/iar/iar_s130_nrf51822_xxab.icf"/>
+            </Folder>
+          </Folder>
+        </Folder>
+        <Folder Name="s132">
+          <Folder Name="doc">
+            <F N="../SDK/softdevice/s132/doc/s132_nrf52_1.0.0-3.alpha_licence_agreement.txt"/>
+            <F N="../SDK/softdevice/s132/doc/s132_nrf52_2.0.0-7.alpha_licence_agreement.pdf"/>
+            <F N="../SDK/softdevice/s132/doc/s132_nrf52_2.0.0-7.alpha_licence_agreement.txt"/>
+            <F N="../SDK/softdevice/s132/doc/s132_nrf52_2.0.0-7.alpha_readme.txt"/>
+            <F N="../SDK/softdevice/s132/doc/s132_nrf52_2.0.0-7.alpha_releasenotes.pdf"/>
+          </Folder>
+          <Folder Name="headers">
+            <Folder Name="nrf52">
+              <F N="../SDK/softdevice/s132/headers/nrf52/nrf_mbr.h"/>
+            </Folder>
+            <F N="../SDK/softdevice/s132/headers/ble.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_err.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_gap.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_gatt.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_gattc.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_gatts.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_hci.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_l2cap.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_ranges.h"/>
+            <F N="../SDK/softdevice/s132/headers/ble_types.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_error.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_error_sdm.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_error_soc.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_sd_def.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_sdm.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_soc.h"/>
+            <F N="../SDK/softdevice/s132/headers/nrf_svc.h"/>
+            <F N="../SDK/softdevice/s132/headers/softdevice_assert.h"/>
+          </Folder>
+          <Folder Name="hex">
+            <F N="../SDK/softdevice/s132/hex/s132_nrf52_2.0.0-7.alpha_softdevice.hex"/>
+          </Folder>
+          <Folder Name="toolchain">
+            <Folder Name="armgcc">
+              <F N="../SDK/softdevice/s132/toolchain/armgcc/armgcc_s132_nrf52832_xxaa.ld"/>
+            </Folder>
+            <Folder Name="iar">
+              <F N="../SDK/softdevice/s132/toolchain/iar/iar_s132_nrf52832_xxaa.icf"/>
+            </Folder>
+          </Folder>
+        </Folder>
+        <Folder Name="s210">
+          <Folder Name="doc">
+            <F N="../SDK/softdevice/s210/doc/s210_nrf51422_5.0.0_licence_agreement.pdf"/>
+            <F N="../SDK/softdevice/s210/doc/s210_nrf51422_5.0.0_licence_agreement.txt"/>
+            <F N="../SDK/softdevice/s210/doc/s210_nrf51422_5.0.0_migration_document.pdf"/>
+            <F N="../SDK/softdevice/s210/doc/s210_nrf51422_5.0.0_readme.txt"/>
+            <F N="../SDK/softdevice/s210/doc/s210_nrf51422_5.0.0_releasenotes.pdf"/>
+          </Folder>
+          <Folder Name="headers">
+            <F N="../SDK/softdevice/s210/headers/ant_error.h"/>
+            <F N="../SDK/softdevice/s210/headers/ant_interface.h"/>
+            <F N="../SDK/softdevice/s210/headers/ant_parameters.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_error.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_error_sdm.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_error_soc.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_mbr.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_sd_def.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_sdm.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_soc.h"/>
+            <F N="../SDK/softdevice/s210/headers/nrf_svc.h"/>
+            <F N="../SDK/softdevice/s210/headers/softdevice_assert.h"/>
+          </Folder>
+          <Folder Name="hex">
+            <F N="../SDK/softdevice/s210/hex/s210_nrf51422_5.0.0_softdevice.hex"/>
+          </Folder>
+          <Folder Name="toolchain">
+            <Folder Name="armgcc">
+              <F N="../SDK/softdevice/s210/toolchain/armgcc/armgcc_s210_nrf51422_xxaa.ld"/>
+              <F N="../SDK/softdevice/s210/toolchain/armgcc/armgcc_s210_nrf51422_xxac.ld"/>
+            </Folder>
+            <Folder Name="iar">
+              <F N="../SDK/softdevice/s210/toolchain/iar/iar_s210_nrf51422_xxaa.icf"/>
+              <F N="../SDK/softdevice/s210/toolchain/iar/iar_s210_nrf51422_xxac.icf"/>
+            </Folder>
+          </Folder>
+        </Folder>
+        <Folder Name="s212">
+          <Folder Name="headers">
+            <F N="../SDK/softdevice/s212/headers/nrf_sd_def.h"/>
+          </Folder>
+          <Folder Name="toolchain">
+            <Folder Name="armgcc">
+              <F N="../SDK/softdevice/s212/toolchain/armgcc/armgcc_s212_nrf52832_xxaa.ld"/>
+            </Folder>
+            <Folder Name="iar">
+              <F N="../SDK/softdevice/s212/toolchain/iar/iar_s212_nrf52832_xxaa.icf"/>
+            </Folder>
+          </Folder>
+        </Folder>
+      </Folder>
+      <Folder Name="toolchain">
+        <Folder Name="arm">
+          <F N="../SDK/toolchain/arm/arm_startup_nrf51.s"/>
+          <F N="../SDK/toolchain/arm/arm_startup_nrf52.s"/>
+          <F N="../SDK/toolchain/arm/uicr_config.h"/>
+        </Folder>
+        <Folder Name="gcc">
+          <F N="../SDK/toolchain/gcc/arm_common_tables.h"/>
+          <F N="../SDK/toolchain/gcc/arm_const_structs.h"/>
+          <F N="../SDK/toolchain/gcc/arm_math.h"/>
+          <F N="../SDK/toolchain/gcc/core_cm0.h"/>
+          <F N="../SDK/toolchain/gcc/core_cm4.h"/>
+          <F N="../SDK/toolchain/gcc/core_cmFunc.h"/>
+          <F N="../SDK/toolchain/gcc/core_cmInstr.h"/>
+          <F N="../SDK/toolchain/gcc/core_cmSimd.h"/>
+          <F N="../SDK/toolchain/gcc/gcc_nrf51_common.ld"/>
+          <F N="../SDK/toolchain/gcc/gcc_startup_nrf51.s"/>
+          <F N="../SDK/toolchain/gcc/gcc_startup_nrf52.s"/>
+          <F N="../SDK/toolchain/gcc/Makefile.common"/>
+          <F N="../SDK/toolchain/gcc/Makefile.posix"/>
+          <F N="../SDK/toolchain/gcc/Makefile.windows"/>
+          <F N="../SDK/toolchain/gcc/nrf51_common.ld"/>
+          <F N="../SDK/toolchain/gcc/nrf51_xxaa.ld"/>
+          <F N="../SDK/toolchain/gcc/nrf51_xxab.ld"/>
+          <F N="../SDK/toolchain/gcc/nrf51_xxac.ld"/>
+          <F N="../SDK/toolchain/gcc/nrf52_common.ld"/>
+          <F N="../SDK/toolchain/gcc/nrf52_xxaa.ld"/>
+          <F N="../SDK/toolchain/gcc/nrf5x_common.ld"/>
+        </Folder>
+        <Folder Name="iar">
+          <F N="../SDK/toolchain/iar/iar_nrf51_blank_xxaa.icf"/>
+          <F N="../SDK/toolchain/iar/iar_nrf51_blank_xxac.icf"/>
+          <F N="../SDK/toolchain/iar/iar_startup_nrf51.s"/>
+          <F N="../SDK/toolchain/iar/iar_startup_nrf52.s"/>
+        </Folder>
+        <F N="../SDK/toolchain/system_nrf51.c"/>
+        <F N="../SDK/toolchain/system_nrf51.h"/>
+        <F N="../SDK/toolchain/system_nrf51422.c"/>
+        <F N="../SDK/toolchain/system_nrf52.c"/>
+        <F N="../SDK/toolchain/system_nrf52.h"/>
+      </Folder>
+    </Folder>
+    <F N="AD-15.vpj"/>
+    <F N="AD-15.vpw"/>
+    <F N="AD-15.vpwhist"/>
+    <F N="AD-15.vtg"/>
+  </Files>
+</Project>
