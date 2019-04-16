@@ -255,7 +255,7 @@ void TestFun(void) {
     /**********************/
     /*test switch door motor---finish*/
     /**********************/
-    static uint8_t flag_motor4 = 0, flag_if_is_touch = 0;
+    static uint8_t flag_motor4 = 0;
     if(flag_motor4 == 0) {
         MOTOR_BACK(4);
         flag_motor4 = 1;
@@ -275,7 +275,7 @@ void TestFun(void) {
     /**********************/
     /*test fault umberlla motor---finish*/
     /**********************/
-    static uint8_t flag_motor3 = 0, flag_if_is_touch = 0;
+    static uint8_t flag_motor3 = 0;
     if(flag_motor3 == 0) {
         MOTOR_FORWARD(3);
         flag_motor3 = 1;
