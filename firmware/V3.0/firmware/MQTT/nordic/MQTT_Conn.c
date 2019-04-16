@@ -61,7 +61,7 @@ static void mqtt_Console(int argc, char* argv[]);
 /**
  * 协议处理初始化
  */
-void MQTT_Conn_Init(void) {
+void MQTTConnInit(void) {
     NetworkInit(&mNetwork);
     MQTTClientInit(&mClient, &mNetwork, MQTT_TIMEOUT_DEF, txBuffer, sizeof(txBuffer), rxBuffer, sizeof(rxBuffer));
     CMD_ENT_DEF(mqtt, mqtt_Console);
@@ -74,7 +74,7 @@ void MQTT_Conn_Init(void) {
  * 协议处理的任务
  * @param argument
  */
-void MQTT_Conn_Polling(void) {
+void MQTTConnPolling(void) {
     UART_MutexCount++;
     Manager_MQTT();
     MQTTYield(&mClient, 0);

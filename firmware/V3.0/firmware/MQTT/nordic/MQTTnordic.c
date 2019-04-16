@@ -73,7 +73,7 @@ int _mqtt_read(Network* n, unsigned char* buffer, int len, int timeout_ms) {
     do {
 
       /*GPRS轮循接收数据*/
-      GPRS_Polling();
+      GPRSPolling();
 
       rc = MQTT_ReadData(buffer + recvLen, len - recvLen);
       if (rc > 0) recvLen += rc;
@@ -84,8 +84,8 @@ int _mqtt_read(Network* n, unsigned char* buffer, int len, int timeout_ms) {
       app_timer_cnt_get(&ts);
       app_timer_cnt_diff_compute(ts, tsold, &tsdiff);
 
-      WatchDog_Clear();
-      if (user_uart_RecLength() == 0 && recvLen < len && tsdiff <= timeout_ms * 32) {
+      WatchDogClear();
+      if (UserUartRecLength() == 0 && recvLen < len && tsdiff <= timeout_ms * 32) {
         sd_app_evt_wait();
       }
     } while (recvLen < len && tsdiff <= timeout_ms * 32);

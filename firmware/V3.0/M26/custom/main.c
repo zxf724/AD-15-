@@ -12588,7 +12588,7 @@ const u8 TakeTheUnbrellaSoon_mp3[4536] = {
 	0x55,0x55,0x55,0x55,0x55,0x55,0x55,0x55,
 };
 
-const u8 status_motor_stuck_mp3[3348] = {
+const u8 k_status_motor_stuck_mp3[3348] = {
 	0xFF,0xF3,0x38,0xC4,0x00,0x14,0x99,0xB9,
 	0xC4,0x00,0x48,0xC6,0x94,0xFF,0xFB,0x50,
 	0xA9,0x30,0xB0,0xB0,0xF9,0x82,0x72,0x44,
@@ -13098,8 +13098,8 @@ void proc_main_task(s32 taskId)
 			filehandle =  Ql_FS_OpenRAMFile("RAM:TakeTheUnbrellaSoon.mp3", QL_FS_CREATE, sizeof(TakeTheUnbrellaSoon_mp3));
             ret = Ql_FS_Write(filehandle, (u8*)TakeTheUnbrellaSoon_mp3, sizeof(TakeTheUnbrellaSoon_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
-			filehandle =  Ql_FS_OpenRAMFile("RAM:status_motor_stuck.mp3", QL_FS_CREATE, sizeof(status_motor_stuck_mp3));
-            ret = Ql_FS_Write(filehandle, (u8*)status_motor_stuck_mp3, sizeof(status_motor_stuck_mp3), &writeedlen);
+			filehandle =  Ql_FS_OpenRAMFile("RAM:k_status_motor_stuck.mp3", QL_FS_CREATE, sizeof(k_status_motor_stuck_mp3));
+            ret = Ql_FS_Write(filehandle, (u8*)k_status_motor_stuck_mp3, sizeof(k_status_motor_stuck_mp3), &writeedlen);
             Ql_FS_Close(filehandle);
         }
         break;

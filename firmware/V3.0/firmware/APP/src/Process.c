@@ -39,7 +39,7 @@ static void process_Console(int argc, char* argv[]);
 /**
  * ҵ��������ʼ��
  */
-void Process_Init(void) {
+void ProcessInit(void) {
     sprintf(subscribeTopic, "/AD-15/%u", WorkData.DeviceID);
     CMD_ENT_DEF(process, process_Console);
     Cmd_AddEntrance(CMD_ENT(process));
@@ -85,28 +85,28 @@ BOOL CMD_Updata(char* cmd, cJSON* desired) {
  * @param rfid   ɡ��RFID
  * @param status �����״�?
  */
-BOOL Report_Umbrella_Status(uint32_t rfid, motor_status_t status) {
+BOOL Report_Umbrella_Status(uint32_t rfid, motor_status_Enum status) {
     cJSON* desired = NULL;
     desired = cJSON_CreateObject();
     if (desired != NULL) {
         cJSON_AddNumberToObject(desired, "Umbrella_ID", rfid);
         switch (status) {
-            case status_output_unbrella_success:
+            case k_status_output_unbrella_success:
                 cJSON_AddStringToObject(desired, "Result", "ok");
                 break;
-            case status_ir_stuck:
+            case k_status_ir_stuck:
                 cJSON_AddStringToObject(desired, "Result", "irstuck");
                 break;
-            case status_motor_stuck:
+            case k_status_motor_stuck:
                 cJSON_AddStringToObject(desired, "Result", "motorstuck");
                 break;
-            case status_timeout:
+            case k_status_timeout:
                 cJSON_AddStringToObject(desired, "Result", "timeout");
                 break;
-            case status_have_no_unbrella:
+            case k_status_have_no_unbrella:
                 cJSON_AddStringToObject(desired, "Result", "empty");
                 break;
-            case status_restart_ouput:
+            case k_status_restart_ouput:
                 cJSON_AddStringToObject(desired, "Result", "motorbroken");
                 break;
             default:
@@ -124,26 +124,26 @@ BOOL Report_Umbrella_Status(uint32_t rfid, motor_status_t status) {
  * @param status ��ɡ��״̬
  * @param ts     ʱ���?
  */
-BOOL Report_Umbrella_Repy_Status(uint32_t rfid, motor_status_t status, uint32_t ts) {
+BOOL Report_Umbrella_Repy_Status(uint32_t rfid, motor_status_Enum status, uint32_t ts) {
     cJSON* desired = NULL;
     desired = cJSON_CreateObject();
     if (desired != NULL) {
         cJSON_AddNumberToObject(desired, "Umbrella_ID", rfid);
         cJSON_AddNumberToObject(desired, "timestamp", ts);
         switch (status) {
-            case status_input_unbrella_success:
+            case k_status_input_unbrella_success:
                 cJSON_AddStringToObject(desired, "Result", "ok");
                 break;
-            case status_ir_stuck:
+            case k_status_ir_stuck:
                 cJSON_AddStringToObject(desired, "Result", "irstuck");
                 break;
-            case status_motor_stuck:
+            case k_status_motor_stuck:
                 cJSON_AddStringToObject(desired, "Result", "motorstuck");
                 break;
-            case status_timeout:
+            case k_status_timeout:
                 cJSON_AddStringToObject(desired, "Result", "timeout");
                 break;
-            case status_full_unbrella:
+            case k_status_full_unbrella:
                 cJSON_AddStringToObject(desired, "Result", "full");
                 break;
             default:

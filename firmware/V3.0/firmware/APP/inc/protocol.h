@@ -54,11 +54,11 @@ extern uint8_t Key_Running[];
 
 /* Exported functions --------------------------------------------------------*/
 
-void Protocol_Init(void);
+void ProtocolInit(void);
 
 void Protocol_NewDate(uint8_t *dat, uint8_t len);
-void Protocol_DateProcPoll(void);
-void Protocol_Report_Umbrella(uint32_t rfid, motor_status_t status);
+void ProtocolDateProcPoll(void);
+void Protocol_Report_Umbrella(uint32_t rfid, motor_status_Enum status);
 
 void Send_Cmd(uint8_t cmd, uint8_t *arg, uint8_t len);
 

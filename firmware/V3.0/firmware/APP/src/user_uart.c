@@ -50,7 +50,7 @@ static void UART_Resume_TimerCB(void* p_context);
  * 串口初始化函数
  *
  */
-void user_uart_init(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate) {
+void UserUartInit(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate) {
     FIFO_Init(&UART_RecFIFO, UART_Rec_Buffer, UART_RX_BUF_SIZE);
 #if UART_TX_USE_INT == 1
     FIFO_Init(&UART_SendFIFO, UART_Send_Buffer, UART_TX_BUF_SIZE);
@@ -154,7 +154,7 @@ BOOL user_uart_ReadByte(uint8_t* readbyte) {
  *
  * @return 返回串口接收的数据长度
  */
-uint16_t user_uart_RecLength(void) {
+uint16_t UserUartRecLength(void) {
     return FIFO_Length(&UART_RecFIFO);
 }
 

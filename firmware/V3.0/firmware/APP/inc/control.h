@@ -19,28 +19,27 @@
 
 /* Exported types ------------------------------------------------------------*/
 typedef enum {
-    status_idle,
+    k_status_idle,
     //output unbrella
-    status_output_unbrella_success,
-    status_take_the_unbrella_soon,
-    status_have_no_unbrella,
-    status_start_output_unbrella,
-
+    k_status_output_unbrella_success,
+    k_status_take_the_unbrella_soon,
+    k_status_have_no_unbrella,
+    k_status_start_output_unbrella,
     //input unbrella
-    status_start_input_unbrella,
-    status_input_unbrella_success,
-    status_do_not_occlusion_door,
-    status_input_unbrella_soon,
-    status_full_unbrella,
+    k_status_start_input_unbrella,
+    k_status_input_unbrella_success,
+    k_status_do_not_occlusion_door,
+    k_status_input_unbrella_soon,
+    k_status_full_unbrella,
     //input breakdown unbrella
-    status_input_breakdown_unbrella,
-    status_restart_ouput,
-    status_report_breakdown,
+    k_status_input_breakdown_unbrella,
+    k_status_restart_ouput,
+    k_status_report_breakdown,
     //other situation
-    status_motor_stuck,
-    status_ir_stuck,
-    status_timeout,
-} motor_status_t;
+    k_status_motor_stuck,
+    k_status_ir_stuck,
+    k_status_timeout,
+} motor_status_Enum;
 
 /* Exported constants --------------------------------------------------------*/
 /*电机转动的时间，单位ms*/
@@ -55,9 +54,7 @@ typedef enum {
 /*电量检测的间隔时间,单位ms*/
 #define BAT_CHECK_TIME        15000
 
-extern  uint16_t BatVol;
-
-extern motor_status_t Motor_staus;
+extern motor_status_Enum Motor_staus;
 
 #define LED_FLASH_CONTINUE    0xFFFF
 
@@ -90,9 +87,9 @@ LED定义：
 #define LED_NOMQTT_FLASH()        LED_NET_Flash_Start(100, 5000, LED_FLASH_CONTINUE)
 
 /* Exported functions --------------------------------------------------------*/
-void Control_Init(void);
+void ControlInit(void);
 
-void Control_Polling(void);
+void ControlPolling(void);
 
 void Borrow_Action(void);
 void Repay_Action(void);
@@ -103,8 +100,8 @@ void LED_STATUS_Flash_Start(uint16_t activetime, uint16_t idletime, uint16_t tim
 
 void TTS_Play(char *text);
 
-void WatchDog_Clear(void);
-uint8_t RFID_ReadPoll(uint8_t addr, uint8_t** data);
+void WatchDogClear(void);
+uint8_t gs_RFID_ReadPoll(uint8_t addr, uint8_t** data);
 
 void Breakdown_Repay(void);
 void Motor_Re_Fun(void);

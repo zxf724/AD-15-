@@ -11,4 +11,4 @@
 
 extern const u8 StartOutputUnbrella_mp3[8748]; /*Format=1*/
 
-extern const u8 status_motor_stuck_mp3[3348]; /*Format=1*/
+extern const u8 k_status_motor_stuck_mp3[3348]; /*Format=1*/

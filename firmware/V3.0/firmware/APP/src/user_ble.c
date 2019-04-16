@@ -216,7 +216,7 @@ static void nus_data_handler(ble_nus_t* p_nus, uint8_t* p_data, uint16_t length)
 }
 
 /**@snippet [Handling the data received over BLE] */
-void user_BLE_Start(void) {
+void UserBLEStart(void) {
     ble_stack_init();
     gap_params_init();
     services_init();
@@ -230,7 +230,7 @@ void user_BLE_Disconnected(void) {
     sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_REMOTE_USER_TERMINATED_CONNECTION);
 }
 
-void user_BLE_Connected(void) {
+void UserBLEConnected(void) {
     sd_ble_gap_adv_start(&m_adv_params);
 }
 

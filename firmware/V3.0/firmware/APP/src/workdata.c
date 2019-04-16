@@ -91,7 +91,7 @@ static void funWorkBack(int argc, char* argv[]);
   * @param  none.
   * @retval none
   */
-void WorkData_Init(void) {
+void WorkDataInit(void) {
     pstorage_module_param_t param;
     pstorage_init();
     /*×¢²ápstorage */

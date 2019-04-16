@@ -75,7 +75,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len);
 /**
  * 初始化命令处理.
  */
-void Protocol_Init(void) {
+void ProtocolInit(void) {
     /* 初始化FIFO */
     if (IS_POWER_OF_TWO(PROTOCOL_REC_STACK_MAX)) {
         ProtocolFifo.sizeMask = PROTOCOL_REC_STACK_MAX - 1;
@@ -88,7 +88,7 @@ void Protocol_Init(void) {
 /**
     * @brief  命令接收处理轮询.
     */
-void Protocol_DateProcPoll(void) {
+void ProtocolDateProcPoll(void) {
     uint8_t* p = NULL, len = 0;
     if (STACK_LENGTH()) {
         p = &(ProtocolFifo.pStack[ProtocolFifo.rpos & ProtocolFifo.sizeMask][0]);
@@ -121,17 +121,17 @@ void Protocol_DateProcPoll(void) {
  * @param rfid   雨伞的RFID
  * @param status 电机的状态
  */
-void Protocol_Report_Umbrella(uint32_t rfid, motor_status_t status) {
+void Protocol_Report_Umbrella(uint32_t rfid, motor_status_Enum status) {
     uint8_t buf[5];
     if (BLE_Connect) {
         *(uint32_t*)buf = rfid;
-        if (status == status_output_unbrella_success) {
+        if (status == k_status_output_unbrella_success) {
             buf[4] = 0x55;
-        } else if (status == status_ir_stuck) {
+        } else if (status == k_status_ir_stuck) {
             buf[4] = 0xAA;
-        } else if (status == status_motor_stuck) {
+        } else if (status == k_status_motor_stuck) {
             buf[4] = 0xAB;
-        } else if (status == status_timeout) {
+        } else if (status == k_status_timeout) {
             buf[4] = 0xAC;
         }
         Send_Cmd(0x3B, buf, 5);
@@ -320,7 +320,7 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                     memcpy(temp, (uint8_t*)&dat[11], 4);
                     RTC_SetCount(*(uint32_t*)temp);
                     if(WorkData.StockCount == 0) {
-                        Motor_staus = status_have_no_unbrella;
+                        Motor_staus = k_status_have_no_unbrella;
                     }
                     temp[0] = 1;
                     temp[1] = VERSION;
@@ -338,20 +338,20 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 /*比较设备ID*/
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
                     Borrow_Action();
-                    Motor_staus = status_start_output_unbrella;
+                    Motor_staus = k_status_start_output_unbrella;
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
                 break;
             /*还伞*/
             case CMD_RETURN_UMBRELLA:
                 DBG_LOG("RepayInAction...");
-                Motor_staus = status_start_input_unbrella;
+                Motor_staus = k_status_start_input_unbrella;
                 Repay_Action();
                 break;
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");
-                Motor_staus = status_input_breakdown_unbrella;
+                Motor_staus = k_status_input_breakdown_unbrella;
                 Breakdown_Repay();
                 break;
             default:

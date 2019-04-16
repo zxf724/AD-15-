@@ -16,16 +16,16 @@ void Borrow_In_Action(void) {
         app_timer_stop(TimerId_Lock);
         LED_IR_OVER_FLASH();
         Stop_Action(1);
-        Motor_staus = status_ir_stuck;
+        Motor_staus = k_status_ir_stuck;
         DBG_LOG("error of device!");
     }
-    /*打开开关门电机*/
+    /* 打开开关门电机 */
     MOTOR_FORWARD(4);
     if(IF_IS_TOUCH(3) == 0) {
         MOTOR_STOP(4);
         DBG_LOG("开关门电机打开完毕：");
     }
-    /*打开推伞电机*/
+    /* 打开推伞电机 */
     // MOTOR_FORWARD(2);
     if(IF_IS_TOUCH(1) == 0) {
         MOTOR_STOP(2);

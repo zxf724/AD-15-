@@ -117,7 +117,7 @@ static uint8_t GetRFID(uint32_t * rfid1, uint32_t *rfid2);
 /**
  * GPRS驱动初始化
  */
-void GPRS_Init(void) {
+void GPRSInit(void) {
     FIFO_Init(&SockRecFIFO, GPRS_RecBuf, GPRS_RECEIVE_MAX_SIZE);
     app_timer_create(&TimerId_GPRS, APP_TIMER_MODE_SINGLE_SHOT, TimerCB_GPRS);
     CMD_ENT_DEF(GPRS, GPRS_Console);
@@ -129,11 +129,11 @@ void GPRS_Init(void) {
  * GPRS任务
  * @param argument 初始化参数
  */
-void GPRS_Polling(void) {
+void GPRSPolling(void) {
     if (NRF_UART0->PSELRXD == GSM_RXD_PIN) {
         UART_MutexCount++;
         GPRS_ManagerPoll();
-        if (user_uart_RecLength() > 0 || RspBufIndex > 0) {
+        if (UserUartRecLength() > 0 || RspBufIndex > 0) {
             GPRS_Intercept_Proc();
         }
         UART_MutexCount--;
@@ -458,7 +458,7 @@ static void GPRS_TCPIP_ReceiveProc(char* pReceive) {
         while (*p && *p++ != ':');
 #if GPRS_DEBUG > 1
         DBG_LOG("GPRS Socket Receive:%d\r", len);
-        DBG_SEND(p, len);
+        DBG_SEND((uint8_t *)p, len);
 #endif
         FIFO_Write(&SockRecFIFO, (uint8_t*)p, len);
         p = p + len + 1;
@@ -710,7 +710,7 @@ static char* WaitATRsp(char* token, uint16_t time) {
                 }
             }
         } else {
-            WatchDog_Clear();
+            WatchDogClear();
             sd_app_evt_wait();
         }
     }

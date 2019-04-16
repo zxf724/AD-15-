@@ -156,7 +156,7 @@
 /** @addtogroup BSP_Exported_Functions
 	* @{
 	*/
-void BSP_Init(void);
+void BSPInit(void);
 void MOTOR_STOP(uint8_t num);
 
 /**

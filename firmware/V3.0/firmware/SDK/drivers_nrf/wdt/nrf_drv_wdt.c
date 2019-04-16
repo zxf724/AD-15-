@@ -41,7 +41,7 @@ void WDT_IRQHandler(void)
 }
 
 
-ret_code_t nrf_drv_wdt_init(nrf_drv_wdt_config_t const * p_config,
+ret_code_t nrf_drv_WdtInit(nrf_drv_wdt_config_t const * p_config,
                             nrf_wdt_event_handler_t     wdt_event_handler)
 {
     ASSERT(wdt_event_handler != NULL);
