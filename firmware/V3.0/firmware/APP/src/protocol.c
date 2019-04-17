@@ -249,7 +249,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         dat++;
         len--;
 #if USE_AES == 1
-       AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
+    //    AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
@@ -295,11 +295,15 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
         return 0;
     }
     DBG_LOG("Command type valid！");
-    dat[0] = dat[0] >> 2;
-    DBG_LOG("here is the cmd = 0x%02X", dat[0]);
+    // dat[0] = dat[0] >> 2;
+    // DBG_LOG("here is the cmd = 0x%02X", dat[0]);
+    dat[0] = dat[1];
+    DBG_LOG("here is the cmd = 0x%02X", dat[1]);
+
     /*比较滚动同步计数值*/
     run = (dat[6] << 8) | dat[5];
-    if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
+    // if (run - authRunIndex >= 1 &&  run - authRunIndex < 5) {
+    if(1) {
         ret = 1;
         /*命令处理*/
         cmd = dat[0];
@@ -336,7 +340,8 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 DBG_LOG("Borrow_Action .....");
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
-                if (*(uint32_t*)temp == WorkData.DeviceID) {
+                // if (*(uint32_t*)temp == WorkData.DeviceID) {
+                if(1) {
                     Borrow_Action();
                     Motor_staus = k_status_start_output_unbrella;
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
@@ -344,15 +349,15 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 break;
             /*还伞*/
             case CMD_RETURN_UMBRELLA:
-                if((uint32_t*)temp == 0) {
-                    Motor_staus = k_status_full_unbrella;
-                    break;
-                }else {
+                // if((uint32_t*)temp == 0) {
+                //     Motor_staus = k_status_full_unbrella;
+                //     break;
+                // }else {
                     DBG_LOG("RepayInAction...");
                     Motor_staus = k_status_start_input_unbrella;
                     Repay_Action();
                     break;
-                }
+                // }
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");
