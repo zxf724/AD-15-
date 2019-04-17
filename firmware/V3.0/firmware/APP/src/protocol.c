@@ -249,7 +249,7 @@ static uint8_t Protocol_Analyse(uint8_t* dat, uint8_t len) {
         dat++;
         len--;
 #if USE_AES == 1
-        AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
+       AesData_decrypt((uint8_t*)dat, (uint8_t*)Key_Default, 16);
         DBG_LOG("AES Decrypt:");
         for (i = 0; i < len; i++) {
             DBG_LOG("解密后的数据包：\n 0x%02X.", (uint8_t) * (dat + i));
@@ -344,10 +344,15 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 break;
             /*还伞*/
             case CMD_RETURN_UMBRELLA:
-                DBG_LOG("RepayInAction...");
-                Motor_staus = k_status_start_input_unbrella;
-                Repay_Action();
-                break;
+                if((uint32_t*)temp == 0) {
+                    Motor_staus = k_status_full_unbrella;
+                    break;
+                }else {
+                    DBG_LOG("RepayInAction...");
+                    Motor_staus = k_status_start_input_unbrella;
+                    Repay_Action();
+                    break;
+                }
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");

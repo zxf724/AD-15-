@@ -105,7 +105,13 @@ uint8_t gs_RFID_ReadPoll(uint8_t addr, uint8_t** data);
 
 void Breakdown_Repay(void);
 void Motor_Re_Fun(void);
-void TestFun(void);
+void TestMainMotor(void);
+void TestSwitchMotor(void);
+void TestPushMotor(void);
+void TestInfraredSensor(void);
+void TestRFID(void);
+void TestBreakDownMotor(void);
+
 void Reset(void);
 void InitFlag(void);
 

@@ -93,14 +93,12 @@ int main(void) {
     LED_OFF(STATUS);
     LED_OFF(NET);
     for (;;) {
-        // TestFun();
-        // Reset();
         WatchDogClear();
         ProtocolDateProcPoll();
         CommandReceivePoll();
         ControlPolling();
-        GPRSPolling();
-        MQTTConnPolling();
+        // GPRSPolling();
+        // MQTTConnPolling();
         /* 进入休眠 */
         if (UserUartRecLength() == 0) {
             sd_app_evt_wait();
@@ -201,22 +199,19 @@ static void wdt_event_handler(void) {
 }
 #endif
 
-/**测试函数
+/**test main motor
   * @}
   */
-void TestFun(void) {
-    /*****************/
-    /*test main motor--finish*/
-    /*****************/
-    static uint8_t step = 0, flag_motor1 = 0;
+void TestMainMotor(void) {
+   static uint8_t gs_step = 0, flag_motor1 = 0;
     if(flag_motor1 == 0) {
         MOTOR_FORWARD(1);
         flag_motor1 = 1;
     }
-    step++;
-    DBG_LOG("step = %d", step);
+    gs_step++;
+    DBG_LOG("gs_step = %d", gs_step);
     DBG_LOG("flag_motor1 = %d", flag_motor1);
-    if((IF_IS_TOUCH(7) == 0) && (step >= 100)) {
+    if((IF_IS_TOUCH(7) == 0) && (gs_step >= 100)) {
         DBG_LOG("hello,world!");
         MOTOR_STOP(1);
     }
@@ -224,38 +219,13 @@ void TestFun(void) {
       DBG_LOG("here!!");
     }
     MOTOR_BACK(1);
-    /*****************/
-    /*test push unberally motor--finish*/
-    /*****************/
-    static uint8_t gs_flag_motor2 = 0, gs_flag_if_is_touch = 0;
-    if(gs_flag_motor2 == 0) {
-    MOTOR_FORWARD(2);
-        gs_flag_motor2 = 1;
-        gs_flag_if_is_touch = 1;
-    }
-    if(IF_IS_TOUCH(1) == 0) {
-    MOTOR_BACK(2);
-        gs_flag_if_is_touch = 0;
-    }
-    if((IF_IS_TOUCH(2) == 0) && (gs_flag_if_is_touch == 0)) {
-        MOTOR_STOP(2);
-        gs_flag_motor2 = 0;
-    }
-    /**********************/
-    /*test infrared sensor*/
-    /**********************/
-    IO_H(IR_SW);
-    if(IR_CHECK() == 0) {   // output 1 when it cover
-        DBG_LOG("here is in the infrared sensor");
-        DBG_LOG("here is the ");
-    }
-    if(IR_CHECK() == 1){
-      DBG_LOG("done!!");
-    }
-    /**********************/
-    /*test switch door motor---finish*/
-    /**********************/
-    static uint8_t gs_flag_motor4 = 0;
+}
+
+/**test switch motor
+  * @}
+  */
+void TestSwitchMotor(void) {
+    static uint8_t gs_flag_motor4 = 0, gs_flag_if_is_touch=0;
     if(gs_flag_motor4 == 0) {
         MOTOR_BACK(4);
         gs_flag_motor4 = 1;
@@ -272,10 +242,47 @@ void TestFun(void) {
         MOTOR_STOP(4);
         gs_flag_motor4 = 0;
     }
-    /**********************/
-    /*test fault umberlla motor---finish*/
-    /**********************/
-    static uint8_t flag_motor3 = 0;
+}
+
+/**test push motor
+  * @}
+  */
+void TestPushMotor(void) {
+    static uint8_t gs_flag_motor2 = 0, gs_flag_if_is_touch = 0;
+    if(gs_flag_motor2 == 0) {
+    MOTOR_FORWARD(2);
+        gs_flag_motor2 = 1;
+        gs_flag_if_is_touch = 1;
+    }
+    if(IF_IS_TOUCH(1) == 0) {
+    MOTOR_BACK(2);
+        gs_flag_if_is_touch = 0;
+    }
+    if((IF_IS_TOUCH(2) == 0) && (gs_flag_if_is_touch == 0)) {
+        MOTOR_STOP(2);
+        gs_flag_motor2 = 0;
+    }
+}
+
+/**test infrared sensor
+  * @}
+  */
+void TestInfraredSensor(void) {
+    IO_H(IR_SW);
+    if(IR_CHECK() == 0) {   // output 1 when it cover
+        DBG_LOG("here is in the infrared sensor");
+        DBG_LOG("here is the ");
+    }
+    if(IR_CHECK() == 1){
+      DBG_LOG("done!!");
+    }
+}
+
+/**test breakdown motor
+  * @}
+  */
+void TestBreakDownMotor(void) {
+    static uint8_t flag_motor3 = 0, gs_flag_if_is_touch = 0;
     if(flag_motor3 == 0) {
         MOTOR_FORWARD(3);
         flag_motor3 = 1;
@@ -290,23 +297,18 @@ void TestFun(void) {
         MOTOR_STOP(3);
         flag_motor3 = 0;
     }
-    /**********************/
-    /*test  RFID*/
-    /*7E 1B A7 12 04 6D 18 C9 A5 49*/
-    /* 6D 18 C9 A5 is data 04 is data len*/
+}
+
+/** test rfid
+  * @}
+  */
+void TestRFID(void) {
     static uint32_t  gs_RFID_Read = 0;
     gs_RFID_Read = GPRS_ReadRFID(2);
     DBG_LOG("gs_RFID_Read = %u", gs_RFID_Read);
-    /**********************/
-    /**********************/
-    /*test video*/
-    /**********************/
-    TTS_Play("RAM:FullUnbrella.mp3");
-    nrf_delay_ms(3000);
-    TTS_Play("RAM:HaveNoUnbrella.mp3");
 }
 
-/**重置函数
+/**reset function
   * @}
   */
 void Reset(void) {
@@ -346,7 +348,6 @@ void Reset(void) {
         MOTOR_STOP(1);
     }
 }
-
 
 /**
   * @}

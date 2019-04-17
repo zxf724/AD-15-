@@ -59,7 +59,6 @@ static void LED_NET_TimerCB(void* p_context);
 static void LED_STATUS_TimerCB(void* p_context);
 static void TTS_TimerCB(void* p_context);
 static void Move_TimerCB(void * p_context);
-static void RFID_SendCmd(uint8_t addr, uint8_t cmd, uint8_t* data, uint8_t datalen);
 static void funControl(int argc, char* argv[]);
 static void RepayInAction(void*);
 static void BreakdownInRepay(void* p_context);
@@ -542,29 +541,7 @@ static void TTS_TimerCB(void* p_context) {
         PA_DISABLE();
     }
 }
-/**
- * 发送命令
- *
- * @param addr    RFID从机地址
- * @param cmd     命令
- * @param data    附加数据
- * @param datalen 附加数据长度
- */
-static void RFID_SendCmd(uint8_t addr, uint8_t cmd, uint8_t* data, uint8_t datalen) {
-    uint8_t buf[32], len = 5;
-    buf[0] = 0x7E;
-    buf[1] = 0x1B;
-    buf[2] = addr;
-    buf[3] = cmd;
-    buf[4] = datalen;
-    if (data != NULL && datalen > 0) {
-        memcpy(&buf[5], data, datalen);
-        len = len + datalen;
-    }
-    buf[5 + datalen] = AddCheck(buf, len);
-    len += 1;
-    RFID_SEND(buf, len);
-}
+
 /**
  * RFID读设备应答
  *
@@ -854,51 +831,49 @@ static void funControl(int argc, char* argv[]) {
     if (ARGV_EQUAL("tts")) {
         DBG_LOG("TTS play start.");
         TTS_Play(argv[1]);
-    } else if (ARGV_EQUAL("borrow")) {
-        DBG_LOG("Borrow_Action.");
+    } else if (ARGV_EQUAL("borrow")) {     //borrow unbreally
+        DBG_LOG("Test Borrow_Action().");
         Borrow_Action();
-    } else if (ARGV_EQUAL("repay")) {
-        DBG_LOG("Repay_Action.");
+    } else if (ARGV_EQUAL("repay")) {      //repay unbreally
+        DBG_LOG("Test Repay_Action().");
         Repay_Action();
-    } else if (ARGV_EQUAL("read")) {
-        DBG_LOG("SEND_READ_RFID() .");
-        SEND_READ_RFID();
-    } else if (ARGV_EQUAL("status")) {
+    } else if (ARGV_EQUAL("BreakDown")) {   //repay breakdown unbreally
+        Breakdown_Repay();
+        DBG_LOG("Test BreakDown().");
+    } else if (ARGV_EQUAL("status")) {      //Motor_staus
         DBG_LOG("Motor_staus:%u.", Motor_staus);
-    } else if (ARGV_EQUAL("forward")) {
+    } else if (ARGV_EQUAL("MainMotorForward")) {  //main motor control 
         MOTOR_FORWARD(1);
-        DBG_LOG("Motor forward.");
-    } else if (ARGV_EQUAL("back")) {
+        DBG_LOG("MotorForward.");
+    } else if (ARGV_EQUAL("back")) {    
         MOTOR_BACK(1);
-        DBG_LOG("Motor back.");
+        DBG_LOG("MainMotorBack.");
     } else if (ARGV_EQUAL("stop")) {
         MOTOR_STOP(1);
         DBG_LOG("Motor stop.");
-    } else if (ARGV_EQUAL("forward_action")) {
-        Move_Forward_Action();
-        DBG_LOG("forward action.");
-    } else if (ARGV_EQUAL("back_action")) {
-        Move_Back_Action();
-        DBG_LOG("back action.");
-    } else if (ARGV_EQUAL("rfid_cmd")) {
-        RFID_SendCmd(0, 0x02, NULL, 0);
-        DBG_LOG("rfid send cmd.");
-    } else if (ARGV_EQUAL("test_forware_action")) {
-        Repay_Action();
-        DBG_LOG("test forware action.");
-    } else if (ARGV_EQUAL("test_back_actionn")) {
-        Borrow_Action();
-        DBG_LOG("test back action.");
-    } else if (ARGV_EQUAL("motor2_forware")) {
-        MOTOR_FORWARD(1);
-        DBG_LOG("motor2 forware action.");
-    } else if (ARGV_EQUAL("motor2_back")) {
-        MOTOR_BACK(1);
-        DBG_LOG("motor2 back action.");
-    } else if (ARGV_EQUAL("motor2_stop")) {
-        MOTOR_STOP(1);
-        DBG_LOG("motor2 back action.");
+    } else if(ARGV_EQUAL("Reset")) {        // reset
+        Reset();
+        DBG_LOG("reset all the Motol");
+    } else if(ARGV_EQUAL("TestMainMotor")) {   //test function begin
+        TestMainMotor();
+        DBG_LOG("Test Main Motor");
+    }else if(ARGV_EQUAL("TestSwitchMotor")) {
+        TestSwitchMotor();
+        DBG_LOG("Test Switch Motor");
+    }else if(ARGV_EQUAL("TestPushMotor")) {
+        TestPushMotor();
+        DBG_LOG("Test Push Motor");        
+    }else if(ARGV_EQUAL("TestBreakDownMotor")) {
+        TestBreakDownMotor();
+        DBG_LOG("Test Push Motor");        
+    }else if(ARGV_EQUAL("TestInfraredSensor")){
+        TestInfraredSensor();
+        DBG_LOG("Test Infrared Sensor");
+    }else if(ARGV_EQUAL("TestRFID")){          //test function end
+        TestRFID();
+        DBG_LOG("Test RFID");
     }
 }
+
 
 /************************ (C) COPYRIGHT  *****END OF FILE****/
