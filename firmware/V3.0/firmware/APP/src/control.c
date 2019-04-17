@@ -249,7 +249,7 @@ void ControlPolling(void) {
 /**
  * 借伞操作函数
  */
-void Borrow_Action(void) {
+void BorrowAction(void) {
     app_timer_stop(TimerId_Lock);
     gs_flag_IR_SW = 1;
     gs_motorTick = 0;
@@ -258,15 +258,15 @@ void Borrow_Action(void) {
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
         Motor_staus = k_status_have_no_unbrella;
-        DBG_LOG("Borrow_Action Empty.");
+        DBG_LOG("BorrowAction Empty.");
     }
     /*红外检测*/
     else if (IR_CHECK() == 0) {
         LED_IR_OVER_FLASH();
         Motor_staus = k_status_ir_stuck;
-        DBG_LOG("Borrow_Action IR Stuck.");
+        DBG_LOG("BorrowAction IR Stuck.");
     } else {
-        DBG_LOG("Borrow_Action NOT stuck!");
+        DBG_LOG("BorrowAction NOT stuck!");
         LED_ON(STATUS);
         app_timer_start(TimerId_Lock, APP_TIMER_TICKS(MOTOR_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
     }
@@ -275,7 +275,7 @@ void Borrow_Action(void) {
 /**
  * 还伞操作函数
  */
-void Repay_Action(void) {
+void RepayAction(void) {
     gs_flag_RFID_GPRS_Read = 1; // open RFID read!
     app_timer_stop(TimerId_Lock);
     gs_flag_IR_SW = 1;
@@ -285,17 +285,17 @@ void Repay_Action(void) {
     if (WorkData.StockCount >= WorkData.StockMax) {
         LED_MOTOR_NG();
         Motor_staus = k_status_full_unbrella;
-        DBG_LOG("Repay_Action Full.");
+        DBG_LOG("RepayAction Full.");
     }
     /*检查是否卡住*/
     else if (IR_CHECK() == 0) {
         LED_IR_OVER_FLASH();
         Motor_staus = k_status_ir_stuck;
-        DBG_LOG("Repay_Action IR Stuck.");
+        DBG_LOG("RepayAction IR Stuck.");
     } else {
         Motor_staus = k_status_start_input_unbrella;
         LED_ON(STATUS);
-        DBG_LOG("Repay_Action");
+        DBG_LOG("RepayAction");
         app_timer_start(TimerId_Repay, APP_TIMER_TICKS(MOVE_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
     }
 }
@@ -592,7 +592,7 @@ static void RepayInAction(void *a) {
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
         Motor_staus = k_status_have_no_unbrella;
-        DBG_LOG("Borrow_Action Empty.");
+        DBG_LOG("BorrowAction Empty.");
     }
     /*检查伞桶内是否有伞*/
     if((gs_RFID_Read > 0) && (gs_flag_rfid == 0)) {
@@ -648,7 +648,7 @@ static void RepayInAction(void *a) {
     }
 }
 
-void Breakdown_Repay(void) {
+void BreakdownRepay(void) {
     //检测系列
     MOTOR_FORWARD(3);
     gs_flag_IR_SW = 1;
@@ -832,13 +832,13 @@ static void funControl(int argc, char* argv[]) {
         DBG_LOG("TTS play start.");
         TTS_Play(argv[1]);
     } else if (ARGV_EQUAL("borrow")) {     //borrow unbreally
-        DBG_LOG("Test Borrow_Action().");
-        Borrow_Action();
+        DBG_LOG("Test BorrowAction().");
+        BorrowAction();
     } else if (ARGV_EQUAL("repay")) {      //repay unbreally
-        DBG_LOG("Test Repay_Action().");
-        Repay_Action();
+        DBG_LOG("Test RepayAction().");
+        RepayAction();
     } else if (ARGV_EQUAL("BreakDown")) {   //repay breakdown unbreally
-        Breakdown_Repay();
+        BreakdownRepay();
         DBG_LOG("Test BreakDown().");
     } else if (ARGV_EQUAL("status")) {      //Motor_staus
         DBG_LOG("Motor_staus:%u.", Motor_staus);
@@ -857,21 +857,33 @@ static void funControl(int argc, char* argv[]) {
     } else if(ARGV_EQUAL("TestMainMotor")) {   //test function begin
         TestMainMotor();
         DBG_LOG("Test Main Motor");
-    }else if(ARGV_EQUAL("TestSwitchMotor")) {
+    } else if(ARGV_EQUAL("TestSwitchMotor")) {
         TestSwitchMotor();
         DBG_LOG("Test Switch Motor");
-    }else if(ARGV_EQUAL("TestPushMotor")) {
+    } else if(ARGV_EQUAL("TestPushMotor")) {
         TestPushMotor();
         DBG_LOG("Test Push Motor");        
-    }else if(ARGV_EQUAL("TestBreakDownMotor")) {
+    } else if(ARGV_EQUAL("TestBreakDownMotor")) {
         TestBreakDownMotor();
         DBG_LOG("Test Push Motor");        
-    }else if(ARGV_EQUAL("TestInfraredSensor")){
+    } else if(ARGV_EQUAL("TestInfraredSensor")){
         TestInfraredSensor();
         DBG_LOG("Test Infrared Sensor");
-    }else if(ARGV_EQUAL("TestRFID")){          //test function end
+    } else if(ARGV_EQUAL("TestRFID")){          //test function end
         TestRFID();
         DBG_LOG("Test RFID");
+    } else if(ARGV_EQUAL("BorrowAction")) {      //test there modes
+        DBG_LOG("Borrow Action");
+        BorrowAction();
+    } else if(ARGV_EQUAL("RepayAction")) {
+        DBG_LOG("Repay Action");
+        RepayAction();
+    } else if(ARGV_EQUAL("BreakdownRepay")) {
+        DBG_LOG("Breakdown Repay");
+        BreakdownRepay();
+    } else if(ARGV_EQUAL("IfIsTouch")) {
+        DBG_LOG("test If Is Touch");
+        IfIsTouch();
     }
 }
 

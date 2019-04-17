@@ -291,7 +291,7 @@ static  void ArriveDataProc(char* cmd, cJSON* desired) {
         child = cJSON_GetObjectItem(desired, "Umbrella");
         if (child != NULL && child->type == cJSON_String) {
             if (STR_EQUAL(child->valuestring, "Borrow")) {
-                Borrow_Action();
+                BorrowAction();
             }
         }
     }

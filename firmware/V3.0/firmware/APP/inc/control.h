@@ -91,8 +91,8 @@ void ControlInit(void);
 
 void ControlPolling(void);
 
-void Borrow_Action(void);
-void Repay_Action(void);
+void BorrowAction(void);
+void RepayAction(void);
 void Stop_Action(uint8_t num);
 
 void LED_NET_Flash_Start(uint16_t activetime, uint16_t idletime, uint16_t times);
@@ -103,7 +103,7 @@ void TTS_Play(char *text);
 void WatchDogClear(void);
 uint8_t gs_RFID_ReadPoll(uint8_t addr, uint8_t** data);
 
-void Breakdown_Repay(void);
+void BreakdownRepay(void);
 void Motor_Re_Fun(void);
 void TestMainMotor(void);
 void TestSwitchMotor(void);
@@ -111,6 +111,7 @@ void TestPushMotor(void);
 void TestInfraredSensor(void);
 void TestRFID(void);
 void TestBreakDownMotor(void);
+void IfIsTouch(void);
 
 void Reset(void);
 void InitFlag(void);

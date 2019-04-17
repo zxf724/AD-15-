@@ -333,11 +333,11 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 break;
             /*借伞*/
             case CMD_BORROW_UMBRELLA:
-                DBG_LOG("Borrow_Action .....");
+                DBG_LOG("BorrowAction .....");
                 memcpy(temp, (uint8_t*)&dat[7], 4);
                 /*比较设备ID*/
                 if (*(uint32_t*)temp == WorkData.DeviceID) {
-                    Borrow_Action();
+                    BorrowAction();
                     Motor_staus = k_status_start_output_unbrella;
                     DBG_LOG("Running index borrowing , store:%u, receive:%u", authRunIndex, run);
                 }
@@ -350,14 +350,14 @@ static uint8_t Protocol_Cmd_Analy(uint8_t* dat, uint8_t len) {
                 }else {
                     DBG_LOG("RepayInAction...");
                     Motor_staus = k_status_start_input_unbrella;
-                    Repay_Action();
+                    RepayAction();
                     break;
                 }
             /*还故障伞*/
             case CMD_RETURN_BREAKDOWN_UMBRELLA:
                 DBG_LOG("BreakDownAction...");
                 Motor_staus = k_status_input_breakdown_unbrella;
-                Breakdown_Repay();
+                BreakdownRepay();
                 break;
             default:
                 break;

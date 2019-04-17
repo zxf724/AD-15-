@@ -204,21 +204,23 @@ static void wdt_event_handler(void) {
   */
 void TestMainMotor(void) {
    static uint8_t gs_step = 0, flag_motor1 = 0;
-    if(flag_motor1 == 0) {
-        MOTOR_FORWARD(1);
-        flag_motor1 = 1;
-    }
-    gs_step++;
-    DBG_LOG("gs_step = %d", gs_step);
-    DBG_LOG("flag_motor1 = %d", flag_motor1);
-    if((IF_IS_TOUCH(7) == 0) && (gs_step >= 100)) {
-        DBG_LOG("hello,world!");
-        MOTOR_STOP(1);
-    }
-    if(IF_IS_TOUCH(7) == 0){
-      DBG_LOG("here!!");
-    }
-    MOTOR_BACK(1);
+   while(1) {
+      if(flag_motor1 == 0) {
+          MOTOR_FORWARD(1);
+          flag_motor1 = 1;
+        }
+        gs_step++;
+        DBG_LOG("gs_step = %d", gs_step);
+        DBG_LOG("flag_motor1 = %d", flag_motor1);
+        if((IF_IS_TOUCH(7) == 0) && (gs_step >= 100)) {
+          DBG_LOG("hello,world!");
+          MOTOR_STOP(1);
+        }
+        if(IF_IS_TOUCH(7) == 0){
+          DBG_LOG("here!!");
+        }
+        MOTOR_BACK(1);
+   }
 }
 
 /**test switch motor
@@ -226,21 +228,23 @@ void TestMainMotor(void) {
   */
 void TestSwitchMotor(void) {
     static uint8_t gs_flag_motor4 = 0, gs_flag_if_is_touch=0;
-    if(gs_flag_motor4 == 0) {
+    while(1) {
+      if(gs_flag_motor4 == 0) {
         MOTOR_BACK(4);
         gs_flag_motor4 = 1;
         gs_flag_if_is_touch = 1;
         DBG_LOG("test!");
-    }
-    if(IF_IS_TOUCH(3) == 0) {
+      }
+      if(IF_IS_TOUCH(3) == 0) {
         MOTOR_STOP(4);
         MOTOR_FORWARD(4);
         gs_flag_if_is_touch = 0;
         DBG_LOG("test in if_is_touch(3)");
-    }
-    if((IF_IS_TOUCH(5) == 0) && (gs_flag_if_is_touch == 0)) {
+      }
+      if((IF_IS_TOUCH(5) == 0) && (gs_flag_if_is_touch == 0)) {
         MOTOR_STOP(4);
         gs_flag_motor4 = 0;
+      }
     }
 }
 
@@ -249,18 +253,20 @@ void TestSwitchMotor(void) {
   */
 void TestPushMotor(void) {
     static uint8_t gs_flag_motor2 = 0, gs_flag_if_is_touch = 0;
-    if(gs_flag_motor2 == 0) {
-    MOTOR_FORWARD(2);
+    while(1) {
+      if(gs_flag_motor2 == 0) {
+        MOTOR_FORWARD(2);
         gs_flag_motor2 = 1;
         gs_flag_if_is_touch = 1;
-    }
-    if(IF_IS_TOUCH(1) == 0) {
-    MOTOR_BACK(2);
+      }
+      if(IF_IS_TOUCH(1) == 0) {
+        MOTOR_BACK(2);
         gs_flag_if_is_touch = 0;
-    }
-    if((IF_IS_TOUCH(2) == 0) && (gs_flag_if_is_touch == 0)) {
+      }
+      if((IF_IS_TOUCH(2) == 0) && (gs_flag_if_is_touch == 0)) {
         MOTOR_STOP(2);
         gs_flag_motor2 = 0;
+      }
     }
 }
 
@@ -268,6 +274,7 @@ void TestPushMotor(void) {
   * @}
   */
 void TestInfraredSensor(void) {
+  while(1){
     IO_H(IR_SW);
     if(IR_CHECK() == 0) {   // output 1 when it cover
         DBG_LOG("here is in the infrared sensor");
@@ -276,6 +283,7 @@ void TestInfraredSensor(void) {
     if(IR_CHECK() == 1){
       DBG_LOG("done!!");
     }
+  }
 }
 
 /**test breakdown motor
@@ -283,19 +291,21 @@ void TestInfraredSensor(void) {
   */
 void TestBreakDownMotor(void) {
     static uint8_t flag_motor3 = 0, gs_flag_if_is_touch = 0;
-    if(flag_motor3 == 0) {
+    while(1) {
+      if(flag_motor3 == 0) {
         MOTOR_FORWARD(3);
         flag_motor3 = 1;
         gs_flag_if_is_touch = 1;
-    }
-    if(IF_IS_TOUCH(4) == 0) {
+      }
+      if(IF_IS_TOUCH(4) == 0) {
         MOTOR_STOP(3);
         MOTOR_BACK(3);
         gs_flag_if_is_touch = 0;
-    }
-    if((IF_IS_TOUCH(6) == 0) && (gs_flag_if_is_touch == 0)) {
+      }
+      if((IF_IS_TOUCH(6) == 0) && (gs_flag_if_is_touch == 0)) {
         MOTOR_STOP(3);
         flag_motor3 = 0;
+      } 
     }
 }
 
@@ -304,8 +314,21 @@ void TestBreakDownMotor(void) {
   */
 void TestRFID(void) {
     static uint32_t  gs_RFID_Read = 0;
-    gs_RFID_Read = GPRS_ReadRFID(2);
-    DBG_LOG("gs_RFID_Read = %u", gs_RFID_Read);
+    while(1) {
+      gs_RFID_Read = GPRS_ReadRFID(2);
+      DBG_LOG("gs_RFID_Read = %u", gs_RFID_Read);
+    }
+}
+
+/** test if_is_touch();
+  * @}
+  */
+void IfIsTouch(void){
+  while(1) {
+    if(IF_IS_TOUCH(7) == 0) {
+      DBG_LOG("touch!!");
+    }
+  }
 }
 
 /**reset function
