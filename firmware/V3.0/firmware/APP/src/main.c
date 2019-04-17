@@ -205,7 +205,7 @@ static void wdt_event_handler(void) {
 void TestMainMotor(void) {
    static uint8_t gs_step = 0, flag_motor1 = 0;
    while(1) {
-      if(flag_motor1 == 0) {
+     if(flag_motor1 == 0) {
           MOTOR_FORWARD(1);
           flag_motor1 = 1;
         }
@@ -219,9 +219,9 @@ void TestMainMotor(void) {
         if(IF_IS_TOUCH(7) == 0){
           DBG_LOG("here!!");
         }
-        MOTOR_BACK(1);
-   }
+    }
 }
+      
 
 /**test switch motor
   * @}

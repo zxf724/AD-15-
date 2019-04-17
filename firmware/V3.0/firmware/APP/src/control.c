@@ -250,6 +250,7 @@ void ControlPolling(void) {
  * 借伞操作函数
  */
 void BorrowAction(void) {
+    Motor_staus = k_status_start_output_unbrella;
     app_timer_stop(TimerId_Lock);
     gs_flag_IR_SW = 1;
     gs_motorTick = 0;
@@ -276,6 +277,7 @@ void BorrowAction(void) {
  * 还伞操作函数
  */
 void RepayAction(void) {
+    Motor_staus = k_status_start_input_unbrella;
     gs_flag_RFID_GPRS_Read = 1; // open RFID read!
     app_timer_stop(TimerId_Lock);
     gs_flag_IR_SW = 1;
@@ -650,6 +652,7 @@ static void RepayInAction(void *a) {
 
 void BreakdownRepay(void) {
     //检测系列
+    Motor_staus = k_status_input_breakdown_unbrella;
     MOTOR_FORWARD(3);
     gs_flag_IR_SW = 1;
     gs_flag_RFID_GPRS_Read = 2;
@@ -845,16 +848,16 @@ static void funControl(int argc, char* argv[]) {
     } else if (ARGV_EQUAL("MainMotorForward")) {  //main motor control 
         MOTOR_FORWARD(1);
         DBG_LOG("MotorForward.");
-    } else if (ARGV_EQUAL("back")) {    
+    } else if (ARGV_EQUAL("MainMotorBack")) {    
         MOTOR_BACK(1);
         DBG_LOG("MainMotorBack.");
-    } else if (ARGV_EQUAL("stop")) {
+    } else if (ARGV_EQUAL("MainMotorStop")) {
         MOTOR_STOP(1);
         DBG_LOG("Motor stop.");
     } else if(ARGV_EQUAL("Reset")) {        // reset
         Reset();
         DBG_LOG("reset all the Motol");
-    } else if(ARGV_EQUAL("TestMainMotor")) {   //test function begin
+    } else if(ARGV_EQUAL("TestMainMotor")) {   //test Motor function begin
         TestMainMotor();
         DBG_LOG("Test Main Motor");
     } else if(ARGV_EQUAL("TestSwitchMotor")) {
@@ -872,7 +875,7 @@ static void funControl(int argc, char* argv[]) {
     } else if(ARGV_EQUAL("TestRFID")){          //test function end
         TestRFID();
         DBG_LOG("Test RFID");
-    } else if(ARGV_EQUAL("BorrowAction")) {      //test there modes
+    } else if(ARGV_EQUAL("BorrowAction")) {      //test three modes
         DBG_LOG("Borrow Action");
         BorrowAction();
     } else if(ARGV_EQUAL("RepayAction")) {
