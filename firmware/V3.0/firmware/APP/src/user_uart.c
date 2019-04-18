@@ -98,8 +98,8 @@ if (!nrf_drv_gpiote_is_init()) {
 void Switch_Uart_Init(uint8_t uart) {
     switch(uart) {
         case 0:
-            NRF_UART0->PSELRXD = UART_TX_DEFAULT_PIN;
-            NRF_UART0->PSELTXD = UART_RX_DEFAULT_PIN;
+            NRF_UART0->PSELRXD = UART_RX_DEFAULT_PIN;
+            NRF_UART0->PSELTXD = UART_TX_DEFAULT_PIN;
             break;
         case 1:
             NRF_UART0->PSELRXD = RX_PIN_NUMBER;//RFID_RX_PIN;

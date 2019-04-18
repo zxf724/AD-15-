@@ -97,8 +97,8 @@ int main(void) {
         ProtocolDateProcPoll();
         CommandReceivePoll();
         ControlPolling();
-        // GPRSPolling();
-        // MQTTConnPolling();
+        GPRSPolling();
+        MQTTConnPolling();
         /* Ω¯»Î–›√ﬂ */
         if (UserUartRecLength() == 0) {
             sd_app_evt_wait();
@@ -205,7 +205,7 @@ static void wdt_event_handler(void) {
 void TestMainMotor(void) {
    static uint8_t gs_step = 0, flag_motor1 = 0;
    while(1) {
-     if(flag_motor1 == 0) {
+      if(flag_motor1 == 0) {
           MOTOR_FORWARD(1);
           flag_motor1 = 1;
         }
@@ -219,9 +219,9 @@ void TestMainMotor(void) {
         if(IF_IS_TOUCH(7) == 0){
           DBG_LOG("here!!");
         }
-    }
+        MOTOR_BACK(1);
+   }
 }
-      
 
 /**test switch motor
   * @}
@@ -305,7 +305,7 @@ void TestBreakDownMotor(void) {
       if((IF_IS_TOUCH(6) == 0) && (gs_flag_if_is_touch == 0)) {
         MOTOR_STOP(3);
         flag_motor3 = 0;
-      } 
+      }
     }
 }
 
