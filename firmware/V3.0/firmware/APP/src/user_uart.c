@@ -76,7 +76,7 @@ void UserUartInit(uint32_t rx_pin_no, uint32_t tx_pin_no, uint32_t baud_rate) {
     nrf_drv_common_irq_enable(UART0_IRQn, APP_IRQ_PRIORITY_LOW);
     NRF_UART0->ENABLE = UART_ENABLE_ENABLE_Enabled;
 
-//start serial port 
+// start serial port
 if (!nrf_drv_gpiote_is_init()) {
     nrf_drv_gpiote_init();
   }
@@ -84,6 +84,7 @@ if (!nrf_drv_gpiote_is_init()) {
   nrf_drv_gpiote_in_config_t config = GPIOTE_CONFIG_IN_SENSE_HITOLO(false);
   config.pull = NRF_GPIO_PIN_PULLUP;
 
+  //set serial port interrupt
   nrf_drv_gpiote_in_init(RX_PIN_NUMBER, &config, uart_incoming_handler);
 
   nrf_drv_gpiote_in_event_enable(RX_PIN_NUMBER, false);

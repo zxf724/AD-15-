@@ -219,7 +219,6 @@ void TestMainMotor(void) {
         if(IF_IS_TOUCH(7) == 0){
           DBG_LOG("here!!");
         }
-        MOTOR_BACK(1);
    }
 }
 
@@ -327,6 +326,8 @@ void IfIsTouch(void){
   while(1) {
     if(IF_IS_TOUCH(7) == 0) {
       DBG_LOG("touch!!");
+    } else if(IF_IS_TOUCH(7) == 1) {
+      DBG_LOG("no touch!!");
     }
   }
 }
