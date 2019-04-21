@@ -242,6 +242,7 @@ void TestSwitchMotor(void) {
       }
       if((IF_IS_TOUCH(5) == 0) && (gs_flag_if_is_touch == 0)) {
         MOTOR_STOP(4);
+        DBG_LOG("test");
         gs_flag_motor4 = 0;
       }
     }
@@ -312,10 +313,12 @@ void TestBreakDownMotor(void) {
   * @}
   */
 void TestRFID(void) {
-    static uint32_t  gs_RFID_Read = 0;
+    static uint32_t  gs_RFID_Read1 = 0, gs_RFID_Read2 = 0;
     while(1) {
-      gs_RFID_Read = GPRS_ReadRFID(2);
-      DBG_LOG("gs_RFID_Read = %u", gs_RFID_Read);
+      gs_RFID_Read1 = GPRS_ReadRFID(2);
+      DBG_LOG("gs_RFID_Read1 = %u", gs_RFID_Read1);
+      gs_RFID_Read2 = GPRS_ReadRFID(1);
+      DBG_LOG("gs_RFID_Read2 = %u", gs_RFID_Read2);
     }
 }
 

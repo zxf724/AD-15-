@@ -44,7 +44,7 @@ APP_TIMER_DEF(TimerId_BreakDown);
 APP_TIMER_DEF(TimerId_RFID);
 
 // a series switch flag, at funtion InitFlag() would be initialize all of the flag
-static uint8_t gs_flag_motor4 = 0, gs_gs_flag_if_is_have_unber = 0, gs_flag_if_is_have_unb = 0,
+static uint8_t gs_flag_motor4 = 0, gs_flag_if_is_have_unber = 0, gs_flag_if_is_have_unb = 0,
                gs_flag_RFID_GPRS_Read = 0, gs_flag_IR_CHECK = 0, gs_flag_rfid = 0,
                gs_flag_motor2 = 0, gs_flag_if_is_touch = 0, gs_flag_IR_SW = 0,gs_TTS_Step = 0, 
                gs_flag_is_have = 0;
@@ -453,11 +453,11 @@ static void MotorTimerCB(void* p_context) {
         MOTOR_STOP(4);
     }
     //判断是否有伞
-    if((gs_RFID_Read == 0) && (gs_gs_flag_if_is_have_unber == 0)) {
+    if((gs_RFID_Read == 0) && (gs_flag_if_is_have_unber == 0)) {
         MOTOR_FORWARD(1);
-        gs_gs_flag_if_is_have_unber = 1;
+        gs_flag_if_is_have_unber = 1;
     }
-    if ((gs_gs_flag_if_is_have_unber == 1) && (gs_RFID_Read > 0) && (IF_IS_TOUCH(7) == 0)) {
+    if ((gs_flag_if_is_have_unber == 1) && (gs_RFID_Read > 0) && (IF_IS_TOUCH(7) == 0)) {
         MOTOR_STOP(1);
         Motor_staus = k_status_start_output_unbrella;
     }
@@ -470,7 +470,7 @@ static void MotorTimerCB(void* p_context) {
         DBG_LOG("Motor is Stuck.");
     }
     /*延时检查到位*/
-    if ((gs_motorTick > 100) && (IF_IS_TOUCH(7) == 0) && (gs_RFID_Read > 0)) {
+    if ((IF_IS_TOUCH(7) == 0) && (gs_RFID_Read > 0)) {
         gs_motorTick = 0;
         Stop_Action(1);
         if (Motor_staus == k_status_start_output_unbrella) {
@@ -589,29 +589,34 @@ static void RepayInAction(void *a) {
     app_timer_stop(TimerId_RFID);
     app_timer_stop(TimerId_Lock);
     WorkData.StockCount = 3;        //单独测试
+    // WorkData.StockCount = 0;
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
         Motor_staus = k_status_have_no_unbrella;
+        app_timer_stop(TimerId_Repay);
+        app_timer_stop(TimerId_In_Repay);
         DBG_LOG("BorrowAction Empty.");
     }
     /*检查伞桶内是否有伞*/
-    if((gs_RFID_Read > 0) && (gs_flag_rfid == 0)) {
-        MOTOR_BACK(1);
-        gs_flag_rfid = 1;
-        gs_flag_is_have = 1;
+    if(WorkData.StockCount > 0){
+        if((gs_RFID_Read > 0) && (gs_flag_rfid == 0)) {
+            MOTOR_BACK(1);
+            gs_flag_rfid = 1;
+            gs_flag_is_have = 1;
+        }
+        if((gs_motorTick1 > 10) && (IF_IS_TOUCH(7) == 0) && (gs_RFID_Read == 0) && (gs_flag_is_have == 1)) {
+            MOTOR_STOP(1);
+            gs_flag_rfid = 1;
+            gs_flag_if_is_have_unb = 1;
+        }
+        if(gs_RFID_Read == 0) {
+            gs_flag_rfid = 1;
+            gs_flag_if_is_have_unb = 1;
+        }
     }
-    if((gs_motorTick1 > 10) && (IF_IS_TOUCH(7) == 0) && (gs_RFID_Read == 0) && (gs_flag_is_have == 1)) {
-        MOTOR_STOP(1);
-        gs_flag_rfid = 1;
-        gs_flag_if_is_have_unb = 1;
-    }
-    if(gs_RFID_Read == 0) {
-        gs_flag_rfid = 1;
-        gs_flag_if_is_have_unb = 1;
-    }
+    
     /*打开开关门电机*/
     if(gs_flag_if_is_have_unb == 1) {
-        Motor_staus = k_status_start_input_unbrella;
         if(gs_flag_motor4 == 0) {
             MOTOR_BACK(4);
             gs_flag_motor4 = 1;
@@ -628,15 +633,13 @@ static void RepayInAction(void *a) {
             Stop_Action(1);
             Motor_staus = k_status_motor_stuck;
             DBG_LOG("Motor is Stuck.");
-        }
+        }   
         if ((gs_motorTick1 > 50) && (IF_IS_TOUCH(7) == 0)) {
             gs_motorTick1 = 0;
             app_timer_stop(TimerId_Lock);
-            if (Motor_staus == k_status_start_input_unbrella) {
-                DBG_LOG("Motor Running forware.");
-                Move_Back_Action();
-                gs_flag_motor41 = 0;
-            }
+            DBG_LOG("Motor Running forware.");
+            Move_Back_Action();
+            gs_flag_motor41 = 0;
         }
     }
     /*超时停止*/
@@ -664,31 +667,33 @@ void BreakdownRepay(void) {
  */
 static void TimerIdInRepay(void* p_context) {
     static uint8_t i = 0, j = 0, step = 0, flag_already = 0;
-    static uint8_t step1 = 0;
-    if(1) {   //后面要添加条件
+    static uint8_t step1 = 0, gs_flag_situation2 = 0;
+    if(1) {   //add app protocal
         step++;
         step1++;
         DBG_LOG("step1 = %d", step1);
         DBG_LOG("step = %d,i = %d,j = %d", step, i, j);
-        if(step >= 100) {
+        if(step >= 50) {
             i++;
             step = 0;
         }
         if(i >= 1) {
             i = 0;
             WatchDogClear();
+            Motor_staus = k_status_input_unbrella_soon;
             DBG_LOG("请尽快还伞");
             j++;
         }
-        if(j >= 3) {
+        if(j >= 4) {
             DBG_LOG("还伞失败，没有及时还伞，关闭电机");
-            j = 0;
+            gs_flag_situation2 = 1;
             //关闭开关门电机
             if(flag_already == 0) {
                 MOTOR_FORWARD(4);
                 flag_already = 1;
             }
             if(IF_IS_TOUCH(5) == 0) {
+                j = 0;
                 MOTOR_STOP(4);
                 InitFlag();
                 app_timer_stop(TimerId_Repay);
@@ -698,16 +703,11 @@ static void TimerIdInRepay(void* p_context) {
         if((gs_RFID_Read > 0) && (IR_CHECK() == 1) && (step1 >= 25)) {
             if(flag_already == 0) {
                 MOTOR_FORWARD(4);
+                gs_flag_situation2 = 2;
                 flag_already = 1;
             }
         }
-        if(IR_CHECK() == 1){
-            DBG_LOG("IR_CHECK() == 1");
-        }
-        if(gs_RFID_Read > 0){
-            DBG_LOG("gs_RFID_Read > 0");
-        }
-        if((IF_IS_TOUCH(5) == 0) && (flag_already == 1)) {
+        if((IF_IS_TOUCH(5) == 0) && (flag_already == 1) && (gs_flag_situation2 == 2)) {
             MOTOR_STOP(4);
             Motor_staus = k_status_input_unbrella_success;
             DBG_LOG("close all the timeid");
@@ -718,6 +718,8 @@ static void TimerIdInRepay(void* p_context) {
             j = 0;
             flag_already = 0;
             step1 = 0;
+            step = 0;
+            gs_flag_situation2 = 0;
             //stop timer
             app_timer_stop(TimerId_Repay);
             app_timer_stop(TimerId_In_Repay);
@@ -737,7 +739,7 @@ void InitFlag(void) {
     gs_flag_rfid = 0;
     gs_flag_is_have = 0;
     gs_flag_if_is_have_unb = 0;
-    gs_gs_flag_if_is_have_unber = 0;
+    gs_flag_if_is_have_unber = 0;
     gs_flag_motor2 = 0;
     gs_flag_if_is_touch = 0;
     gs_flag_IR_SW = 0;
@@ -844,13 +846,13 @@ static void funControl(int argc, char* argv[]) {
         DBG_LOG("Motor_staus:%u.", Motor_staus);
     } else if (ARGV_EQUAL("MainMotorForward")) {  //main motor control 
         MOTOR_FORWARD(1);
-        DBG_LOG("MotorForward.");
-    } else if (ARGV_EQUAL("back")) {    
+        DBG_LOG("Motor Forward.");
+    } else if (ARGV_EQUAL("MainMotorBack")) {    
         MOTOR_BACK(1);
-        DBG_LOG("MainMotorBack.");
-    } else if (ARGV_EQUAL("stop")) {
+        DBG_LOG("Main Motor Back.");
+    } else if (ARGV_EQUAL("MainMotorStop")) {
         MOTOR_STOP(1);
-        DBG_LOG("Motor stop.");
+        DBG_LOG("Main Motor Stop.");
     } else if(ARGV_EQUAL("Reset")) {        // reset
         Reset();
         DBG_LOG("reset all the Motol");
@@ -866,7 +868,7 @@ static void funControl(int argc, char* argv[]) {
     } else if(ARGV_EQUAL("TestBreakDownMotor")) {
         TestBreakDownMotor();
         DBG_LOG("Test Push Motor");        
-    } else if(ARGV_EQUAL("TestInfraredSensor")){
+    } else if(ARGV_EQUAL("TestInfraredSensor")) {
         TestInfraredSensor();
         DBG_LOG("Test Infrared Sensor");
     } else if(ARGV_EQUAL("TestRFID")){          //test function end
@@ -879,12 +881,23 @@ static void funControl(int argc, char* argv[]) {
         DBG_LOG("Repay Action");
         RepayAction();
     } else if(ARGV_EQUAL("BreakdownRepay")) {
-        DBG_LOG("Breakdown Repay");
+        DBG_LOG("Breakdown Repay"); 
         BreakdownRepay();
     } else if(ARGV_EQUAL("IfIsTouch")) {
         DBG_LOG("test If Is Touch");
         IfIsTouch();
+    } else if(ARGV_EQUAL("TmpTest")) {
+        DBG_LOG("Tmp Test");
+        TmpTest();
+
     }
+}
+
+/** test TmpTest();
+  * @}
+  */
+void TmpTest(void) {
+    Motor_staus = k_status_input_unbrella_soon;
 }
 
 

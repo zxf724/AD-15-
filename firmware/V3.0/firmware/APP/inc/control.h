@@ -112,6 +112,7 @@ void TestInfraredSensor(void);
 void TestRFID(void);
 void TestBreakDownMotor(void);
 void IfIsTouch(void);
+void TmpTest(void);
 
 void Reset(void);
 void InitFlag(void);
