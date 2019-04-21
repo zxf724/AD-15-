@@ -255,10 +255,17 @@ void BorrowAction(void) {
     gs_motorTick = 0;
     nrf_delay_ms(80);
     gs_flag_RFID_GPRS_Read = 1;
+    Motor_staus = k_status_start_output_unbrella;
+    // WorkData.StockCount = 1; //test!
+    WorkData.StockCount = 0;
     if (WorkData.StockCount == 0) {
         LED_MOTOR_NG();
         Motor_staus = k_status_have_no_unbrella;
         DBG_LOG("BorrowAction Empty.");
+        app_timer_stop(TimerId_Lock);
+        app_timer_stop(TimerId_RFID);
+        app_timer_stop(TimerId_Move);
+        InitFlag();
     }
     /*ºìÍâ¼ì²â*/
     else if (IR_CHECK() == 0) {
@@ -390,7 +397,7 @@ void WatchDogClear(void) {
 
 static void Move_TimerCB(void * p_context) {
     static uint8_t i = 0, j = 0, step = 0;
-    static uint8_t  flag_motor5 = 0;
+    static uint8_t  flag_motor5 = 0, gs_flag_motor_tmp = 0;
     if(1) {   //bluetooth condition add  todo
         if(gs_flag_motor2 == 0) {
             MOTOR_FORWARD(2);
@@ -400,12 +407,12 @@ static void Move_TimerCB(void * p_context) {
         if((IF_IS_TOUCH(1) == 0) && (gs_flag_if_is_touch == 1)) {
             MOTOR_STOP(2);
             gs_flag_IR_CHECK = 1;
-            //¼ì²â½èÉ¡³É¹¦
+            //if successed
             app_timer_start(TimerId_RFID, APP_TIMER_TICKS(MOVE_ACTION_TIME, APP_TIMER_PRESCALER), NULL);
         }
         step++;
         // DBG_LOG("step = %d,i = %d,j = %d", step, i, j);
-        if(step >= 100) {
+        if(step >= 80) {
             i++;
             step = 0;
         }
@@ -416,7 +423,7 @@ static void Move_TimerCB(void * p_context) {
             j++;
             Motor_staus = k_status_take_the_unbrella_soon;
         }
-        if(j >= 3) {
+        if(j >= 5) {
             DBG_LOG("³öÉ¡Ê§°Ü£¬Ã»ÓÐ¼°Ê±È¡É¡");
             MOTOR_BACK(2);
             gs_flag_if_is_touch = 0;
@@ -429,11 +436,18 @@ static void Move_TimerCB(void * p_context) {
             }
             if(IF_IS_TOUCH(5) == 0) {
                 MOTOR_STOP(4);
+                gs_flag_motor_tmp = 1;
+                DBG_LOG("have stop it!!");
             }
-            if((IF_IS_TOUCH(2) == 0) && (gs_flag_if_is_touch == 0)) {
+            if((IF_IS_TOUCH(2) == 0) && (gs_flag_if_is_touch == 0) && (gs_flag_motor_tmp == 1)) {
                 MOTOR_STOP(2);
+                j = 0;
+                gs_flag_motor_tmp = 0;
+                InitFlag();
+                DBG_LOG("stop all the timer!");
                 app_timer_stop(TimerId_Move);
                 app_timer_stop(TimerId_RFID);
+                app_timer_stop(TimerId_Lock);
             }
         }
     }
@@ -457,7 +471,7 @@ static void MotorTimerCB(void* p_context) {
         MOTOR_FORWARD(1);
         gs_flag_if_is_have_unber = 1;
     }
-    if ((gs_flag_if_is_have_unber == 1) && (gs_RFID_Read > 0) && (IF_IS_TOUCH(7) == 0)) {
+    if ((gs_RFID_Read > 0) && (IF_IS_TOUCH(7) == 0)) {
         MOTOR_STOP(1);
         Motor_staus = k_status_start_output_unbrella;
     }
@@ -598,7 +612,7 @@ static void RepayInAction(void *a) {
         DBG_LOG("BorrowAction Empty.");
     }
     /*¼ì²éÉ¡Í°ÄÚÊÇ·ñÓÐÉ¡*/
-    if(WorkData.StockCount > 0){
+    if(WorkData.StockCount > 0) {
         if((gs_RFID_Read > 0) && (gs_flag_rfid == 0)) {
             MOTOR_BACK(1);
             gs_flag_rfid = 1;
@@ -802,7 +816,7 @@ static void TimerIdRFID(void* p_context) {
     //ºìÍâ¼ì²â
     static uint8_t step = 0;
     step++;
-    if((IR_CHECK() == 1) && (gs_flag_IR_CHECK == 1) && (gs_RFID_Read == 0) && (step >= 20)) {
+    if((IR_CHECK() == 1) && (gs_flag_IR_CHECK == 1) && (gs_RFID_Read == 0) && (step >= 40)) {
         app_timer_stop(TimerId_Move);
         app_timer_stop(TimerId_Lock);
         Motor_staus = k_status_output_unbrella_success;
@@ -874,7 +888,7 @@ static void funControl(int argc, char* argv[]) {
     } else if(ARGV_EQUAL("TestRFID")){          //test function end
         TestRFID();
         DBG_LOG("Test RFID");
-    } else if(ARGV_EQUAL("BorrowAction")) {      //test there modes
+    } else if(ARGV_EQUAL("BorrowAction")) {      //test there kinds of modes
         DBG_LOG("Borrow Action");
         BorrowAction();
     } else if(ARGV_EQUAL("RepayAction")) {
@@ -897,7 +911,23 @@ static void funControl(int argc, char* argv[]) {
   * @}
   */
 void TmpTest(void) {
-    Motor_staus = k_status_input_unbrella_soon;
+    // Motor_staus = k_status_input_unbrella_soon;
+    // static uint8_t test = 0;
+    // while(1){
+    //     if(test == 0) {
+    //         MOTOR_FORWARD(4);
+    //         test = 1;
+    //     }
+    //     if(IF_IS_TOUCH(5) == 0) {
+    //         MOTOR_STOP(5);
+    //         DBG_LOG("hello,world!");
+    //     }
+    // }
+    while(1) {
+        if(IR_CHECK() == 1) {
+            DBG_LOG("hello,world!");
+        }
+    }
 }
 
 
