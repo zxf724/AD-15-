@@ -1,10 +1,10 @@
 /**
   ******************************************************************************
   * @file    main.c
-  * @author  ËÎÑô
+  * @author  å®‹é˜³
   * @version V1.0
   * @date    2015.12.2
-  * @brief   ÖÇÄÜ¹·Íëmainº¯Êı.
+  * @brief   æ™ºèƒ½ç‹—ç¢—mainå‡½æ•°.
   *
   ******************************************************************************
   */
@@ -20,7 +20,7 @@
 
 
 /** @defgroup MAIN
-  * @brief Ö÷º¯ÊıÎÄ¼ş
+  * @brief ä¸»å‡½æ•°æ–‡ä»¶
   * @{
   */
 
@@ -59,7 +59,7 @@ static void wdt_event_handler(void);
 /* Exported functions ---------------------------------------------------------*/
 
 /** @defgroup main_Exported_Functions main Exported Functions
-  *  @brief   main Íâ²¿º¯Êı
+  *  @brief   main å¤–éƒ¨å‡½æ•°
   * @{
   */
 
@@ -68,7 +68,7 @@ static void wdt_event_handler(void);
 
 
 /**
-  * @brief  mainº¯Êı.
+  * @brief  mainå‡½æ•°.
   * @param  none.
   * @retval none.
   */
@@ -92,6 +92,7 @@ int main(void) {
     DBG_LOG("System Start.");
     LED_OFF(STATUS);
     LED_OFF(NET);
+    DBG_LOG("hello,world!");
     for (;;) {
         WatchDogClear();
         ProtocolDateProcPoll();
@@ -99,7 +100,7 @@ int main(void) {
         ControlPolling();
         // GPRSPolling();
         // MQTTConnPolling();
-        /* ½øÈëĞİÃß */
+        /* è¿›å…¥ä¼‘çœ  */
         if (UserUartRecLength() == 0) {
             sd_app_evt_wait();
         }
@@ -107,10 +108,10 @@ int main(void) {
 }
 
 /**
-  * @brief  ´íÎóÅ×³öº¯Êı.
-  * @param  error_codr: ´íÎó´úÂë.
-  * @param  line_num: ´íÎó·¢ÉúµÄĞĞÊı.
-  * @param  p_file_name: ´íÎó·¢ÉúµÄÎÄ¼şÃû.
+  * @brief  é”™è¯¯æŠ›å‡ºå‡½æ•°.
+  * @param  error_codr: é”™è¯¯ä»£ç .
+  * @param  line_num: é”™è¯¯å‘ç”Ÿçš„è¡Œæ•°.
+  * @param  p_file_name: é”™è¯¯å‘ç”Ÿçš„æ–‡ä»¶å.
   * @retval none.
   */
 uint32_t m_error_code;
@@ -157,8 +158,8 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t* p_file_name) {
   * @{
   */
 /**
-  * @brief  ¿´ÃÅ¹·³õÊ¼»¯.
-  * @param  value: ¿´ÃÅ¹·Òç³öÊ±¼ä.
+  * @brief  çœ‹é—¨ç‹—åˆå§‹åŒ–.
+  * @param  value: çœ‹é—¨ç‹—æº¢å‡ºæ—¶é—´.
   * @retval none.
   */
 static void WdtInit(uint32_t value) {
@@ -174,7 +175,7 @@ static void WdtInit(uint32_t value) {
 }
 
 /**
-  * @brief  FLASH¶ÁĞ´±£»¤³õÊ¼»¯.
+  * @brief  FLASHè¯»å†™ä¿æŠ¤åˆå§‹åŒ–.
   * @param  none.
   * @retval none.
   */
@@ -189,7 +190,7 @@ static void FlashWRPProcess(void) {
 }
 
 /**
-  * @brief  ¿´ÃÅ¹·Òç³öÖĞ¶Ï´¦Àí.
+  * @brief  çœ‹é—¨ç‹—æº¢å‡ºä¸­æ–­å¤„ç†.
   * @param  none.
   * @retval none.
   */
